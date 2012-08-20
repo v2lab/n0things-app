@@ -1,0 +1,368 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3D230E2215E1943B0003DC9D /* Abstractor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2015E1943B0003DC9D /* Abstractor.xcdatamodeld */; };
+		3D230E2815E196F60003DC9D /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2715E196F60003DC9D /* Cluster.m */; };
+		3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */; };
+		3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D230E2C15E19E000003DC9D /* CoreData.framework */; };
+		3D230E3815E1B10F0003DC9D /* ShapeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E3715E1B10F0003DC9D /* ShapeObject.m */; };
+		3D332B3015D940D20065F9E6 /* ImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D332B2F15D940D20065F9E6 /* ImageProcessing.m */; };
+		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
+		3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07015D94B5C0067BDE9 /* StartViewController.m */; };
+		3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07815D99C140067BDE9 /* CollectionManager.m */; };
+		3DF1687815D30D27003236BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687715D30D27003236BA /* UIKit.framework */; };
+		3DF1687A15D30D27003236BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687915D30D27003236BA /* Foundation.framework */; };
+		3DF1687C15D30D27003236BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687B15D30D27003236BA /* CoreGraphics.framework */; };
+		3DF1688215D30D27003236BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DF1688015D30D27003236BA /* InfoPlist.strings */; };
+		3DF1688415D30D27003236BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF1688315D30D27003236BA /* main.m */; };
+		3DF1688815D30D27003236BA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF1688715D30D27003236BA /* AppDelegate.m */; };
+		3DF1688B15D30D27003236BA /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DF1688915D30D27003236BA /* MainStoryboard.storyboard */; };
+		3DF1688E15D30D27003236BA /* MainImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF1688D15D30D27003236BA /* MainImageViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3D230E2115E1943B0003DC9D /* Abstractor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Abstractor.xcdatamodel; sourceTree = "<group>"; };
+		3D230E2615E196F60003DC9D /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
+		3D230E2715E196F60003DC9D /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
+		3D230E2915E19A430003DC9D /* ImageProcessingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessingOperation.h; sourceTree = "<group>"; };
+		3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessingOperation.m; sourceTree = "<group>"; };
+		3D230E2C15E19E000003DC9D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3D230E3615E1B10F0003DC9D /* ShapeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeObject.h; sourceTree = "<group>"; };
+		3D230E3715E1B10F0003DC9D /* ShapeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeObject.m; sourceTree = "<group>"; };
+		3D332B2E15D940D20065F9E6 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
+		3D332B2F15D940D20065F9E6 /* ImageProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessing.m; sourceTree = "<group>"; };
+		3D332B3615D942440065F9E6 /* ImageProcessingProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageProcessingProtocol.h; sourceTree = "<group>"; };
+		3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
+		3D98A06F15D94B5C0067BDE9 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
+		3D98A07015D94B5C0067BDE9 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		3D98A07715D99C140067BDE9 /* CollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionManager.h; sourceTree = "<group>"; };
+		3D98A07815D99C140067BDE9 /* CollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionManager.m; sourceTree = "<group>"; };
+		3DF1687315D30D27003236BA /* Constantijn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Constantijn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DF1687715D30D27003236BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3DF1687915D30D27003236BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3DF1687B15D30D27003236BA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3DF1687F15D30D27003236BA /* Constantijn-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Constantijn-Info.plist"; sourceTree = "<group>"; };
+		3DF1688115D30D27003236BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DF1688315D30D27003236BA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3DF1688515D30D27003236BA /* Constantijn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Constantijn-Prefix.pch"; sourceTree = "<group>"; };
+		3DF1688615D30D27003236BA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3DF1688715D30D27003236BA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3DF1688A15D30D27003236BA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		3DF1688C15D30D27003236BA /* MainImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainImageViewController.h; sourceTree = "<group>"; };
+		3DF1688D15D30D27003236BA /* MainImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainImageViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3DF1687015D30D27003236BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */,
+				3DF1687815D30D27003236BA /* UIKit.framework in Frameworks */,
+				3DF1687A15D30D27003236BA /* Foundation.framework in Frameworks */,
+				3DF1687C15D30D27003236BA /* CoreGraphics.framework in Frameworks */,
+				3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D230E1E15E194000003DC9D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3D230E2015E1943B0003DC9D /* Abstractor.xcdatamodeld */,
+				3D230E3615E1B10F0003DC9D /* ShapeObject.h */,
+				3D230E3715E1B10F0003DC9D /* ShapeObject.m */,
+				3D230E2615E196F60003DC9D /* Cluster.h */,
+				3D230E2715E196F60003DC9D /* Cluster.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		3DF1686815D30D27003236BA = {
+			isa = PBXGroup;
+			children = (
+				3DF1687D15D30D27003236BA /* Constantijn */,
+				3DF1687615D30D27003236BA /* Frameworks */,
+				3DF1687415D30D27003236BA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3DF1687415D30D27003236BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3DF1687315D30D27003236BA /* Constantijn.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3DF1687615D30D27003236BA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */,
+				3D230E2C15E19E000003DC9D /* CoreData.framework */,
+				3DF1687715D30D27003236BA /* UIKit.framework */,
+				3DF1687915D30D27003236BA /* Foundation.framework */,
+				3DF1687B15D30D27003236BA /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3DF1687D15D30D27003236BA /* Constantijn */ = {
+			isa = PBXGroup;
+			children = (
+				3DF1688615D30D27003236BA /* AppDelegate.h */,
+				3DF1688715D30D27003236BA /* AppDelegate.m */,
+				3DF1688915D30D27003236BA /* MainStoryboard.storyboard */,
+				3D98A06F15D94B5C0067BDE9 /* StartViewController.h */,
+				3D98A07015D94B5C0067BDE9 /* StartViewController.m */,
+				3DF1688C15D30D27003236BA /* MainImageViewController.h */,
+				3DF1688D15D30D27003236BA /* MainImageViewController.m */,
+				3D332B3615D942440065F9E6 /* ImageProcessingProtocol.h */,
+				3D230E2915E19A430003DC9D /* ImageProcessingOperation.h */,
+				3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */,
+				3D332B2E15D940D20065F9E6 /* ImageProcessing.h */,
+				3D332B2F15D940D20065F9E6 /* ImageProcessing.m */,
+				3D98A07715D99C140067BDE9 /* CollectionManager.h */,
+				3D98A07815D99C140067BDE9 /* CollectionManager.m */,
+				3D230E1E15E194000003DC9D /* Data */,
+				3DF1687E15D30D27003236BA /* Supporting Files */,
+			);
+			path = Constantijn;
+			sourceTree = "<group>";
+		};
+		3DF1687E15D30D27003236BA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3DF1687F15D30D27003236BA /* Constantijn-Info.plist */,
+				3DF1688015D30D27003236BA /* InfoPlist.strings */,
+				3DF1688315D30D27003236BA /* main.m */,
+				3DF1688515D30D27003236BA /* Constantijn-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3DF1687215D30D27003236BA /* Constantijn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DF1689115D30D27003236BA /* Build configuration list for PBXNativeTarget "Constantijn" */;
+			buildPhases = (
+				3DF1686F15D30D27003236BA /* Sources */,
+				3DF1687015D30D27003236BA /* Frameworks */,
+				3DF1687115D30D27003236BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Constantijn;
+			productName = Constantijn;
+			productReference = 3DF1687315D30D27003236BA /* Constantijn.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3DF1686A15D30D27003236BA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = V2_;
+			};
+			buildConfigurationList = 3DF1686D15D30D27003236BA /* Build configuration list for PBXProject "Constantijn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3DF1686815D30D27003236BA;
+			productRefGroup = 3DF1687415D30D27003236BA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3DF1687215D30D27003236BA /* Constantijn */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3DF1687115D30D27003236BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF1688215D30D27003236BA /* InfoPlist.strings in Resources */,
+				3DF1688B15D30D27003236BA /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3DF1686F15D30D27003236BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF1688415D30D27003236BA /* main.m in Sources */,
+				3DF1688815D30D27003236BA /* AppDelegate.m in Sources */,
+				3DF1688E15D30D27003236BA /* MainImageViewController.m in Sources */,
+				3D332B3015D940D20065F9E6 /* ImageProcessing.m in Sources */,
+				3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */,
+				3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */,
+				3D230E2215E1943B0003DC9D /* Abstractor.xcdatamodeld in Sources */,
+				3D230E2815E196F60003DC9D /* Cluster.m in Sources */,
+				3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */,
+				3D230E3815E1B10F0003DC9D /* ShapeObject.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3DF1688015D30D27003236BA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DF1688115D30D27003236BA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3DF1688915D30D27003236BA /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DF1688A15D30D27003236BA /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3DF1688F15D30D27003236BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3DF1689015D30D27003236BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3DF1689215D30D27003236BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/aws-ios-sdk-1.3.3\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Constantijn/Constantijn-Prefix.pch";
+				INFOPLIST_FILE = "Constantijn/Constantijn-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3DF1689315D30D27003236BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Downloads/aws-ios-sdk-1.3.3\"",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Constantijn/Constantijn-Prefix.pch";
+				INFOPLIST_FILE = "Constantijn/Constantijn-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3DF1686D15D30D27003236BA /* Build configuration list for PBXProject "Constantijn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DF1688F15D30D27003236BA /* Debug */,
+				3DF1689015D30D27003236BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3DF1689115D30D27003236BA /* Build configuration list for PBXNativeTarget "Constantijn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DF1689215D30D27003236BA /* Debug */,
+				3DF1689315D30D27003236BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3D230E2015E1943B0003DC9D /* Abstractor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3D230E2115E1943B0003DC9D /* Abstractor.xcdatamodel */,
+			);
+			currentVersion = 3D230E2115E1943B0003DC9D /* Abstractor.xcdatamodel */;
+			path = Abstractor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 3DF1686A15D30D27003236BA /* Project object */;
+}

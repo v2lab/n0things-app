@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Cluster" syncable="YES">
+        <attribute name="centroid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="generation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="objects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShapeObject" inverseName="cluster" inverseEntity="ShapeObject" syncable="YES"/>
+        <relationship name="representatives" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShapeObject" inverseName="cluster" inverseEntity="ShapeObject" syncable="YES"/>
+    </entity>
+    <entity name="ShapeObject" representedClassName="ShapeObject" syncable="YES">
+        <attribute name="collectionId" attributeType="String" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="String" maxValueString="6" syncable="YES"/>
+        <attribute name="defectsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="huMoments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="shape" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="vertexCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="cluster" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Cluster" inverseName="representatives" inverseEntity="Cluster" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ShapeObject" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Cluster" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Wgq-2b-c6G">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+    </dependencies>
+    <scenes>
+        <!--Start View Controller - N0THINGS-->
+        <scene sceneID="uXd-WZ-YF8">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e3h-qG-dxR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="CXJ-Tw-lDA" customClass="StartViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Qd-Ia-CJX">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U4O-tb-51x">
+                                <rect key="frame" x="99" y="136" width="123" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="take a picture">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="yP0-8v-CAd" kind="push" id="BbE-fo-66J"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7Zc-eA-JRk">
+                                <rect key="frame" x="79" y="333" width="163" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="show my collection">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="87m-Tb-ehz" kind="push" id="zRP-WS-IIr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="N0THINGS" id="r6b-AP-pvq">
+                        <barButtonItem key="backBarButtonItem" title="back" id="A9U-kj-DWR"/>
+                    </navigationItem>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-680" y="-259"/>
+        </scene>
+        <!--View Controller - My Collection-->
+        <scene sceneID="k3k-Wy-1cO">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2bR-Xv-f5L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="" id="87m-Tb-ehz" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aYH-Q2-NfZ">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Collection View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="vj6-ic-QQP">
+                                <rect key="frame" x="105" y="182" width="118" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="My Collection" id="Gcf-V6-bQS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="WGe-6y-VfO"/>
+                    </navigationItem>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="404" y="-259"/>
+        </scene>
+        <!--Main Image View Controller - N0THINGS-->
+        <scene sceneID="z3R-c9-O11">
+            <objects>
+                <viewController id="yP0-8v-CAd" customClass="MainImageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zz6-xg-DzA">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="YJh-pp-nHg">
+                                <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="camera" id="EWY-1o-hFc">
+                                        <connections>
+                                            <action selector="showCamera:" destination="yP0-8v-CAd" id="een-8E-AcV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Vp6-dn-8D6"/>
+                                    <barButtonItem enabled="NO" style="plain" systemItem="action" id="7Yr-YB-u31">
+                                        <connections>
+                                            <action selector="submitImage:" destination="yP0-8v-CAd" id="KRE-jI-EDa"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
+                            <imageView contentMode="scaleToFill" id="Q9I-VH-hpU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="d9f-nQ-q3h" appends="YES" id="95d-gA-nel"/>
+                                </connections>
+                            </imageView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" id="Zjq-4V-kmB">
+                                <rect key="frame" x="80" y="93" width="160" height="230"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="SgE-Fa-5PV">
+                                <rect key="frame" x="142" y="348" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.9450981021" green="0.12549020350000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="N0THINGS" id="Fsy-Jw-Pfv">
+                        <barButtonItem key="backBarButtonItem" title="camera" id="a4v-lc-LQT"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="Q9I-VH-hpU" id="MZF-kx-Ibp"/>
+                        <outlet property="selectionBox" destination="Zjq-4V-kmB" id="Chn-uC-MG3"/>
+                        <outlet property="submitButton" destination="7Yr-YB-u31" id="OxU-nH-F6s"/>
+                        <outlet property="submitIndicator" destination="SgE-Fa-5PV" id="M1W-Mf-L0r"/>
+                        <segue destination="87m-Tb-ehz" kind="push" identifier="presentCollection" id="ceQ-MW-TBF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L4T-pg-5bp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="d9f-nQ-q3h">
+                    <connections>
+                        <action selector="panGesture:" destination="yP0-8v-CAd" id="6E8-NU-PvR"/>
+                        <outlet property="delegate" destination="yP0-8v-CAd" id="4uQ-He-FUG"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-136" y="-636"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uhh-d8-OSK">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="Wgq-2b-c6G" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackTranslucent" id="Rhh-hX-6BA">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="CXJ-Tw-lDA" kind="relationship" relationship="rootViewController" id="IYo-la-6jd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ouB-Z2-PQ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1107" y="-259"/>
+        </scene>
+    </scenes>
+    <classes>
+        <class className="MainImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainImageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="panGesture:" candidateClass="UIGestureRecognizer"/>
+                <relationship kind="action" name="showCamera:"/>
+                <relationship kind="action" name="submitImage:"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="selectionBox" candidateClass="UIView"/>
+                <relationship kind="outlet" name="submitButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="submitIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="StartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StartViewController.h"/>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="ceQ-MW-TBF"/>
+    </inferredMetricsTieBreakers>
+</document>
