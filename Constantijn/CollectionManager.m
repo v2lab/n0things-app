@@ -37,7 +37,7 @@
     if (self) {
         classes = [NSArray array];
         objects = [NSDictionary dictionary];
-        simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:@"key" withSecretKey:@"secret"];
+        simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:@"key" withSecretKey:@"secrets"];
         queue = [[NSOperationQueue alloc] init];
         [self checkForNewGeneration];
         NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
