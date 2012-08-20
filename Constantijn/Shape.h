@@ -1,5 +1,5 @@
 //
-//  ShapeObject.h
+//  Shape.h
 //  Constantijn
 //
 //  Created by Jan Misker on 20-08-12.
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface ShapeObject : NSManagedObject
+@interface Shape : NSManagedObject
 
 @property (nonatomic, retain) NSString * collectionId;
 @property (nonatomic, retain) NSString * color;

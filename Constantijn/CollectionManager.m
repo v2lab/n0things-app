@@ -8,6 +8,7 @@
 
 #import "CollectionManager.h"
 #include <xlocale.h>                                    // for strptime_l
+#import "Constants.h"
 
 @implementation CollectionManager
 
@@ -25,9 +26,14 @@
 
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
-        SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:@"select * from `Generations` ORDER BY Timestamp LIMIT 1"];
-        SimpleDBSelectResponse *resp = [simpleDBClient select:req];
-        NSLog(@"response: %@", resp);
+        @try {
+            SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:@"select * from `Generations` ORDER BY Timestamp LIMIT 1"];
+            SimpleDBSelectResponse *resp = [simpleDBClient select:req];
+            NSLog(@"response: %@", resp);
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception calling Amazon %@", [exception description]);
+        }
     }];
     [queue addOperation:op];
 }
@@ -37,7 +43,7 @@
     if (self) {
         classes = [NSArray array];
         objects = [NSDictionary dictionary];
-        simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:@"key" withSecretKey:@"secrets"];
+        simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:AWS_KEY withSecretKey:AWS_SECRET];
         queue = [[NSOperationQueue alloc] init];
         [self checkForNewGeneration];
         NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
