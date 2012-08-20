@@ -13,6 +13,7 @@
     CGPoint selectionOrigin;
     ImageProcessing *imageProcessor;
     NSOperationQueue *queue;
+    UIAlertView *submitWaiting;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;

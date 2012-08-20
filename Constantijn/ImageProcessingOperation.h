@@ -17,7 +17,7 @@
 
 @property (copy, readonly) UIImage *image;
 @property (assign, readonly) CGRect selection;
-@property (copy, readonly) ShapeRecord *shapeRecord;
+@property (retain, readonly) ShapeRecord *shapeRecord;
 
 - (id)initWithImage:(UIImage *)image selection:(CGRect)rect;
 - (void)main;

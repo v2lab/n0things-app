@@ -24,6 +24,7 @@
     
     /* or see: http://niw.at/articles/2009/03/14/using-opencv-on-iphone/en */
 
+    /*
     CGImageRef imageRef = img.CGImage;
     
     const int srcWidth        = CGImageGetWidth(imageRef);
@@ -71,6 +72,7 @@
     
     CFRelease(rawData);
     IplImage *cvImg;
+    */
     
     int red = 200;
     UIColor *color = [UIColor colorWithRed:red/255. green:0. blue:0. alpha:1.];
@@ -90,7 +92,9 @@
     result.color = color;
     result.huMoments = [NSArray arrayWithObjects:[NSNumber numberWithDouble:0.2], nil];
     result.defectsCount = 1;
-    
+
+    sleep(4);
+
     return result;
 }
 

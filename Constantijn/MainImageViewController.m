@@ -9,6 +9,7 @@
 #import "MainImageViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageProcessingOperation.h"
+#import "CollectionManager.h"
 
 @interface MainImageViewController ()
 
@@ -31,7 +32,7 @@
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
     ShapeRecord *shapeRecord = operation.shapeRecord;
     NSLog(@"finishedProcessingImage %@, %@", [shapeRecord.vertices description], shapeRecord.color);
-    NSArray *shape12D = [ImageProcessing mapShapeRecord:shapeRecord withWeights:[NSArray array]];
+    NSArray *shape12D = [ImageProcessing mapShapeRecord:shapeRecord withWeights:[CollectionManager sharedInstance].currentGenerationWeights];
     self.navigationItem.prompt = @"Submit the object or select a new one";
     self.submitButton.enabled = YES;
 }
@@ -46,6 +47,7 @@
     self.selectionBox.layer.shadowOffset = CGSizeMake(2., 2.);
     self.selectionBox.layer.shadowOpacity = 0.5;
     queue = [[NSOperationQueue alloc] init];
+    queue.maxConcurrentOperationCount = 1;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [self showCamera:nil];
@@ -101,7 +103,7 @@
 }
 
 - (IBAction)submitImage:(id)sender {
-    UIAlertView *submitWaiting = [[UIAlertView alloc] initWithTitle:@"Submitting" message:@"Your image is being processed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"<debug>", nil];
+    submitWaiting = [[UIAlertView alloc] initWithTitle:@"Submitting" message:@"Your image is being processed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"<debug>", nil];
     [self.submitIndicator startAnimating];
     [submitWaiting show];
     self.navigationItem.prompt = nil;

@@ -9,7 +9,7 @@
 #import "ImageProcessingOperation.h"
 
 @interface ImageProcessingOperation ()
-@property (copy, readwrite) ShapeRecord *shapeRecord;
+@property (retain, readwrite) ShapeRecord *shapeRecord;
 @end
 
 @implementation ImageProcessingOperation

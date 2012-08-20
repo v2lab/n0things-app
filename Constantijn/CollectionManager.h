@@ -26,7 +26,7 @@
     NSDictionary *objects;
     NSManagedObjectContext *managedObjectContext;
     NSArray *currentGenerationWeights;
-    NSDate *currentGenerationTimestamp;
+    NSString *currentGenerationTimestamp;
     AmazonSimpleDBClient *simpleDBClient;
     NSOperationQueue *queue;
 }
@@ -35,7 +35,7 @@
 @property (nonatomic, readonly) NSDictionary *objects;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, readonly) NSArray *currentGenerationWeights;
-@property (nonatomic, readonly) NSDate *currentGenerationTimestamp;
+@property (nonatomic, readonly) NSString *currentGenerationTimestamp;
 
 - (id)init;
 - (void)loadRemoteCollection;
