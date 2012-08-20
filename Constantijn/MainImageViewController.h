@@ -14,6 +14,7 @@
     ImageProcessing *imageProcessor;
     NSOperationQueue *queue;
     UIAlertView *submitWaiting;
+    ShapeRecord *currentShapeRecord;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;

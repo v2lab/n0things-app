@@ -2,20 +2,20 @@
 //  Cluster.m
 //  Constantijn
 //
-//  Created by Jan Misker on 19-08-12.
+//  Created by Jan Misker on 20-08-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
 #import "Cluster.h"
-#import "Object.h"
+#import "Shape.h"
 
 
 @implementation Cluster
 
-@dynamic id;
 @dynamic centroid;
 @dynamic generation;
+@dynamic id;
 @dynamic objects;
-@dynamic representatives;
+@dynamic representative;
 
 @end

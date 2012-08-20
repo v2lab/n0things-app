@@ -22,5 +22,7 @@
  */
 + (NSArray *)mapShapeRecord:(ShapeRecord *)shape withWeights:(NSArray *)weights;
 
++ (double)distanceBetweenPointA:(NSArray *)a andPointB:(NSArray *)b;
+
 @end
 

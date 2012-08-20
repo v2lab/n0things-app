@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIColor.h>
 //#import <UIKit/UIBezierPath.h>
-#import "ShapeObject.h"
+#import "Shape.h"
 #import "Cluster.h"
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
+#import "ShapeRecord.h"
 
 @protocol CollectionManagerDelegate <NSObject>
 
@@ -39,7 +40,7 @@
 
 - (id)init;
 - (void)loadRemoteCollection;
-- (void)submitShape:(NSArray *)vertices color:(UIColor *)color shape12D:(NSArray *)array;
+- (void)submitShapeRecord:(ShapeRecord *)shapeRecord;
 - (void)checkForNewGeneration;
 
 // singleton

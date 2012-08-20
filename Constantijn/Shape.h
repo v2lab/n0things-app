@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Cluster;
 
 @interface Shape : NSManagedObject
 
@@ -17,9 +18,9 @@
 @property (nonatomic) int16_t defectsCount;
 @property (nonatomic, retain) NSString * huMoments;
 @property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSString * shape;
+@property (nonatomic, retain) NSString * contour;
 @property (nonatomic) int16_t vertexCount;
 @property (nonatomic, retain) id shapeRecord;
-@property (nonatomic, retain) NSManagedObject *cluster;
+@property (nonatomic, retain) Cluster *cluster;
 
 @end

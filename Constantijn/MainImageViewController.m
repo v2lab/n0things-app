@@ -30,9 +30,8 @@
 }
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
-    ShapeRecord *shapeRecord = operation.shapeRecord;
-    NSLog(@"finishedProcessingImage %@, %@", [shapeRecord.vertices description], shapeRecord.color);
-    NSArray *shape12D = [ImageProcessing mapShapeRecord:shapeRecord withWeights:[CollectionManager sharedInstance].currentGenerationWeights];
+    currentShapeRecord = operation.shapeRecord;
+    NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
     self.navigationItem.prompt = @"Submit the object or select a new one";
     self.submitButton.enabled = YES;
 }
@@ -107,6 +106,7 @@
     [self.submitIndicator startAnimating];
     [submitWaiting show];
     self.navigationItem.prompt = nil;
+    [[CollectionManager sharedInstance] submitShapeRecord:currentShapeRecord];
 }
 
 - (IBAction)panGesture:(UIGestureRecognizer *)sender {

@@ -7,6 +7,7 @@
 //
 
 #import "Shape.h"
+#import "Cluster.h"
 
 
 @implementation Shape
@@ -16,7 +17,7 @@
 @dynamic defectsCount;
 @dynamic huMoments;
 @dynamic id;
-@dynamic shape;
+@dynamic contour;
 @dynamic vertexCount;
 @dynamic shapeRecord;
 @dynamic cluster;

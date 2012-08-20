@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3D230E2215E1943B0003DC9D /* Abstractor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2015E1943B0003DC9D /* Abstractor.xcdatamodeld */; };
-		3D230E2815E196F60003DC9D /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2715E196F60003DC9D /* Cluster.m */; };
 		3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */; };
 		3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D230E2C15E19E000003DC9D /* CoreData.framework */; };
 		3D332B3015D940D20065F9E6 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D332B2F15D940D20065F9E6 /* ImageProcessing.mm */; };
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
-		3D5C012215E2950900E4A80B /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C012115E2950900E4A80B /* Shape.m */; };
+		3D5C012A15E2E14000E4A80B /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C012915E2E14000E4A80B /* Shape.m */; };
+		3D5C012D15E2E31700E4A80B /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C012C15E2E31700E4A80B /* Cluster.m */; };
 		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
 		3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07015D94B5C0067BDE9 /* StartViewController.m */; };
 		3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07815D99C140067BDE9 /* CollectionManager.m */; };
@@ -30,8 +30,6 @@
 
 /* Begin PBXFileReference section */
 		3D230E2115E1943B0003DC9D /* Abstractor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Abstractor.xcdatamodel; sourceTree = "<group>"; };
-		3D230E2615E196F60003DC9D /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
-		3D230E2715E196F60003DC9D /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D230E2915E19A430003DC9D /* ImageProcessingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessingOperation.h; sourceTree = "<group>"; };
 		3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessingOperation.m; sourceTree = "<group>"; };
 		3D230E2C15E19E000003DC9D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -41,9 +39,11 @@
 		3D5C010E15E27D9100E4A80B /* ShapeRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeRecord.h; sourceTree = "<group>"; };
 		3D5C010F15E27D9100E4A80B /* ShapeRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeRecord.m; sourceTree = "<group>"; };
 		3D5C011215E280DA00E4A80B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
-		3D5C012015E2950900E4A80B /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
-		3D5C012115E2950900E4A80B /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
 		3D5C012415E295E800E4A80B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		3D5C012815E2E14000E4A80B /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		3D5C012915E2E14000E4A80B /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
+		3D5C012B15E2E31700E4A80B /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
+		3D5C012C15E2E31700E4A80B /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
 		3D98A06F15D94B5C0067BDE9 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		3D98A07015D94B5C0067BDE9 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
@@ -85,10 +85,10 @@
 			isa = PBXGroup;
 			children = (
 				3D230E2015E1943B0003DC9D /* Abstractor.xcdatamodeld */,
-				3D5C012015E2950900E4A80B /* Shape.h */,
-				3D5C012115E2950900E4A80B /* Shape.m */,
-				3D230E2615E196F60003DC9D /* Cluster.h */,
-				3D230E2715E196F60003DC9D /* Cluster.m */,
+				3D5C012B15E2E31700E4A80B /* Cluster.h */,
+				3D5C012C15E2E31700E4A80B /* Cluster.m */,
+				3D5C012815E2E14000E4A80B /* Shape.h */,
+				3D5C012915E2E14000E4A80B /* Shape.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -230,10 +230,10 @@
 				3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */,
 				3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */,
 				3D230E2215E1943B0003DC9D /* Abstractor.xcdatamodeld in Sources */,
-				3D230E2815E196F60003DC9D /* Cluster.m in Sources */,
 				3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */,
 				3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */,
-				3D5C012215E2950900E4A80B /* Shape.m in Sources */,
+				3D5C012A15E2E14000E4A80B /* Shape.m in Sources */,
+				3D5C012D15E2E31700E4A80B /* Cluster.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

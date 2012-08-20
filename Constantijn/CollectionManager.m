@@ -9,6 +9,15 @@
 #import "CollectionManager.h"
 #include <xlocale.h>                                    // for strptime_l
 #import "Constants.h"
+#import "ImageProcessing.h"
+
+@interface CollectionManager ()
+
+- (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)clusters;
+- (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName;
+- (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item;
+
+@end
 
 @implementation CollectionManager
 
@@ -19,9 +28,18 @@
     NSLog(@"loadRemoteCollection for uuid %@", uuid);
 }
 
-- (void)submitShape:(UIBezierPath *)path color:(UIColor *)color {
+- (void)submitShapeRecord:(ShapeRecord *)shapeRecord {
+    
     NSString *uuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uuid"];
-    NSLog(@"loadRemoteCollection for uuid %@", uuid);
+    NSLog(@"submitShapeRecord for uuid %@", uuid);
+    Shape *s = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    s.vertexCount = shapeRecord.vertices.count;
+    s.defectsCount = shapeRecord.defectsCount;
+    NSMutableArray *attributes = [NSMutableArray array];
+    [attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"CollectionId" andValue:uuid]];
+    [attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue]]];
+    SimpleDBPutAttributesRequest *req = [[SimpleDBPutAttributesRequest alloc] initWithDomainName:@"Shape" andItemName:s.id andAttributes:attributes];
+    [simpleDBClient putAttributes:req];
 }
 
 - (void)checkForNewGeneration {
@@ -45,6 +63,37 @@
                     }
                 }
                 if (timestamp && timestamp.length && weights && [weights isKindOfClass:[NSArray class]] && weights.count == 12) {
+                    selectExpr = [NSString stringWithFormat:@"SELECT * FROM Cluster WHERE Generation = '%@'", timestamp];
+                    req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
+                    SimpleDBSelectResponse *clusterResponse = [simpleDBClient select:req];
+                    //load all the representatives
+                    NSMutableArray *representativeIDs = [NSMutableArray arrayWithCapacity:clusterResponse.items.count];
+                    for (SimpleDBItem *clusterItem in clusterResponse.items) {
+                        NSString *reprId = [self simpleDBItem:clusterItem attributeValue:@"Representative"];
+                        if (reprId)
+                            [representativeIDs addObject:[NSString stringWithFormat:@"'%@'", reprId]];
+                    }
+                    req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:[NSString stringWithFormat:@"SELECT * FROM Shape WHERE itemName() IN (%@)", [representativeIDs componentsJoinedByString:@","]]];
+                    SimpleDBSelectResponse *representativeResponse = [simpleDBClient select:req];
+                    NSMutableDictionary *representativeShapes = [NSMutableDictionary dictionaryWithCapacity:representativeResponse.items.count];
+                    for (SimpleDBItem *reprItem in representativeResponse.items) {
+                        //create Shape
+                        Shape *s = [self createShapeFromSimpleDBItem:reprItem];
+                        [representativeShapes setObject:s forKey:s.id];
+                    }
+                    //store all the clusters in db
+                    for (SimpleDBItem *clusterItem in clusterResponse.items) {
+                        Cluster *cluster = [NSEntityDescription insertNewObjectForEntityForName:@"Cluster" inManagedObjectContext:self.managedObjectContext];
+                        //cluster.id =
+                        for (SimpleDBAttribute *attr in clusterItem.attributes) {
+                            if ([attr.name isEqualToString:@"Representative"]) {
+                                cluster.representative = [representativeShapes objectForKey:attr.value];
+                            }
+                        }
+                    }
+                    //re-classify
+                    
+                    
                     NSLog(@"found this data %@ %@", timestamp, [[weights objectAtIndex:1] class]);
                     currentGenerationWeights = weights;
                     currentGenerationTimestamp = timestamp;
@@ -60,6 +109,28 @@
         }
     }];
     [queue addOperation:op];
+}
+
+- (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName {
+    int idx = [item.attributes indexOfObjectPassingTest:^BOOL(SimpleDBAttribute *obj, NSUInteger idx, BOOL *stop) {
+        return [obj.name isEqualToString:attributeName];
+    }];
+    if (idx == NSNotFound)
+        return nil;
+    SimpleDBAttribute *attr = [item.attributes objectAtIndex:idx];
+    return attr.value;
+}
+
+- (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item {
+    Shape *shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    for (SimpleDBAttribute *attr in item.attributes) {
+        if ([attr.name isEqualToString:@"Contour"]) {
+            shape.contour = attr.value;
+        } else if ([attr.name isEqualToString:@"VertexCount"]) {
+            shape.vertexCount = [attr.value intValue];
+        }
+    }
+    return shape;
 }
 
 - (id)init {

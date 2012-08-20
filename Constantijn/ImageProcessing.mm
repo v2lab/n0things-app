@@ -109,5 +109,17 @@
     return [NSArray arrayWithArray:result];
 }
 
++ (double)distanceBetweenPointA:(NSArray *)pointA andPointB:(NSArray *)pointB {
+    if (pointA.count != pointB.count) {
+        return DBL_MAX;
+    }
+    double result = 0;
+    for (int i = 0; i < pointA.count; ++i) {
+        double a = [(NSNumber *)[pointA objectAtIndex:i] doubleValue];
+        double b = [(NSNumber *)[pointB objectAtIndex:i] doubleValue];
+        result += (a-b)*(a-b);
+    }
+    return result;
+}
 
 @end
