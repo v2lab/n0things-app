@@ -9,17 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "ImageProcessing.h"
 
-@interface ImageProcessingOperation : NSOperation <ImageProcessingDelegate> {
+@interface ImageProcessingOperation : NSOperation {
     UIImage *_image;
     CGRect _selection;
-    NSArray *_vertices;
-    UIColor *_color;
+    ShapeRecord *_shapeRecord;
 }
 
 @property (copy, readonly) UIImage *image;
 @property (assign, readonly) CGRect selection;
-@property (copy, readonly) NSArray *vertices;
-@property (strong, readonly) UIColor *color;
+@property (copy, readonly) ShapeRecord *shapeRecord;
 
 - (id)initWithImage:(UIImage *)image selection:(CGRect)rect;
 - (void)main;

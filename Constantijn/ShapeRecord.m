@@ -10,6 +10,6 @@
 
 @implementation ShapeRecord
 
-@synthesize vertices, color;
+@synthesize vertices, color, huMoments, defectsCount;
 
 @end

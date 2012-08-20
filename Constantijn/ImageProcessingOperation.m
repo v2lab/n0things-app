@@ -9,16 +9,14 @@
 #import "ImageProcessingOperation.h"
 
 @interface ImageProcessingOperation ()
-@property (copy, readwrite) NSArray *vertices;
-@property (strong, readwrite) UIColor *color;
+@property (copy, readwrite) ShapeRecord *shapeRecord;
 @end
 
 @implementation ImageProcessingOperation
 
 @synthesize image = _image;
 @synthesize selection = _selection;
-@synthesize vertices = _vertices;
-@synthesize color = _color;
+@synthesize shapeRecord = _shapeRecord;
 
 - (id)initWithImage:(UIImage *)image selection:(CGRect)rect {
     self = [super init];
@@ -29,13 +27,8 @@
     return self;
 }
 
-- (void)finishedContourDetection:(UIImage *)originalImage shape:(NSArray *)vertices color:(UIColor *)color {
-    self.vertices = vertices;
-    self.color = color;
-}
-
 - (void)main {
-    [ImageProcessing detectContourForImage:self.image selection:self.selection delegate:self];
+    self.shapeRecord = [ImageProcessing detectContourForImage:self.image selection:self.selection];
 }
 
 @end

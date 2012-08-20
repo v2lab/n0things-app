@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ShapeRecord : NSObject
+@interface ShapeRecord : NSObject {
+    NSArray *vertices;
+    UIColor *color;
+    NSArray *huMoments;
+    NSInteger defectsCount;
+}
 
 @property (nonatomic, strong) NSArray *vertices;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) NSArray *huMoments;
+@property (nonatomic, assign) NSInteger defectsCount;
 
 @end

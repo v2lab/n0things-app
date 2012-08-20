@@ -29,10 +29,9 @@
 }
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
-    NSArray *vertices = operation.vertices;
-    UIColor *color = operation.color;
-    NSLog(@"finishedProcessingImage %@, %@", [vertices description], color);
-    NSArray *shape12D = [ImageProcessing calculate12DShapeForContour:vertices color:color weights:nil];
+    ShapeRecord *shapeRecord = operation.shapeRecord;
+    NSLog(@"finishedProcessingImage %@, %@", [shapeRecord.vertices description], shapeRecord.color);
+    NSArray *shape12D = [ImageProcessing mapShapeRecord:shapeRecord withWeights:[NSArray array]];
     self.navigationItem.prompt = @"Submit the object or select a new one";
     self.submitButton.enabled = YES;
 }
