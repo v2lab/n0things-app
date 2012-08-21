@@ -16,10 +16,13 @@
 - (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)clusters;
 - (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName;
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item;
+- (void)mapSimpleDBItem:(SimpleDBItem *)item toObject:(NSObject *)object withMapping:(NSDictionary *)mapping;
 
 @end
 
 @implementation CollectionManager
+
+static NSDictionary *shapeMapping;
 
 @synthesize classes, objects;
 
@@ -28,18 +31,27 @@
     NSLog(@"loadRemoteCollection for uuid %@", uuid);
 }
 
-- (void)submitShapeRecord:(ShapeRecord *)shapeRecord {
+- (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate {
+    //ToDo put in Operation
     
     NSString *uuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uuid"];
     NSLog(@"submitShapeRecord for uuid %@", uuid);
     Shape *s = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
     s.vertexCount = shapeRecord.vertices.count;
     s.defectsCount = shapeRecord.defectsCount;
+    s.collectionId = uuid;
+    s.id = @"blah"; //create UUID
     NSMutableArray *attributes = [NSMutableArray array];
     [attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"CollectionId" andValue:uuid]];
-    [attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue]]];
+    //[attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue]]];
     SimpleDBPutAttributesRequest *req = [[SimpleDBPutAttributesRequest alloc] initWithDomainName:@"Shape" andItemName:s.id andAttributes:attributes];
-    [simpleDBClient putAttributes:req];
+    @try {
+        [simpleDBClient putAttributes:req];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception putting aws items %@", [exception description]);
+    }
+    [delegate shapeSubmitSuccesObjectId:s.id];
 }
 
 - (void)checkForNewGeneration {
@@ -73,13 +85,15 @@
                         if (reprId)
                             [representativeIDs addObject:[NSString stringWithFormat:@"'%@'", reprId]];
                     }
-                    req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:[NSString stringWithFormat:@"SELECT * FROM Shape WHERE itemName() IN (%@)", [representativeIDs componentsJoinedByString:@","]]];
-                    SimpleDBSelectResponse *representativeResponse = [simpleDBClient select:req];
-                    NSMutableDictionary *representativeShapes = [NSMutableDictionary dictionaryWithCapacity:representativeResponse.items.count];
-                    for (SimpleDBItem *reprItem in representativeResponse.items) {
-                        //create Shape
-                        Shape *s = [self createShapeFromSimpleDBItem:reprItem];
-                        [representativeShapes setObject:s forKey:s.id];
+                    NSMutableDictionary *representativeShapes = [NSMutableDictionary dictionaryWithCapacity:representativeIDs.count];
+                    if (representativeIDs.count) {
+                        req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:[NSString stringWithFormat:@"SELECT * FROM Shape WHERE itemName() IN (%@)", [representativeIDs componentsJoinedByString:@","]]];
+                        SimpleDBSelectResponse *representativeResponse = [simpleDBClient select:req];
+                        for (SimpleDBItem *reprItem in representativeResponse.items) {
+                            //create Shape
+                            Shape *s = [self createShapeFromSimpleDBItem:reprItem];
+                            [representativeShapes setObject:s forKey:s.id];
+                        }
                     }
                     //store all the clusters in db
                     for (SimpleDBItem *clusterItem in clusterResponse.items) {
@@ -123,19 +137,29 @@
 
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item {
     Shape *shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    shape.id = item.name;
+    [self mapSimpleDBItem:item toObject:shape withMapping:shapeMapping];
     for (SimpleDBAttribute *attr in item.attributes) {
-        if ([attr.name isEqualToString:@"Contour"]) {
-            shape.contour = attr.value;
-        } else if ([attr.name isEqualToString:@"VertexCount"]) {
+        if ([attr.name isEqualToString:@"VertexCount"]) {
             shape.vertexCount = [attr.value intValue];
         }
     }
     return shape;
 }
 
+- (void)mapSimpleDBItem:(SimpleDBItem *)item toObject:(NSObject *)object withMapping:(NSDictionary *)mapping {
+    for (SimpleDBAttribute *attr in item.attributes) {
+        NSString *key = [mapping objectForKey:attr.name];
+        if (key) {
+            [object setValue:attr.value forKey:key];
+        }
+    }
+}
+
 - (id)init {
     self = [super init];
     if (self) {
+        shapeMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"contour", @"Contour", nil];
         classes = [NSArray array];
         objects = [NSDictionary dictionary];
         simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:AWS_KEY withSecretKey:AWS_SECRET];

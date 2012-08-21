@@ -9,7 +9,6 @@
 #import "MainImageViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageProcessingOperation.h"
-#import "CollectionManager.h"
 
 @interface MainImageViewController ()
 
@@ -21,6 +20,9 @@
 @synthesize submitButton;
 @synthesize submitIndicator, selectionBox, imageView;
 
+- (void)shapeSubmitSuccesObjectId:(NSString *)objectId {
+    NSLog(@"shapeSubmitSuccesObjectId %@", objectId);
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([object isKindOfClass:[ImageProcessingOperation class]]) {
@@ -106,7 +108,7 @@
     [self.submitIndicator startAnimating];
     [submitWaiting show];
     self.navigationItem.prompt = nil;
-    [[CollectionManager sharedInstance] submitShapeRecord:currentShapeRecord];
+    [[CollectionManager sharedInstance] submitShapeRecord:currentShapeRecord delegate:self];
 }
 
 - (IBAction)panGesture:(UIGestureRecognizer *)sender {

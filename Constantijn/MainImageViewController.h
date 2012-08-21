@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ImageProcessing.h"
+#import "CollectionManager.h"
 
-@interface MainImageViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate> {
+@interface MainImageViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, CollectionManagerDelegate> {
     CGPoint selectionOrigin;
     ImageProcessing *imageProcessor;
     NSOperationQueue *queue;

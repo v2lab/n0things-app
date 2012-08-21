@@ -16,6 +16,7 @@
 
 @protocol CollectionManagerDelegate <NSObject>
 
+@optional
 - (void)collectionLoadSucces;
 - (void)shapeSubmitSuccesObjectId:(NSString *)objectId;
 - (void)connectionFailure:(NSError *)error;
@@ -40,7 +41,7 @@
 
 - (id)init;
 - (void)loadRemoteCollection;
-- (void)submitShapeRecord:(ShapeRecord *)shapeRecord;
+- (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate;
 - (void)checkForNewGeneration;
 
 // singleton
