@@ -22,6 +22,8 @@
 
 - (void)shapeSubmitSuccesObjectId:(NSString *)objectId {
     NSLog(@"shapeSubmitSuccesObjectId %@", objectId);
+    [submitIndicator stopAnimating];
+    [submitWaiting dismissWithClickedButtonIndex:0 animated:YES];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

@@ -28,14 +28,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-    NSString *uuid = [defs stringForKey:@"uuid"];
-    if (!uuid.length) {
-        CFUUIDRef _uuid = CFUUIDCreate(NULL);
-        uuid = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, _uuid);
-        [defs setObject:uuid forKey:@"uuid"];
-        [defs synchronize];
-    }
     [[CollectionManager sharedInstance] loadRemoteCollection];
     [CollectionManager sharedInstance].managedObjectContext = self.managedObjectContext;
     

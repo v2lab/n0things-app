@@ -29,6 +29,7 @@
     NSManagedObjectContext *managedObjectContext;
     NSArray *currentGenerationWeights;
     NSString *currentGenerationTimestamp;
+    NSString *uuid;
     AmazonSimpleDBClient *simpleDBClient;
     NSOperationQueue *queue;
 }

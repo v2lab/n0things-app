@@ -75,7 +75,10 @@
     */
     
     int red = 200;
-    UIColor *color = [UIColor colorWithRed:red/255. green:0. blue:0. alpha:1.];
+    int green = 100;
+    int blue = 0;
+    //UIColor *color = [UIColor colorWithRed:red/255. green:0. blue:0. alpha:1.];
+    NSArray *color = [NSArray arrayWithObjects:[NSNumber numberWithInt:red], [NSNumber numberWithInt:green], [NSNumber numberWithInt:blue], nil];
     NSMutableArray *vertices = [NSMutableArray array];
     
     //data looks something like this ??
@@ -93,7 +96,7 @@
     result.huMoments = [NSArray arrayWithObjects:[NSNumber numberWithDouble:0.2], nil];
     result.defectsCount = 1;
 
-    sleep(4);
+    sleep(1);
 
     return result;
 }

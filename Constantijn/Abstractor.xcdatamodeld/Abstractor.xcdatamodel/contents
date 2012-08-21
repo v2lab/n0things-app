@@ -9,10 +9,10 @@
     </entity>
     <entity name="Shape" representedClassName="Shape" syncable="YES">
         <attribute name="collectionId" attributeType="String" syncable="YES"/>
-        <attribute name="color" optional="YES" attributeType="String" maxValueString="6" syncable="YES"/>
-        <attribute name="contour" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="Transformable" maxValueString="6" syncable="YES"/>
+        <attribute name="contour" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="defectsCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="huMoments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="huMoments" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="shapeRecord" optional="YES" transient="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="vertexCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>

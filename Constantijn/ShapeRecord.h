@@ -10,13 +10,13 @@
 
 @interface ShapeRecord : NSObject {
     NSArray *vertices;
-    UIColor *color;
+    NSArray *color;
     NSArray *huMoments;
     NSInteger defectsCount;
 }
 
 @property (nonatomic, strong) NSArray *vertices;
-@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) NSArray *color;
 @property (nonatomic, strong) NSArray *huMoments;
 @property (nonatomic, assign) NSInteger defectsCount;
 

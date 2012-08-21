@@ -13,6 +13,7 @@
 
 @interface CollectionManager ()
 
++ (NSString *)generateUUID;
 - (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)clusters;
 - (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName;
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item;
@@ -27,23 +28,36 @@ static NSDictionary *shapeMapping;
 @synthesize classes, objects;
 
 - (void)loadRemoteCollection {
-    NSString *uuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uuid"];
     NSLog(@"loadRemoteCollection for uuid %@", uuid);
 }
 
 - (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate {
     //ToDo put in Operation
     
-    NSString *uuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uuid"];
     NSLog(@"submitShapeRecord for uuid %@", uuid);
+    NSString *contourJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:shapeRecord.vertices options:0 error:nil] encoding:NSUTF8StringEncoding];
+    NSString *huMomentsJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:shapeRecord.huMoments options:0 error:nil] encoding:NSUTF8StringEncoding];
+    NSString *colorJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:shapeRecord.color options:0 error:nil] encoding:NSUTF8StringEncoding];
+    int red = [[shapeRecord.color objectAtIndex:0] intValue];
+    int green = [[shapeRecord.color objectAtIndex:1] intValue];
+    int blue = [[shapeRecord.color objectAtIndex:2] intValue];
+    
     Shape *s = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    s.id = [CollectionManager generateUUID];
+    s.contour = shapeRecord.vertices;
     s.vertexCount = shapeRecord.vertices.count;
+    s.color = [UIColor colorWithRed:red/255. green:green/255. blue:blue/255. alpha:1.];
+    s.huMoments = shapeRecord.huMoments;
     s.defectsCount = shapeRecord.defectsCount;
     s.collectionId = uuid;
-    s.id = @"blah"; //create UUID
+    
     NSMutableArray *attributes = [NSMutableArray array];
-    [attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"CollectionId" andValue:uuid]];
-    //[attributes addObject:[[SimpleDBAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue]]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"CollectionId" andValue:uuid andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Contour" andValue:contourJSON andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue] andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Color" andValue:colorJSON andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"HuMoments" andValue:huMomentsJSON andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.defectsCount] stringValue] andReplace:YES]];
     SimpleDBPutAttributesRequest *req = [[SimpleDBPutAttributesRequest alloc] initWithDomainName:@"Shape" andItemName:s.id andAttributes:attributes];
     @try {
         [simpleDBClient putAttributes:req];
@@ -156,17 +170,29 @@ static NSDictionary *shapeMapping;
     }
 }
 
++ (NSString *)generateUUID {
+    CFUUIDRef _uuid = CFUUIDCreate(NULL);
+    NSString *result = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, _uuid);
+    return result;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
+        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
+        uuid = [defs stringForKey:@"uuid"];
+        if (!uuid.length) {
+            uuid = [CollectionManager generateUUID];
+            [defs setObject:uuid forKey:@"uuid"];
+            [defs synchronize];
+        }
+        currentGenerationTimestamp = [defs stringForKey:@"currentGenerationTimestamp"];
+        currentGenerationWeights = [defs arrayForKey:@"currentGenerationWeights"];
         shapeMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"contour", @"Contour", nil];
         classes = [NSArray array];
         objects = [NSDictionary dictionary];
         simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:AWS_KEY withSecretKey:AWS_SECRET];
         queue = [[NSOperationQueue alloc] init];
-        NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-        currentGenerationTimestamp = [defs stringForKey:@"currentGenerationTimestamp"];
-        currentGenerationWeights = [defs arrayForKey:@"currentGenerationWeights"];
         [self checkForNewGeneration];
     }
     return self;
