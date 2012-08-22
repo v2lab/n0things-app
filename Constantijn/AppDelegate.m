@@ -108,7 +108,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Abstractor" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"N0things" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -124,7 +124,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Abstractor.CDBStore"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"N0things.CDBStore"];
     
     /*
      Set up the store.
@@ -133,7 +133,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     // If the expected store doesn't exist, copy the default store.
     if (![fileManager fileExistsAtPath:[storeURL path]]) {
-        NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:@"Abstractor" withExtension:@"CDBStore"];
+        NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:@"N0things" withExtension:@"CDBStore"];
         if (defaultStoreURL) {
             [fileManager copyItemAtURL:defaultStoreURL toURL:storeURL error:NULL];
         }

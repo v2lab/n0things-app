@@ -99,12 +99,20 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" id="xGa-Jo-TZ5">
+                                <rect key="frame" x="0.0" y="51" width="320" height="409"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Collection" id="Gcf-V6-bQS">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="WGe-6y-VfO"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionContainer" destination="xGa-Jo-TZ5" id="Soq-aY-Mlu"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="404" y="-259"/>
@@ -269,6 +277,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CollectionViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backTapped:"/>
+                <relationship kind="outlet" name="collectionContainer" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="MainImageViewController" superclassName="UIViewController">

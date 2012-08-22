@@ -10,6 +10,8 @@
 
 @interface CollectionViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIView *collectionContainer;
+
 - (IBAction)backTapped:(id)sender;
 
 @end

@@ -7,12 +7,15 @@
 //
 
 #import "CollectionViewController.h"
+#import "CollectionManager.h"
+#import "ClusterView.h"
 
 @interface CollectionViewController ()
 
 @end
 
 @implementation CollectionViewController
+@synthesize collectionContainer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,6 +26,17 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    NSArray *clusters = [CollectionManager sharedInstance].clusters;
+    CGRect f = CGRectMake(10, 10, 60, 400);
+    for (Cluster *cluster in clusters) {
+        ClusterView *clusterView = [[ClusterView alloc] initWithFrame:f];
+        clusterView.backgroundColor = [UIColor blueColor];
+        [self.collectionContainer addSubview:clusterView];
+        f.origin = CGPointMake(f.origin.x + 80, f.origin.y);
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,6 +45,7 @@
 
 - (void)viewDidUnload
 {
+    [self setCollectionContainer:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
