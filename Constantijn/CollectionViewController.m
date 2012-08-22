@@ -30,8 +30,9 @@
     NSArray *clusters = [CollectionManager sharedInstance].clusters;
     CGRect f = CGRectMake(10, 10, 60, 400);
     for (Cluster *cluster in clusters) {
-        ClusterView *clusterView = [[ClusterView alloc] initWithFrame:f];
+        ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
         clusterView.backgroundColor = [UIColor blueColor];
+        clusterView.frame = f;
         [self.collectionContainer addSubview:clusterView];
         f.origin = CGPointMake(f.origin.x + 80, f.origin.y);
     }

@@ -15,7 +15,7 @@
 @dynamic centroid;
 @dynamic generation;
 @dynamic id;
-@dynamic objects;
+@dynamic shapes;
 @dynamic representative;
 
 @end

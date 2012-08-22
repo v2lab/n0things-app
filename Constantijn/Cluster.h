@@ -16,15 +16,15 @@
 @property (nonatomic, retain) NSArray * centroid;
 @property (nonatomic, retain) NSString * generation;
 @property (nonatomic, retain) NSString * id;
-@property (nonatomic, retain) NSSet *objects;
+@property (nonatomic, retain) NSSet *shapes;
 @property (nonatomic, retain) Shape *representative;
 @end
 
 @interface Cluster (CoreDataGeneratedAccessors)
 
-- (void)addObjectsObject:(Shape *)value;
-- (void)removeObjectsObject:(Shape *)value;
-- (void)addObjects:(NSSet *)values;
-- (void)removeObjects:(NSSet *)values;
+- (void)addShapesObject:(Shape *)value;
+- (void)removeShapesObject:(Shape *)value;
+- (void)addShapes:(NSSet *)values;
+- (void)removeShapes:(NSSet *)values;
 
 @end

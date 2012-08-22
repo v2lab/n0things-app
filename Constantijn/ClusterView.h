@@ -15,4 +15,6 @@
 
 @property (nonatomic, strong) Cluster *cluster;
 
+- (id)initWithCluster:(Cluster *)cluster;
+
 @end
