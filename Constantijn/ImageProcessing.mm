@@ -93,10 +93,10 @@
     ShapeRecord *result = [[ShapeRecord alloc] init];
     result.vertices = [NSArray arrayWithArray:vertices];
     result.color = color;
-    result.huMoments = [NSArray arrayWithObjects:[NSNumber numberWithDouble:0.2], nil];
+    result.huMoments = [NSArray arrayWithObjects:[NSNumber numberWithDouble:0.2], [NSNumber numberWithDouble:0.2], [NSNumber numberWithDouble:0.2], nil];
     result.defectsCount = 1;
 
-    sleep(1);
+    sleep(1); //for testing purposes
 
     return result;
 }

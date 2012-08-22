@@ -71,7 +71,7 @@ static NSDictionary *shapeMapping;
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
         @try {
-            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp > '%@' ORDER BY Timestamp DESC LIMIT 1", currentGenerationTimestamp];
+            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", currentGenerationTimestamp];
             SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
             SimpleDBSelectResponse *resp = [simpleDBClient select:req];
             NSLog(@"req: %@ \nresponse: %@", req, resp);
@@ -119,6 +119,7 @@ static NSDictionary *shapeMapping;
                             }
                         }
                     }
+#pragma mark ToDo ReClassify all objects
                     //re-classify
                     
                     
@@ -150,12 +151,15 @@ static NSDictionary *shapeMapping;
 }
 
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item {
+#pragma mark ToDo check whether shape already exists
     Shape *shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
     shape.id = item.name;
     [self mapSimpleDBItem:item toObject:shape withMapping:shapeMapping];
     for (SimpleDBAttribute *attr in item.attributes) {
         if ([attr.name isEqualToString:@"VertexCount"]) {
             shape.vertexCount = [attr.value intValue];
+        } else if ([attr.name isEqualToString:@"DefectsCount"]) {
+            shape.defectsCount = [attr.value intValue];
         }
     }
     return shape;
