@@ -62,7 +62,7 @@ static NSDictionary *shapeMapping;
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.vertexCount] stringValue] andReplace:YES]];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Color" andValue:colorJSON andReplace:YES]];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"HuMoments" andValue:huMomentsJSON andReplace:YES]];
-    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"VertexCount" andValue:[[NSNumber numberWithInt:s.defectsCount] stringValue] andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"DefectsCount" andValue:[[NSNumber numberWithInt:s.defectsCount] stringValue] andReplace:YES]];
     SimpleDBPutAttributesRequest *req = [[SimpleDBPutAttributesRequest alloc] initWithDomainName:@"Shape" andItemName:s.id andAttributes:attributes];
     @try {
         [simpleDBClient putAttributes:req];

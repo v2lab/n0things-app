@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ImageProcessingOperation.h"
 
+#define ANIMATION_DURATION 1.0
+
 @interface MainImageViewController ()
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation;
@@ -17,6 +19,8 @@
 @end
 
 @implementation MainImageViewController
+@synthesize titleImage;
+@synthesize cameraButton;
 @synthesize submitButton;
 @synthesize submitIndicator, selectionBox, imageView;
 
@@ -36,8 +40,8 @@
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
     currentShapeRecord = operation.shapeRecord;
     NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
-    self.navigationItem.prompt = @"Submit the object or select a new one";
-    self.submitButton.enabled = YES;
+    self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
+    self.submitButton.hidden = NO;
 }
 
 - (void)viewDidLoad
@@ -53,7 +57,7 @@
     queue.maxConcurrentOperationCount = 1;
 }
 - (void)viewWillAppear:(BOOL)animated {
-    [self showCamera:nil];
+    //[self showCamera:nil];
     selectionOrigin = CGPointZero;
 }
 
@@ -65,11 +69,13 @@
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     self.imageView.image = img;
     [self dismissModalViewControllerAnimated:YES];
-    self.navigationItem.prompt = @"Select the object of interest";
+    self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
+    self.cameraButton.hidden = YES;
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
-    self.navigationItem.prompt = @"Select the object of interest";
+    self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
+    self.cameraButton.hidden = YES;
 }
 
 - (void)viewDidUnload
@@ -78,6 +84,9 @@
     [self setSelectionBox:nil];
     [self setSubmitIndicator:nil];
     [self setSubmitButton:nil];
+    [self setCameraButton:nil];
+    [self setSubmitButton:nil];
+    [self setTitleImage:nil];
     [super viewDidUnload];
     queue = nil;
     // Release any retained subviews of the main view.
@@ -136,6 +145,10 @@
         //[self.imageProcessor processImage:self.imageView.image selection:self.selectionBox.frame delegate:self];
         //[self.imageProcessor detectContourForImage:self.imageView.image selection:self.selectionBox.frame delegate:self];
     }
+}
+
+- (IBAction)backTapped:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

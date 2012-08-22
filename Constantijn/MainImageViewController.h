@@ -21,10 +21,14 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIView *selectionBox;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *submitIndicator;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *submitButton;
+@property (strong, nonatomic) IBOutlet UIImageView *titleImage;
+
+@property (strong, nonatomic) IBOutlet UIButton *cameraButton;
+@property (strong, nonatomic) IBOutlet UIButton *submitButton;
 
 - (IBAction)showCamera:(id)sender;
 - (IBAction)submitImage:(id)sender;
 - (IBAction)panGesture:(UIGestureRecognizer *)sender;
+- (IBAction)backTapped:(id)sender;
 
 @end
