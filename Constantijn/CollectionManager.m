@@ -13,8 +13,13 @@
 
 @interface CollectionManager ()
 
+@property (atomic, readwrite) NSArray *clusters;
+@property (atomic, readwrite) NSArray *shapes;
+@property (atomic, readwrite) NSArray *currentGenerationWeights;
+@property (atomic, readwrite) NSString *currentGenerationTimestamp;
+
 + (NSString *)generateUUID;
-- (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)clusters;
+- (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)clusters withWeights:(NSArray *)weights;
 - (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName;
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item;
 - (void)mapSimpleDBItem:(SimpleDBItem *)item toObject:(NSObject *)object withMapping:(NSDictionary *)mapping;
@@ -25,15 +30,10 @@
 
 static NSDictionary *shapeMapping;
 
-@synthesize classes, objects;
-
-- (void)loadRemoteCollection {
-    NSLog(@"loadRemoteCollection for uuid %@", uuid);
-}
+@synthesize clusters, shapes, currentGenerationTimestamp, currentGenerationWeights, managedObjectContext;
 
 - (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate {
-    //ToDo put in Operation
-    
+#pragma mark ToDo put this in an NSOperation
     NSLog(@"submitShapeRecord for uuid %@", uuid);
     NSString *contourJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:shapeRecord.vertices options:0 error:nil] encoding:NSUTF8StringEncoding];
     NSString *huMomentsJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:shapeRecord.huMoments options:0 error:nil] encoding:NSUTF8StringEncoding];
@@ -50,7 +50,12 @@ static NSDictionary *shapeMapping;
     s.huMoments = shapeRecord.huMoments;
     s.defectsCount = shapeRecord.defectsCount;
     s.collectionId = uuid;
-    
+    [shapes addObject:s];
+
+    [self classifyShape:s inClusters:self.clusters withWeights:self.currentGenerationWeights];
+    NSError *err;
+    [self.managedObjectContext save:&err];
+
     NSMutableArray *attributes = [NSMutableArray array];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"CollectionId" andValue:uuid andReplace:YES]];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Contour" andValue:contourJSON andReplace:YES]];
@@ -71,7 +76,7 @@ static NSDictionary *shapeMapping;
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
         @try {
-            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", currentGenerationTimestamp];
+            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
             SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
             SimpleDBSelectResponse *resp = [simpleDBClient select:req];
             NSLog(@"req: %@ \nresponse: %@", req, resp);
@@ -110,26 +115,33 @@ static NSDictionary *shapeMapping;
                         }
                     }
                     //store all the clusters in db
+                    NSMutableArray *newClusters = [NSMutableArray arrayWithCapacity:clusterResponse.items.count];
                     for (SimpleDBItem *clusterItem in clusterResponse.items) {
                         Cluster *cluster = [NSEntityDescription insertNewObjectForEntityForName:@"Cluster" inManagedObjectContext:self.managedObjectContext];
-                        //cluster.id =
+                        cluster.id = clusterItem.name;
                         for (SimpleDBAttribute *attr in clusterItem.attributes) {
                             if ([attr.name isEqualToString:@"Representative"]) {
                                 cluster.representative = [representativeShapes objectForKey:attr.value];
-                            }
+                            } 
                         }
+                        [newClusters addObject:cluster];
                     }
-#pragma mark ToDo ReClassify all objects
+                    self.clusters = [NSArray arrayWithArray:newClusters];
+
                     //re-classify
-                    
+                    for (Shape *shape in self.shapes) {
+                        [self classifyShape:shape inClusters:clusters withWeights:weights];
+                    }
                     
                     NSLog(@"found this data %@ %@", timestamp, [[weights objectAtIndex:1] class]);
-                    currentGenerationWeights = weights;
-                    currentGenerationTimestamp = timestamp;
+                    self.currentGenerationWeights = weights;
+                    self.currentGenerationTimestamp = timestamp;
                     NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
                     [defs setObject:currentGenerationTimestamp forKey:@"currentGenerationTimestamp"];
                     [defs setObject:currentGenerationWeights forKey:@"currentGenerationWeights"];
                     [defs synchronize];
+                    NSError *err;
+                    [self.managedObjectContext save:&err];
                 }
             }
         }
@@ -138,6 +150,21 @@ static NSDictionary *shapeMapping;
         }
     }];
     [queue addOperation:op];
+}
+
+- (Cluster *)classifyShape:(Shape *)shape inClusters:(NSArray *)_clusters withWeights:(NSArray *)weights {
+    double closestDistance = DBL_MAX;
+    Cluster *closestCluster = nil;
+    NSArray *shape12D = [ImageProcessing mapShapeRecord:shape.shapeRecord withWeights:weights];
+    for (Cluster *cluster in _clusters) {
+        double distance = [ImageProcessing distanceBetweenPointA:shape12D andPointB:cluster.centroid];
+        if (!closestCluster || (distance < closestDistance)) {
+            closestCluster = cluster;
+            closestDistance = distance;
+        }
+    }
+    shape.cluster = closestCluster;
+    return shape.cluster;
 }
 
 - (NSString *)simpleDBItem:(SimpleDBItem *)item attributeValue:(NSString *)attributeName {
@@ -180,6 +207,19 @@ static NSDictionary *shapeMapping;
     return result;
 }
 
+- (void)loadShapesAndClusters {
+    NSFetchRequest *req = [[NSFetchRequest alloc] init];
+    req.entity = [NSEntityDescription entityForName:@"Cluster" inManagedObjectContext:self.managedObjectContext];
+    req.predicate = [NSPredicate predicateWithFormat:@"generation = %@", self.currentGenerationTimestamp];
+    NSError *err;
+    self.clusters = [self.managedObjectContext executeFetchRequest:req error:&err];
+    req = [[NSFetchRequest alloc] init];
+    req.entity = [NSEntityDescription entityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    req.predicate = [NSPredicate predicateWithFormat:@"collectionId = %@", uuid];
+    self.shapes = [NSMutableArray arrayWithArray:[self.managedObjectContext executeFetchRequest:req error:&err]];
+    [self checkForNewGeneration];
+}
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -190,14 +230,11 @@ static NSDictionary *shapeMapping;
             [defs setObject:uuid forKey:@"uuid"];
             [defs synchronize];
         }
-        currentGenerationTimestamp = [defs stringForKey:@"currentGenerationTimestamp"];
-        currentGenerationWeights = [defs arrayForKey:@"currentGenerationWeights"];
+        self.currentGenerationTimestamp = [defs stringForKey:@"currentGenerationTimestamp"];
+        self.currentGenerationWeights = [defs arrayForKey:@"currentGenerationWeights"];
         shapeMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"contour", @"Contour", nil];
-        classes = [NSArray array];
-        objects = [NSDictionary dictionary];
         simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:AWS_KEY withSecretKey:AWS_SECRET];
         queue = [[NSOperationQueue alloc] init];
-        [self checkForNewGeneration];
     }
     return self;
 }

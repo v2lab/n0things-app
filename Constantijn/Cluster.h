@@ -2,7 +2,7 @@
 //  Cluster.h
 //  Constantijn
 //
-//  Created by Jan Misker on 21-08-12.
+//  Created by Jan Misker on 22-08-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 
 @interface Cluster : NSManagedObject
 
-@property (nonatomic, retain) NSString * centroid;
+@property (nonatomic, retain) NSArray * centroid;
 @property (nonatomic, retain) NSString * generation;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSSet *objects;

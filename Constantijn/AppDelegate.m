@@ -28,8 +28,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [[CollectionManager sharedInstance] loadRemoteCollection];
     [CollectionManager sharedInstance].managedObjectContext = self.managedObjectContext;
+    [[CollectionManager sharedInstance] loadShapesAndClusters];
     
     return YES;
 }

@@ -24,8 +24,8 @@
 @end
 
 @interface CollectionManager : NSObject {
-    NSArray *classes;
-    NSDictionary *objects;
+    NSArray *clusters;
+    NSMutableArray *shapes;
     NSManagedObjectContext *managedObjectContext;
     NSArray *currentGenerationWeights;
     NSString *currentGenerationTimestamp;
@@ -34,14 +34,14 @@
     NSOperationQueue *queue;
 }
 
-@property (nonatomic, readonly) NSArray *classes;
-@property (nonatomic, readonly) NSDictionary *objects;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, readonly) NSArray *currentGenerationWeights;
-@property (nonatomic, readonly) NSString *currentGenerationTimestamp;
+@property (atomic, readonly) NSArray *clusters;
+@property (atomic, readonly) NSArray *shapes;
+@property (atomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (atomic, readonly) NSArray *currentGenerationWeights;
+@property (atomic, readonly) NSString *currentGenerationTimestamp;
 
 - (id)init;
-- (void)loadRemoteCollection;
+- (void)loadShapesAndClusters;
 - (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate;
 - (void)checkForNewGeneration;
 
