@@ -30,7 +30,7 @@
     // Override point for customization after application launch.
     [CollectionManager sharedInstance].managedObjectContext = self.managedObjectContext;
     [[CollectionManager sharedInstance] loadShapesAndClusters];
-    
+    self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     return YES;
 }
 							

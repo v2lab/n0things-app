@@ -49,6 +49,8 @@
 		3D3163CB15E56F7500E76754 /* toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3163C715E56F7500E76754 /* toolbar.png */; };
 		3D3163CC15E56F7500E76754 /* titlebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3163C815E56F7500E76754 /* titlebar.png */; };
 		3D3163CD15E56F7500E76754 /* titlebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3163C915E56F7500E76754 /* titlebar@2x.png */; };
+		3D3163D015E576C100E76754 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3163CF15E576C100E76754 /* CollectionViewController.m */; };
+		3D3163D315E5781300E76754 /* ClusterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3163D215E5781300E76754 /* ClusterView.m */; };
 		3D332B3015D940D20065F9E6 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D332B2F15D940D20065F9E6 /* ImageProcessing.mm */; };
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
@@ -111,6 +113,10 @@
 		3D3163C715E56F7500E76754 /* toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar.png; sourceTree = "<group>"; };
 		3D3163C815E56F7500E76754 /* titlebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titlebar.png; sourceTree = "<group>"; };
 		3D3163C915E56F7500E76754 /* titlebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "titlebar@2x.png"; sourceTree = "<group>"; };
+		3D3163CE15E576C100E76754 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		3D3163CF15E576C100E76754 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		3D3163D115E5781200E76754 /* ClusterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClusterView.h; sourceTree = "<group>"; };
+		3D3163D215E5781300E76754 /* ClusterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClusterView.m; sourceTree = "<group>"; };
 		3D332B2E15D940D20065F9E6 /* ImageProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessing.h; sourceTree = "<group>"; };
 		3D332B2F15D940D20065F9E6 /* ImageProcessing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageProcessing.mm; sourceTree = "<group>"; };
 		3D332B3615D942440065F9E6 /* ImageProcessingProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageProcessingProtocol.h; sourceTree = "<group>"; };
@@ -271,6 +277,10 @@
 				3D98A07015D94B5C0067BDE9 /* StartViewController.m */,
 				3DF1688C15D30D27003236BA /* MainImageViewController.h */,
 				3DF1688D15D30D27003236BA /* MainImageViewController.m */,
+				3D3163CE15E576C100E76754 /* CollectionViewController.h */,
+				3D3163CF15E576C100E76754 /* CollectionViewController.m */,
+				3D3163D115E5781200E76754 /* ClusterView.h */,
+				3D3163D215E5781300E76754 /* ClusterView.m */,
 				3D5C010E15E27D9100E4A80B /* ShapeRecord.h */,
 				3D5C010F15E27D9100E4A80B /* ShapeRecord.m */,
 				3D332B3615D942440065F9E6 /* ImageProcessingProtocol.h */,
@@ -410,6 +420,8 @@
 				3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */,
 				3D5C013715E3E52E00E4A80B /* Shape.m in Sources */,
 				3D31637615E52C3D00E76754 /* Cluster.m in Sources */,
+				3D3163D015E576C100E76754 /* CollectionViewController.m in Sources */,
+				3D3163D315E5781300E76754 /* ClusterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

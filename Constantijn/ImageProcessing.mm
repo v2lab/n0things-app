@@ -74,9 +74,9 @@
     IplImage *cvImg;
     */
     
-    int red = 200;
-    int green = 100;
-    int blue = 0;
+    int red = arc4random() % 256;
+    int green = arc4random() % 256;
+    int blue = arc4random() % 256;
     //UIColor *color = [UIColor colorWithRed:red/255. green:0. blue:0. alpha:1.];
     NSArray *color = [NSArray arrayWithObjects:[NSNumber numberWithInt:red], [NSNumber numberWithInt:green], [NSNumber numberWithInt:blue], nil];
     NSMutableArray *vertices = [NSMutableArray array];
@@ -89,6 +89,23 @@
         [vertices addObject:[NSArray arrayWithObjects:[NSNumber numberWithDouble:x[i]],
                              [NSNumber numberWithDouble:y[i]], nil]];
     }
+    /* something to create output*/
+    [vertices removeAllObjects];
+    [vertices addObject:[NSArray arrayWithObjects:
+                         [NSNumber numberWithDouble:rect.origin.x],
+                         [NSNumber numberWithDouble:rect.origin.y], nil]];
+    [vertices addObject:[NSArray arrayWithObjects:
+                         [NSNumber numberWithDouble:rect.origin.x + rect.size.width],
+                         [NSNumber numberWithDouble:rect.origin.y], nil]];
+    [vertices addObject:[NSArray arrayWithObjects:
+                         [NSNumber numberWithDouble:rect.origin.x + rect.size.width],
+                         [NSNumber numberWithDouble:rect.origin.y + rect.size.height], nil]];
+    [vertices addObject:[NSArray arrayWithObjects:
+                         [NSNumber numberWithDouble:rect.origin.x],
+                         [NSNumber numberWithDouble:rect.origin.y + rect.size.height], nil]];
+    [vertices addObject:[NSArray arrayWithObjects:
+                         [NSNumber numberWithDouble:rect.origin.x],
+                         [NSNumber numberWithDouble:rect.origin.y], nil]];
     
     ShapeRecord *result = [[ShapeRecord alloc] init];
     result.vertices = [NSArray arrayWithArray:vertices];
