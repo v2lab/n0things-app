@@ -17,6 +17,13 @@
 
 @end
 
+template <typename T>
+std::vector<T>& operator<<(std::vector<T> vector, const T& value)
+{
+    vector.push_back(value);
+    return vector;
+}
+
 
 @implementation ImageProcessing
 
@@ -45,6 +52,29 @@
     assert(bitPerComponent == 8);
     assert(numComponents == 3 || numComponents == 4);
     cv::Mat cv_image(srcHeight, srcWidth, CV_8UC(numComponents), (void*)dataPtr, stride);
+    
+    if (numComponents == 4) {
+        // where is alpha?
+        CGImageAlphaInfo ainfo = CGImageGetAlphaInfo( imageRef );
+        bool afirst = ((ainfo == kCGImageAlphaPremultipliedFirst)
+                       || (ainfo == kCGImageAlphaFirst)
+                       || (ainfo == kCGImageAlphaNoneSkipFirst));
+        
+        // split the alpha off
+        cv::Mat rgb( cv_image.rows, cv_image.cols, CV_8UC3 );
+        cv::Mat alpha( cv_image.rows, cv_image.cols, CV_8UC1 );        
+        cv::Mat outs[] = { rgb, alpha };
+
+        std::vector<int> from_to;
+        // = { 0,2, 1,1, 2,0, 3,3 };
+        if (afirst) {
+            from_to << 0<<3 << 1<<0 << 2<<1 << 3<<2;
+        } else {
+            from_to << 0<<0 << 1<<1 << 2<<2 << 3<<3;
+        }
+        mixChannels( &cv_image, 1, outs, 2, from_to.data(), 4 );
+        cv_image = rgb;
+    }
     
     /* convert selection rectangle to opencv */
     cv::Rect grab( CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) );
@@ -124,7 +154,6 @@
     std::vector<double> hu; // 7 doubles
     cv::HuMoments( mom, hu );
         
-    // FIXME Do I need to release rawData?
     CFRelease(rawData);
     
     NSMutableArray *vertices = [NSMutableArray array];
