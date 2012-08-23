@@ -162,8 +162,8 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
     for (int i = 0; i < contour.size(); ++i) {
         [vertices addObject:
          [NSArray arrayWithObjects:
-          [NSNumber numberWithDouble:contour[i].x],
-          [NSNumber numberWithDouble:contour[i].y], 
+          [NSNumber numberWithDouble:contour[i].x / scale + roi.x],
+          [NSNumber numberWithDouble:contour[i].y / scale + roi.y], 
           nil]];
     }
     result.vertices = [NSArray arrayWithArray:vertices];
