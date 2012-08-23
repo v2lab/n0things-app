@@ -21,10 +21,13 @@
 @implementation ImageProcessing
 
 + (ShapeRecord *)detectContourForImage:(UIImage *)img selection:(CGRect)rect {
+    /* parameters (could be made configuarable) */
+    double grabMaxArea = 35000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
+    double roiMargin = 5.0; // after scaling image patch is selection rect plus this margin (for bg detection)
+    int denoise = 2; // small subcontours filter - before grab cut
+    int simplicity = 3; // contour simplification - after grab cut
     
-    /* or see: http://niw.at/articles/2009/03/14/using-opencv-on-iphone/en */
-
-    /*
+    /* wrap UIImage for opencv */
     CGImageRef imageRef = img.CGImage;
     
     const int srcWidth        = CGImageGetWidth(imageRef);
@@ -32,88 +35,124 @@
     const int stride          = CGImageGetBytesPerRow(imageRef);
     const int bitPerPixel     = CGImageGetBitsPerPixel(imageRef);
     const int bitPerComponent = CGImageGetBitsPerComponent(imageRef);
-    const int numPixels       = bitPerPixel / bitPerComponent;
+    const int numComponents   = bitPerPixel / bitPerComponent;
     
     CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
     CFDataRef rawData = CGDataProviderCopyData(dataProvider);
     
     const UInt8 * dataPtr = CFDataGetBytePtr(rawData);
-    
-    UIImageOrientation orientation = img.imageOrientation;
-    
-    int dstWidth = srcWidth;
-    int dstHeight = srcHeight;
-    
-    if (orientation == UIImageOrientationLeft || orientation == UIImageOrientationRight)
-    {
-        std::swap(dstWidth, dstHeight); // swap width and height since we have to rotate image to 90 degrees.
-    }
-    
-    if (numPixels == 4 && bitPerComponent == 8)
-    {
-        //bgra8_view_t sourceView = interleaved_view(srcWidth, srcHeight,(bgra8_pixel_t*)dataPtr, stride);
-        //copy_with_regards_to_orientation(sourceView, view(result), orientation);
-    }
-    else if(numPixels == 3 && bitPerComponent == 8)
-    {
-        //bgr8_view_t sourceView = interleaved_view(srcWidth, srcHeight,(bgr8_pixel_t*)dataPtr, stride);
-        //copy_with_regards_to_orientation(sourceView, view(result), orientation);
-    }
-    else if(numPixels == 1 && bitPerComponent == 8) // Assume gray pixel
-    {
-        // assume grayscale image
-        //gray8_view_t sourceView = interleaved_view(srcWidth, srcHeight,(gray8_pixel_t*)dataPtr, stride);
-        //copy_with_regards_to_orientation(sourceView, view(result), orientation);
-    }
-    else
-    {
-        NSLog(@"Unsupported format of the input UIImage (neither BGRA, BGR or GRAY)");
-    }
-    
-    CFRelease(rawData);
-    IplImage *cvImg;
-    */
-    
-    int red = arc4random() % 256;
-    int green = arc4random() % 256;
-    int blue = arc4random() % 256;
-    //UIColor *color = [UIColor colorWithRed:red/255. green:0. blue:0. alpha:1.];
-    NSArray *color = [NSArray arrayWithObjects:[NSNumber numberWithInt:red], [NSNumber numberWithInt:green], [NSNumber numberWithInt:blue], nil];
-    NSMutableArray *vertices = [NSMutableArray array];
-    
-    //data looks something like this ??
-    double x[9];
-    double y[9];
-    int vertexCount = 9;
-    for (int i = 0; i < vertexCount; ++i) {
-        [vertices addObject:[NSArray arrayWithObjects:[NSNumber numberWithDouble:x[i]],
-                             [NSNumber numberWithDouble:y[i]], nil]];
-    }
-    /* something to create output*/
-    [vertices removeAllObjects];
-    [vertices addObject:[NSArray arrayWithObjects:
-                         [NSNumber numberWithDouble:rect.origin.x],
-                         [NSNumber numberWithDouble:rect.origin.y], nil]];
-    [vertices addObject:[NSArray arrayWithObjects:
-                         [NSNumber numberWithDouble:rect.origin.x + rect.size.width],
-                         [NSNumber numberWithDouble:rect.origin.y], nil]];
-    [vertices addObject:[NSArray arrayWithObjects:
-                         [NSNumber numberWithDouble:rect.origin.x + rect.size.width],
-                         [NSNumber numberWithDouble:rect.origin.y + rect.size.height], nil]];
-    [vertices addObject:[NSArray arrayWithObjects:
-                         [NSNumber numberWithDouble:rect.origin.x],
-                         [NSNumber numberWithDouble:rect.origin.y + rect.size.height], nil]];
-    [vertices addObject:[NSArray arrayWithObjects:
-                         [NSNumber numberWithDouble:rect.origin.x],
-                         [NSNumber numberWithDouble:rect.origin.y], nil]];
-    
-    ShapeRecord *result = [[ShapeRecord alloc] init];
-    result.vertices = [NSArray arrayWithArray:vertices];
-    result.color = color;
-    result.huMoments = [NSArray arrayWithObjects:[NSNumber numberWithDouble:0.2], [NSNumber numberWithDouble:0.2], [NSNumber numberWithDouble:0.2], nil];
-    result.defectsCount = 1;
 
-    sleep(1); //for testing purposes
+    assert(bitPerComponent == 8);
+    assert(numComponents == 3 || numComponents == 4);
+    cv::Mat cv_image(srcHeight, srcWidth, CV_8UC(numComponents), (void*)dataPtr, stride);
+    
+    /* convert selection rectangle to opencv */
+    cv::Rect grab( CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) );
+    
+    // how large should the grab rect become?
+    // 40x40=1600, to get 1000: scale is sqrt(1600/1000) =
+    double area = grab.width*grab.height;
+    double scale = 1.0;
+    if (area > grabMaxArea) {
+        scale = std::sqrt(grabMaxArea / area);
+    }
+    
+    // find roi so that it will have roiMargin around grab after scaling
+    int margin = roiMargin * scale;
+    cv::Rect roi(grab);
+    roi -= cv::Point(margin, margin);
+    roi += cv::Size(margin*2, margin*2);
+    roi &= cv::Rect( cv::Point(0,0), cv_image.size() );
+    
+    // now scale region of interest if necessary
+    cv::Mat selection( cv_image, roi );
+    cv::Mat scaled = selection;
+    if (area > grabMaxArea) {
+        cv::resize( selection, scaled, cv::Size(), scale, scale );
+    }
+    
+    // adjust the grab rectangle
+    cv::Rect grabInScaled(grab);
+    grabInScaled -= roi.tl();
+    grabInScaled.x *= scale;
+    grabInScaled.y *= scale;
+    grabInScaled.width *= scale;
+    grabInScaled.height *= scale;
+    
+    // perform grabcut
+    cv::Mat mask, bgd, fgd;
+    cv::grabCut( scaled, mask, grabInScaled, bgd, fgd, 1, cv::GC_INIT_WITH_RECT );
+    mask = (mask == cv::GC_FGD) + (mask == cv::GC_PR_FGD);
+    if (denoise)
+        cv::morphologyEx( mask, mask, cv::MORPH_OPEN, cv::Mat(), cv::Point(-1,-1),
+                         denoise, cv::BORDER_CONSTANT, cv::Scalar(0) );
+    // FIXME average color?
+    cv::Scalar color = cv::mean( scaled, mask );
+    
+    std::vector< std::vector< cv::Point > > contours;
+    cv::findContours( mask, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1, roi.tl() );
+    if (contours.size() < 1)
+        return nil; // no contours found
+    
+    // find the largest contour
+    double max_area=0;
+    int max_index=-1;
+    for(int i=0; i<contours.size(); i++) {
+        double area = cv::contourArea(contours[i]);
+        if (contours[i].size() > 2 && area > max_area) {
+            max_area = area;
+            max_index = i;
+        }
+    }
+    if (max_index < 0)
+        return nil; // no contour contains more than 2 vertices
+    
+    std::vector<cv::Point> contour = contours[max_index];
+    
+    if (simplicity && contour.size() > 10)
+        cv::approxPolyDP(contour, contour, simplicity, true);
+    
+    // find defects (just to know the count)
+    std::vector< int > hull_idx;
+    cv::convexHull( contour, hull_idx, false, true );
+    std::vector< cv::Vec4i > defects;
+    if ( contour.size() > 3 )
+        cv::convexityDefects( contour, hull_idx, defects );
+    
+    // find hu moments
+    cv::Moments mom = cv::moments( contour );
+    std::vector<double> hu; // 7 doubles
+    cv::HuMoments( mom, hu );
+        
+    // FIXME Do I need to release rawData?
+    CFRelease(rawData);
+    
+    NSMutableArray *vertices = [NSMutableArray array];
+        
+    ShapeRecord *result = [[ShapeRecord alloc] init];
+    for (int i = 0; i < contour.size(); ++i) {
+        [vertices addObject:
+         [NSArray arrayWithObjects:
+          [NSNumber numberWithDouble:contour[i].x],
+          [NSNumber numberWithDouble:contour[i].y], 
+          nil]];
+    }
+    result.vertices = [NSArray arrayWithArray:vertices];
+    result.color = [NSArray arrayWithObjects:
+                    [NSNumber numberWithInt:color[0]], 
+                    [NSNumber numberWithInt:color[1]], 
+                    [NSNumber numberWithInt:color[2]], 
+                    nil];
+    result.huMoments = [NSArray arrayWithObjects:
+                        [NSNumber numberWithDouble:hu[0]], 
+                        [NSNumber numberWithDouble:hu[1]], 
+                        [NSNumber numberWithDouble:hu[2]], 
+                        [NSNumber numberWithDouble:hu[3]], 
+                        [NSNumber numberWithDouble:hu[4]], 
+                        [NSNumber numberWithDouble:hu[5]], 
+                        [NSNumber numberWithDouble:hu[6]], 
+                        nil];
+    result.defectsCount = defects.size();
 
     return result;
 }
