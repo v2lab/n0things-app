@@ -11,6 +11,7 @@
 
 @interface ShapeRecordView : UIView {
     UIBezierPath *path;
+    ShapeRecord *shapeRecord;
 }
 
 - (id)initWithShapeRecord:(ShapeRecord *)_shapeRecord;
