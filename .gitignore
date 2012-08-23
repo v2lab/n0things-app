@@ -1,10 +1,2 @@
-/build
-/Constantijn.xcodeproj/artm.mode2v3
-/Constantijn.xcodeproj/artm.pbxuser
-/Constantijn.xcodeproj/project.xcworkspace/contents.xcworkspacedata
-/Constantijn.xcodeproj/project.xcworkspace/xcuserdata/artm.xcuserdatad/UserInterfaceState.xcuserstate
-/Constantijn.xcodeproj/xcuserdata/artm.xcuserdatad/xcschemes/Constantijn.xcscheme
-/Constantijn.xcodeproj/xcuserdata/artm.xcuserdatad/xcschemes/xcschememanagement.plist
-/AWSiOSSDK.framework
-/opencv2.framework
-/Constantijn/Constants.h
+opencv2.framework
+AWSiOSSDK.framework

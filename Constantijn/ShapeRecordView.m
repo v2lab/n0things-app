@@ -21,7 +21,7 @@
     if (self) {
         shapeRecord = _shapeRecord;
         path = [UIBezierPath bezierPath];
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor blueColor];//[UIColor clearColor];
         NSArray *contour = shapeRecord.vertices;
         CGPoint origin = [self pointForArray:[contour objectAtIndex:0]];
         [path moveToPoint:origin];
@@ -30,8 +30,9 @@
             [path addLineToPoint:p];
         }
         [path closePath];
+        path.lineWidth = 2.;
         NSLog(@"shaperecord path bounds %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
-        [path applyTransform:CGAffineTransformMakeTranslation(-path.bounds.origin.x, -path.bounds.origin.y)];
+        //[path applyTransform:CGAffineTransformMakeTranslation(-path.bounds.origin.x, -path.bounds.origin.y)];
     }
     return self;
 }
@@ -42,6 +43,7 @@
     //[self.backgroundColor setFill];
     UIColor *color = [UIColor colorWithRed:[(NSNumber *)[shapeRecord.color objectAtIndex:0] intValue] / 255. green:[(NSNumber *)[shapeRecord.color objectAtIndex:1] intValue] / 255. blue:[(NSNumber *)[shapeRecord.color objectAtIndex:2] intValue] / 255. alpha:.5];
     [color setFill];
+    [[UIColor redColor] setFill];
     [[UIColor blackColor] setStroke];
     [path fill];
     [path stroke];

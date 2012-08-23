@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2829" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Wgq-2b-c6G">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1914"/>
     </dependencies>
@@ -157,7 +156,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="titlebar.png" id="jho-ma-WlW">
+                                    <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" image="titlebar.png" id="jho-ma-WlW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -181,13 +180,13 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="Jc0-pR-Kjd">
+                            <view alpha="0.10000000000000001" contentMode="scaleToFill" id="Jc0-pR-Kjd">
                                 <rect key="frame" x="0.0" y="411" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" image="toolbar.png" id="AxN-FV-AWI">
+                                    <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="center" image="toolbar.png" id="AxN-FV-AWI">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
@@ -222,10 +221,10 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.9450981021" green="0.12549020350000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="N0THINGS" id="Fsy-Jw-Pfv">
                         <barButtonItem key="backBarButtonItem" title="camera" id="a4v-lc-LQT"/>
@@ -286,33 +285,6 @@
         <image name="upload-button-down.png" width="46" height="36"/>
         <image name="upload-button-up.png" width="46" height="36"/>
     </resources>
-    <classes>
-        <class className="CollectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CollectionViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backTapped:"/>
-                <relationship kind="outlet" name="collectionContainer" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="MainImageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainImageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backTapped:"/>
-                <relationship kind="action" name="panGesture:" candidateClass="UIGestureRecognizer"/>
-                <relationship kind="action" name="showCamera:"/>
-                <relationship kind="action" name="submitImage:"/>
-                <relationship kind="outlet" name="cameraButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="selectionBox" candidateClass="UIView"/>
-                <relationship kind="outlet" name="submitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="submitIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="titleImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="StartViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StartViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

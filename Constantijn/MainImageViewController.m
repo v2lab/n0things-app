@@ -45,14 +45,17 @@
         self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
         self.submitButton.hidden = NO;
         currentShapeRecordView = [[ShapeRecordView alloc] initWithShapeRecord:currentShapeRecord];
-        currentShapeRecordView.frame = imageView.frame;
+        CGRect f;
+        f.origin = CGPointZero;
+        f.size = imageView.image.size;
+        currentShapeRecordView.frame = f;
         CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
         CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
-        CGFloat scale = MAX(scaleX, scaleY); // because image is set to aspect fill
+        CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
         currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
         [self.view addSubview:currentShapeRecordView];
     } else {
-        NSLog(@"no image found");
+        NSLog(@"no contour found");
     }
 }
 
@@ -155,8 +158,9 @@
         CGRect r = self.selectionBox.frame;
         CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
         CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
-        CGFloat scale = MAX(scaleX, scaleY); // because image is set to aspect fill
+        CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
         r = CGRectMake(r.origin.x * scale, r.origin.y * scale, r.size.width * scale, r.size.height * scale);
+        NSLog(@"asking contour detection on %f,%f %f,%f", r.origin.x, r.origin.y, r.size.width, r.size.height);
         ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
         [queue addOperation:op];
