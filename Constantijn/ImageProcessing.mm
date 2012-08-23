@@ -18,7 +18,7 @@
 @end
 
 template <typename T>
-std::vector<T>& operator<<(std::vector<T> vector, const T& value)
+std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 {
     vector.push_back(value);
     return vector;
