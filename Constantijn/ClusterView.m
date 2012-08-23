@@ -49,6 +49,11 @@
     [self setNeedsDisplay];
 }
 
+- (void)dealloc {
+    self.cluster = nil;
+    [self removeObserver:self forKeyPath:@"cluster"];
+}
+
 - (void)layoutSubviews {
 }
 

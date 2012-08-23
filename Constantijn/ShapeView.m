@@ -66,5 +66,11 @@
     [path stroke];
 }
 
+- (void)dealloc {
+    self.shape = nil;
+    path = nil;
+    [self removeObserver:self forKeyPath:@"shape"];
+}
+
 
 @end
