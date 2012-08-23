@@ -68,12 +68,12 @@
     NSLog(@"picker finish %@", [info description]);
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     self.imageView.image = img;
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated: YES];
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
     self.cameraButton.hidden = YES;
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated: YES];
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
     self.cameraButton.hidden = YES;
 }
@@ -109,7 +109,8 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
-    cameraController.navigationItem.title = @"Nothings";
+    cameraController.allowsEditing = NO;
+    //cameraController.navigationItem.title = @"Nothings";
     cameraController.delegate = self;
     [self presentModalViewController:cameraController animated:YES];
 }
@@ -139,7 +140,8 @@
         self.selectionBox.frame = r;
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"panGesture done %f,%f", p.x, p.y);
-        ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:self.selectionBox.frame];
+        CGRect r = self.selectionBox.frame;
+        ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
         [queue addOperation:op];
         //[self.imageProcessor processImage:self.imageView.image selection:self.selectionBox.frame delegate:self];

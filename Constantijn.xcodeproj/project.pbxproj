@@ -186,6 +186,7 @@
 				3D31637815E54E3100E76754 /* foto */,
 				3D31638B15E54E3100E76754 /* startscherm */,
 				3D31639A15E54E3100E76754 /* back-button-down.png */,
+				3D48AAFE15E650180090C0C8 /* icons */,
 				3D31639B15E54E3100E76754 /* back-button-up.png */,
 				3D31639C15E54E3100E76754 /* back-button-down@2x.png */,
 				3D31639D15E54E3100E76754 /* back-button-up@2x.png */,
@@ -240,6 +241,13 @@
 				3D79D29A15E630F200193CE7 /* title_nothings@2x.png */,
 			);
 			path = startscherm;
+			sourceTree = "<group>";
+		};
+		3D48AAFE15E650180090C0C8 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = icons;
 			sourceTree = "<group>";
 		};
 		3DF1686815D30D27003236BA = {
