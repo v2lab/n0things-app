@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ImageProcessing.h"
 #import "CollectionManager.h"
+#import "ShapeRecordView.h"
 
 @interface MainImageViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, CollectionManagerDelegate> {
     CGPoint selectionOrigin;
@@ -16,6 +17,7 @@
     NSOperationQueue *queue;
     UIAlertView *submitWaiting;
     ShapeRecord *currentShapeRecord;
+    ShapeRecordView *currentShapeRecordView;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;

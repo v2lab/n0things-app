@@ -60,6 +60,7 @@
 		3D79D2AC15E6311C00193CE7 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D79D2AA15E6311C00193CE7 /* background@2x.png */; };
 		3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07015D94B5C0067BDE9 /* StartViewController.m */; };
 		3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D98A07815D99C140067BDE9 /* CollectionManager.m */; };
+		3DCD0BC115E66F1200C6E817 /* ShapeRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD0BC015E66F1200C6E817 /* ShapeRecordView.m */; };
 		3DF1687815D30D27003236BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687715D30D27003236BA /* UIKit.framework */; };
 		3DF1687A15D30D27003236BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687915D30D27003236BA /* Foundation.framework */; };
 		3DF1687C15D30D27003236BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687B15D30D27003236BA /* CoreGraphics.framework */; };
@@ -136,6 +137,8 @@
 		3D98A07015D94B5C0067BDE9 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		3D98A07715D99C140067BDE9 /* CollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionManager.h; sourceTree = "<group>"; };
 		3D98A07815D99C140067BDE9 /* CollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionManager.m; sourceTree = "<group>"; };
+		3DCD0BBF15E66F1200C6E817 /* ShapeRecordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeRecordView.h; sourceTree = "<group>"; };
+		3DCD0BC015E66F1200C6E817 /* ShapeRecordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeRecordView.m; sourceTree = "<group>"; };
 		3DF1687315D30D27003236BA /* Constantijn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Constantijn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF1687715D30D27003236BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3DF1687915D30D27003236BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -291,6 +294,8 @@
 				3D98A07015D94B5C0067BDE9 /* StartViewController.m */,
 				3DF1688C15D30D27003236BA /* MainImageViewController.h */,
 				3DF1688D15D30D27003236BA /* MainImageViewController.m */,
+				3DCD0BBF15E66F1200C6E817 /* ShapeRecordView.h */,
+				3DCD0BC015E66F1200C6E817 /* ShapeRecordView.m */,
 				3D3163CE15E576C100E76754 /* CollectionViewController.h */,
 				3D3163CF15E576C100E76754 /* CollectionViewController.m */,
 				3D3163D115E5781200E76754 /* ClusterView.h */,
@@ -440,6 +445,7 @@
 				3D3163D315E5781300E76754 /* ClusterView.m in Sources */,
 				3D79D28815E5858700193CE7 /* Cluster.m in Sources */,
 				3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */,
+				3DCD0BC115E66F1200C6E817 /* ShapeRecordView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

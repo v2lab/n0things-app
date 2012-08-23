@@ -39,10 +39,18 @@
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
     currentShapeRecord = operation.shapeRecord;
+    [currentShapeRecordView removeFromSuperview];
     if (currentShapeRecord) {
         NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
         self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
         self.submitButton.hidden = NO;
+        currentShapeRecordView = [[ShapeRecordView alloc] initWithShapeRecord:currentShapeRecord];
+        currentShapeRecordView.frame = imageView.frame;
+        CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
+        CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
+        CGFloat scale = MAX(scaleX, scaleY); // because image is set to aspect fill
+        currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
+        [self.view addSubview:currentShapeRecordView];
     } else {
         NSLog(@"no image found");
     }
@@ -147,7 +155,8 @@
         CGRect r = self.selectionBox.frame;
         CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
         CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
-        r = CGRectMake(r.origin.x * scaleX, r.origin.y * scaleY, r.size.width * scaleX, r.size.height * scaleY);
+        CGFloat scale = MAX(scaleX, scaleY); // because image is set to aspect fill
+        r = CGRectMake(r.origin.x * scale, r.origin.y * scale, r.size.width * scale, r.size.height * scale);
         ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
         [queue addOperation:op];
