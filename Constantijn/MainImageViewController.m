@@ -39,9 +39,13 @@
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation {
     currentShapeRecord = operation.shapeRecord;
-    NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
-    self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
-    self.submitButton.hidden = NO;
+    if (currentShapeRecord) {
+        NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
+        self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
+        self.submitButton.hidden = NO;
+    } else {
+        NSLog(@"no image found");
+    }
 }
 
 - (void)viewDidLoad
@@ -141,6 +145,9 @@
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"panGesture done %f,%f", p.x, p.y);
         CGRect r = self.selectionBox.frame;
+        CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
+        CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
+        r = CGRectMake(r.origin.x * scaleX, r.origin.y * scaleY, r.size.width * scaleX, r.size.height * scaleY);
         ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
         [queue addOperation:op];
