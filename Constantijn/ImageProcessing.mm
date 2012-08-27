@@ -11,6 +11,7 @@
 #undef MIN
 #include <opencv2/opencv.hpp>
 
+#include <algorithm>
 
 @interface ImageProcessing ()
 
@@ -29,7 +30,7 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 
 + (ShapeRecord *)detectContourForImage:(UIImage *)img selection:(CGRect)rect {
     /* parameters (could be made configuarable) */
-    double grabMaxArea = 35000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
+    double grabMaxArea = 10000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
     double roiMargin = 5.0; // after scaling image patch is selection rect plus this margin (for bg detection)
     int denoise = 2; // small subcontours filter - before grab cut
     int simplicity = 3; // contour simplification - after grab cut
@@ -88,7 +89,7 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
     }
     
     // find roi so that it will have roiMargin around grab after scaling
-    int margin = roiMargin * scale;
+    int margin = std::min(2, (int)(roiMargin / scale));
     cv::Rect roi(grab);
     roi -= cv::Point(margin, margin);
     roi += cv::Size(margin*2, margin*2);
@@ -120,7 +121,7 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
     cv::Scalar color = cv::mean( scaled, mask );
     
     std::vector< std::vector< cv::Point > > contours;
-    cv::findContours( mask, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1, roi.tl() );
+    cv::findContours( mask, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
     if (contours.size() < 1)
         return nil; // no contours found
     

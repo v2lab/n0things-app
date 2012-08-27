@@ -52,11 +52,20 @@
         CGRect f;
         f.origin = CGPointZero;
         f.size = imageView.image.size;
-        currentShapeRecordView.frame = f;
         CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
         CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
         CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
+        CGFloat offsetX = (self.imageView.bounds.size.width * scale - self.imageView.image.size.width) / 2.;
+        CGFloat offsetY = (self.imageView.bounds.size.height * scale - self.imageView.image.size.height) / 2.;
+        currentShapeRecordView.frame = f;
+        //currentShapeRecordView.layer.anchorPoint = CGPointZero;
+        currentShapeRecordView.userInteractionEnabled = NO;
         currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
+        CGRect f1 = currentShapeRecordView.frame;
+        f1.origin = CGPointZero;
+        currentShapeRecordView.frame = f1;
+        currentShapeRecordView.transform = CGAffineTransformConcat(currentShapeRecordView.transform, CGAffineTransformMakeTranslation(offsetX, offsetY));
+        
         [self.view addSubview:currentShapeRecordView];
     } else {
         NSLog(@"no contour found"); //ToDO something

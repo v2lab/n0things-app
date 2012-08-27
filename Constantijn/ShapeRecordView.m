@@ -21,7 +21,7 @@
     if (self) {
         shapeRecord = _shapeRecord;
         path = [UIBezierPath bezierPath];
-        self.backgroundColor = [UIColor blueColor];//[UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
         NSArray *contour = shapeRecord.vertices;
         CGPoint origin = [self pointForArray:[contour objectAtIndex:0]];
         [path moveToPoint:origin];
@@ -43,7 +43,7 @@
     //[self.backgroundColor setFill];
     UIColor *color = [UIColor colorWithRed:[(NSNumber *)[shapeRecord.color objectAtIndex:0] intValue] / 255. green:[(NSNumber *)[shapeRecord.color objectAtIndex:1] intValue] / 255. blue:[(NSNumber *)[shapeRecord.color objectAtIndex:2] intValue] / 255. alpha:.5];
     [color setFill];
-    [[UIColor redColor] setFill];
+    [[[UIColor redColor] colorWithAlphaComponent:.2] setFill];
     [[UIColor blackColor] setStroke];
     [path fill];
     [path stroke];
