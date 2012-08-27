@@ -43,7 +43,7 @@
     //[self.backgroundColor setFill];
     UIColor *color = [UIColor colorWithRed:[(NSNumber *)[shapeRecord.color objectAtIndex:0] intValue] / 255. green:[(NSNumber *)[shapeRecord.color objectAtIndex:1] intValue] / 255. blue:[(NSNumber *)[shapeRecord.color objectAtIndex:2] intValue] / 255. alpha:.5];
     [color setFill];
-    [[[UIColor redColor] colorWithAlphaComponent:.2] setFill];
+    //[[[UIColor redColor] colorWithAlphaComponent:.2] setFill];
     [[UIColor blackColor] setStroke];
     [path fill];
     [path stroke];

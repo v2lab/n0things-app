@@ -49,15 +49,18 @@
         self.imageView.userInteractionEnabled = YES;
         [self.submitIndicator stopAnimating];
         currentShapeRecordView = [[ShapeRecordView alloc] initWithShapeRecord:currentShapeRecord];
-        CGRect f;
-        f.origin = CGPointZero;
-        f.size = imageView.image.size;
-        CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
-        CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
+        //CGRect f;
+        //f.origin = CGPointZero;
+        //f.size = imageView.image.size;
+        
+        CGRect scaledImageRect = CGRectMake(0, 0, 480., 480. * self.imageView.image.size.height / self.imageView.image.size.width);
+
+        CGFloat scaleX = scaledImageRect.size.width / self.imageView.bounds.size.width;
+        CGFloat scaleY = scaledImageRect.size.height / self.imageView.bounds.size.height;
         CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
-        CGFloat offsetX = (self.imageView.bounds.size.width * scale - self.imageView.image.size.width) / 2.;
-        CGFloat offsetY = (self.imageView.bounds.size.height * scale - self.imageView.image.size.height) / 2.;
-        currentShapeRecordView.frame = f;
+        CGFloat offsetX = (self.imageView.bounds.size.width * scale - scaledImageRect.size.width) / 2.;
+        CGFloat offsetY = (self.imageView.bounds.size.height * scale - scaledImageRect.size.height) / 2.;
+        currentShapeRecordView.frame = scaledImageRect;
         //currentShapeRecordView.layer.anchorPoint = CGPointZero;
         currentShapeRecordView.userInteractionEnabled = NO;
         currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
@@ -69,6 +72,11 @@
         [self.view addSubview:currentShapeRecordView];
     } else {
         NSLog(@"no contour found"); //ToDO something
+        self.selectionBox.layer.borderColor = [[UIColor redColor] colorWithAlphaComponent:.5].CGColor;
+        self.imageView.userInteractionEnabled = YES;
+        [self.submitIndicator stopAnimating];
+        self.pleaseWaitImage.hidden = YES;
+        self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
     }
 }
 
@@ -159,6 +167,8 @@
         selectionOrigin = p;
         self.selectionBox.bounds = CGRectZero;
         self.selectionBox.hidden = NO;
+        self.submitButton.hidden = YES;
+        self.selectionBox.layer.borderColor = [UIColor colorWithWhite:1. alpha:.5].CGColor;
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         CGFloat x1 = selectionOrigin.x;
         CGFloat x2 = p.x;
@@ -170,21 +180,28 @@
         self.selectionBox.frame = r;
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"panGesture done %f,%f %f,%f", self.selectionBox.frame.origin.x, self.selectionBox.frame.origin.y, self.selectionBox.frame.size.width, self.selectionBox.frame.size.height);
-        NSLog(@"photo size %f,%f", self.imageView.image.size.width, self.imageView.image.size.height);
+        CGRect scaledImageRect = CGRectMake(0, 0, 480., 480. * self.imageView.image.size.height / self.imageView.image.size.width);
+
+        UIGraphicsBeginImageContext(scaledImageRect.size);
+        [self.imageView.image drawInRect:scaledImageRect blendMode:kCGBlendModePlusDarker alpha:1];
+        UIImage *targetImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        NSLog(@"photo size %f,%f", targetImage.size.width, targetImage.size.height);
         self.titleImage.image = [UIImage imageNamed:@"title-detecting-shape"];
         self.imageView.userInteractionEnabled = NO;
         self.pleaseWaitImage.hidden = NO;
         [self.submitIndicator startAnimating];
         CGRect r = self.selectionBox.frame;
-        CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
-        CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
+        CGFloat scaleX = targetImage.size.width / self.imageView.bounds.size.width;
+        CGFloat scaleY = targetImage.size.height / self.imageView.bounds.size.height;
         CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
-        CGFloat offsetX = (self.imageView.bounds.size.width * scale - self.imageView.image.size.width) / 2.;
-        CGFloat offsetY = (self.imageView.bounds.size.height * scale - self.imageView.image.size.height) / 2.;
+        CGFloat offsetX = (self.imageView.bounds.size.width * scale - targetImage.size.width) / 2.;
+        CGFloat offsetY = (self.imageView.bounds.size.height * scale - targetImage.size.height) / 2.;
         r = CGRectMake(r.origin.x * scale - offsetX, r.origin.y * scale - offsetY, r.size.width * scale, r.size.height * scale);
         NSLog(@"scaleX %f scaleY %f ofssetX %f offsetY %f", scaleX, scaleY, offsetX, offsetY);
         NSLog(@"asking contour detection on %f,%f %f,%f", r.origin.x, r.origin.y, r.size.width, r.size.height);
-        ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
+        ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:targetImage selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
         [queue addOperation:op];
         //[self.imageProcessor processImage:self.imageView.image selection:self.selectionBox.frame delegate:self];
