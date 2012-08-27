@@ -21,7 +21,7 @@
     </entity>
     <fetchRequest name="FetchRequest" entity="Shape" predicateString="collectionId == &quot;COLLECTION_ID&quot;"/>
     <elements>
-        <element name="Cluster" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Shape" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Cluster" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Shape" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

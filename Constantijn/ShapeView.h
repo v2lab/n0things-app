@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Shape.h"
+#import "Shape+CD.h"
 
 @interface ShapeView : UIView {
     Shape *shape;

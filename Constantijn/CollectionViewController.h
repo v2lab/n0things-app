@@ -11,6 +11,7 @@
 @interface CollectionViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIView *collectionContainer;
+@property (strong, nonatomic) NSString *latestShape;
 
 - (IBAction)backTapped:(id)sender;
 

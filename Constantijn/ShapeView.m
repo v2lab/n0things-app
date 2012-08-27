@@ -40,7 +40,7 @@
     path = [UIBezierPath bezierPath];
     CGPoint origin = [self pointForArray:[shape.contour objectAtIndex:0]];
     [path moveToPoint:origin];
-    for (int i = 1; i < shape.contour.count; ++i) {
+    for (int i = 1; i < [shape.contour count]; ++i) {
         CGPoint p = [self pointForArray:[shape.contour objectAtIndex:i]];
         [path addLineToPoint:p];
     }

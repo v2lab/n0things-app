@@ -15,7 +15,7 @@
 @end
 
 @implementation CollectionViewController
-@synthesize collectionContainer;
+@synthesize collectionContainer, latestShape;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,6 +26,14 @@
     return self;
 }
 
+/*
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"presentCollectionWithNewShape"]) {
+        self.latestShape = sender;
+        NSLog(@"presentCollectionWithNewShape %@", sender);
+    }
+}
+*/
 - (void)viewWillAppear:(BOOL)animated {
     NSArray *clusters = [CollectionManager sharedInstance].clusters;
     CGRect f = CGRectMake(10, 10, 60, 400);

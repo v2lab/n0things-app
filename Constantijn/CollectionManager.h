@@ -13,12 +13,13 @@
 #import "Cluster.h"
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "ShapeRecord.h"
+#import "ISO8601DateFormatter.h"
 
 @protocol CollectionManagerDelegate <NSObject>
 
 @optional
 - (void)collectionLoadSucces;
-- (void)shapeSubmitSuccesObjectId:(NSString *)objectId;
+- (void)shapeSubmitSuccesObjectId:(Shape *)shape;
 - (void)connectionFailure:(NSError *)error;
 
 @end
@@ -32,6 +33,7 @@
     NSString *uuid;
     AmazonSimpleDBClient *simpleDBClient;
     NSOperationQueue *queue;
+    ISO8601DateFormatter *dateFormatter;
 }
 
 @property (atomic, readonly) NSArray *clusters;

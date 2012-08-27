@@ -50,6 +50,7 @@ static NSDictionary *shapeMapping;
     s.huMoments = shapeRecord.huMoments;
     s.defectsCount = shapeRecord.defectsCount;
     s.collectionId = uuid;
+    s.submittedDate = [[NSDate date] timeIntervalSince1970];
     [shapes addObject:s];
 
     [self classifyShape:s inClusters:self.clusters withWeights:self.currentGenerationWeights];
@@ -63,14 +64,16 @@ static NSDictionary *shapeMapping;
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Color" andValue:colorJSON andReplace:YES]];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"HuMoments" andValue:huMomentsJSON andReplace:YES]];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"DefectsCount" andValue:[[NSNumber numberWithInt:s.defectsCount] stringValue] andReplace:YES]];
+    [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"Timestamp" andValue:[dateFormatter stringFromDate:[NSDate date]] andReplace:YES]];
     SimpleDBPutAttributesRequest *req = [[SimpleDBPutAttributesRequest alloc] initWithDomainName:@"Shape" andItemName:s.id andAttributes:attributes];
     @try {
         [simpleDBClient putAttributes:req];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception putting aws items %@", [exception description]);
+#pragma warning ToDo handle AWS exceptions
     }
-    [delegate shapeSubmitSuccesObjectId:s.id];
+    [delegate shapeSubmitSuccesObjectId:s];
 }
 
 - (void)checkForNewGeneration {
@@ -223,6 +226,10 @@ static NSDictionary *shapeMapping;
 - (id)init {
     self = [super init];
     if (self) {
+        dateFormatter = [[ISO8601DateFormatter alloc] init];
+        NSLog(@"date: %@", [dateFormatter stringFromDate:[NSDate date]]);
+        dateFormatter.includeTime = YES;
+        NSLog(@"date: %@", [dateFormatter stringFromDate:[NSDate date]]);
         NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
         uuid = [defs stringForKey:@"uuid"];
         if (!uuid.length) {

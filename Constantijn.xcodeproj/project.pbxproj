@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D230E2215E1943B0003DC9D /* N0things.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */; };
+		3D04C4CB15EBD8BB00EA78DF /* N0things.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */; };
+		3D04C4D415EBD97700EA78DF /* Shape+CD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D04C4D315EBD97700EA78DF /* Shape+CD.m */; };
+		3D04C4DF15EBDCF900EA78DF /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D04C4DE15EBDCF900EA78DF /* Shape.m */; };
+		3D04C4E215EBDE7600EA78DF /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D04C4E115EBDE7200EA78DF /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */; };
 		3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D230E2C15E19E000003DC9D /* CoreData.framework */; };
 		3D3163A015E54E3100E76754 /* photo-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D31637915E54E3100E76754 /* photo-button-down.png */; };
@@ -38,7 +41,6 @@
 		3D332B3015D940D20065F9E6 /* ImageProcessing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3D332B2F15D940D20065F9E6 /* ImageProcessing.mm */; };
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
-		3D5C013715E3E52E00E4A80B /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C013615E3E52E00E4A80B /* Shape.m */; };
 		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
 		3D79D28815E5858700193CE7 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79D28715E5858700193CE7 /* Cluster.m */; };
 		3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79D28B15E594B100193CE7 /* ShapeView.m */; };
@@ -94,6 +96,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 2.xcdatamodel"; sourceTree = "<group>"; };
+		3D04C4D215EBD97600EA78DF /* Shape+CD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Shape+CD.h"; sourceTree = "<group>"; };
+		3D04C4D315EBD97700EA78DF /* Shape+CD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Shape+CD.m"; sourceTree = "<group>"; };
+		3D04C4DD15EBDCF900EA78DF /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		3D04C4DE15EBDCF900EA78DF /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
+		3D04C4E015EBDE7200EA78DF /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		3D04C4E115EBDE7200EA78DF /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = N0things.xcdatamodel; sourceTree = "<group>"; };
 		3D230E2915E19A430003DC9D /* ImageProcessingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessingOperation.h; sourceTree = "<group>"; };
 		3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessingOperation.m; sourceTree = "<group>"; };
@@ -132,8 +141,6 @@
 		3D5C010F15E27D9100E4A80B /* ShapeRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeRecord.m; sourceTree = "<group>"; };
 		3D5C011215E280DA00E4A80B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		3D5C012415E295E800E4A80B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		3D5C013515E3E52E00E4A80B /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
-		3D5C013615E3E52E00E4A80B /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
 		3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
 		3D79D28615E5858700193CE7 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
 		3D79D28715E5858700193CE7 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
@@ -218,8 +225,10 @@
 		3D230E1E15E194000003DC9D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3D5C013515E3E52E00E4A80B /* Shape.h */,
-				3D5C013615E3E52E00E4A80B /* Shape.m */,
+				3D04C4DD15EBDCF900EA78DF /* Shape.h */,
+				3D04C4DE15EBDCF900EA78DF /* Shape.m */,
+				3D04C4D215EBD97600EA78DF /* Shape+CD.h */,
+				3D04C4D315EBD97700EA78DF /* Shape+CD.m */,
 				3D79D28615E5858700193CE7 /* Cluster.h */,
 				3D79D28715E5858700193CE7 /* Cluster.m */,
 				3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */,
@@ -401,6 +410,8 @@
 				3D332B2F15D940D20065F9E6 /* ImageProcessing.mm */,
 				3D98A07715D99C140067BDE9 /* CollectionManager.h */,
 				3D98A07815D99C140067BDE9 /* CollectionManager.m */,
+				3D04C4E015EBDE7200EA78DF /* ISO8601DateFormatter.h */,
+				3D04C4E115EBDE7200EA78DF /* ISO8601DateFormatter.m */,
 				3D230E1E15E194000003DC9D /* Data */,
 				3DF1687E15D30D27003236BA /* Supporting Files */,
 			);
@@ -549,15 +560,17 @@
 				3D332B3015D940D20065F9E6 /* ImageProcessing.mm in Sources */,
 				3D98A07115D94B5C0067BDE9 /* StartViewController.m in Sources */,
 				3D98A07915D99C140067BDE9 /* CollectionManager.m in Sources */,
-				3D230E2215E1943B0003DC9D /* N0things.xcdatamodeld in Sources */,
 				3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */,
 				3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */,
-				3D5C013715E3E52E00E4A80B /* Shape.m in Sources */,
 				3D3163D015E576C100E76754 /* CollectionViewController.m in Sources */,
 				3D3163D315E5781300E76754 /* ClusterView.m in Sources */,
 				3D79D28815E5858700193CE7 /* Cluster.m in Sources */,
 				3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */,
 				3DCD0BC115E66F1200C6E817 /* ShapeRecordView.m in Sources */,
+				3D04C4CB15EBD8BB00EA78DF /* N0things.xcdatamodeld in Sources */,
+				3D04C4D415EBD97700EA78DF /* Shape+CD.m in Sources */,
+				3D04C4DF15EBDCF900EA78DF /* Shape.m in Sources */,
+				3D04C4E215EBDE7600EA78DF /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -693,9 +706,10 @@
 		3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */,
 				3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */,
 			);
-			currentVersion = 3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */;
+			currentVersion = 3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */;
 			path = N0things.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

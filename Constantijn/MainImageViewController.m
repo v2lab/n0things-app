@@ -9,6 +9,7 @@
 #import "MainImageViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageProcessingOperation.h"
+#import "CollectionViewController.h"
 
 #define ANIMATION_DURATION 1.0
 
@@ -25,10 +26,17 @@
 @synthesize submitButton;
 @synthesize submitIndicator, selectionBox, imageView;
 
-- (void)shapeSubmitSuccesObjectId:(NSString *)objectId {
-    NSLog(@"shapeSubmitSuccesObjectId %@", objectId);
+- (void)shapeSubmitSuccesObjectId:(Shape *)shape {
+    NSLog(@"shapeSubmitSuccesObjectId %@", shape);
     [submitIndicator stopAnimating];
-    [submitWaiting dismissWithClickedButtonIndex:0 animated:YES];
+    //[submitWaiting dismissWithClickedButtonIndex:0 animated:YES];
+    [self performSegueWithIdentifier:@"presentCollectionWithNewShape" sender:shape];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"presentCollectionWithNewShape"]) {
+        ((CollectionViewController *)segue.destinationViewController).latestShape = sender;
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -138,7 +146,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self.submitIndicator stopAnimating];
     if (buttonIndex != alertView.cancelButtonIndex) {
-        [self performSegueWithIdentifier:@"presentCollection" sender:nil];
+        [self performSegueWithIdentifier:@"presentCollectionWithNewShape" sender:nil];
     }
 }
 
@@ -154,9 +162,11 @@
 }
 
 - (IBAction)submitImage:(id)sender {
-    submitWaiting = [[UIAlertView alloc] initWithTitle:@"Submitting" message:@"Your image is being processed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"<debug>", nil];
+    //submitWaiting = [[UIAlertView alloc] initWithTitle:@"Submitting" message:@"Your image is being processed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"<debug>", nil];
     [self.submitIndicator startAnimating];
-    [submitWaiting show];
+    self.submitButton.hidden = YES;
+    self.imageView.userInteractionEnabled = NO;
+    //[submitWaiting show];
     self.navigationItem.prompt = nil;
     [[CollectionManager sharedInstance] submitShapeRecord:currentShapeRecord delegate:self];
 }
