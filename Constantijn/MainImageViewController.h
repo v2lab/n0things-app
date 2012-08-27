@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *titleImage;
 
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
+@property (strong, nonatomic) IBOutlet UIImageView *pleaseWaitImage;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
 
 - (IBAction)showCamera:(id)sender;

@@ -20,6 +20,7 @@
 
 @implementation MainImageViewController
 @synthesize titleImage;
+@synthesize pleaseWaitImage;
 @synthesize cameraButton;
 @synthesize submitButton;
 @synthesize submitIndicator, selectionBox, imageView;
@@ -44,6 +45,9 @@
         NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
         self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
         self.submitButton.hidden = NO;
+        self.pleaseWaitImage.hidden = YES;
+        self.imageView.userInteractionEnabled = YES;
+        [self.submitIndicator stopAnimating];
         currentShapeRecordView = [[ShapeRecordView alloc] initWithShapeRecord:currentShapeRecord];
         CGRect f;
         f.origin = CGPointZero;
@@ -55,7 +59,7 @@
         currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
         [self.view addSubview:currentShapeRecordView];
     } else {
-        NSLog(@"no contour found");
+        NSLog(@"no contour found"); //ToDO something
     }
 }
 
@@ -86,11 +90,12 @@
     [self dismissModalViewControllerAnimated: YES];
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
     self.cameraButton.hidden = YES;
+    self.imageView.userInteractionEnabled = YES;
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated: YES];
-    self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
-    self.cameraButton.hidden = YES;
+    //self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
+    //self.cameraButton.hidden = YES;
 }
 
 - (void)viewDidUnload
@@ -102,6 +107,7 @@
     [self setCameraButton:nil];
     [self setSubmitButton:nil];
     [self setTitleImage:nil];
+    [self setPleaseWaitImage:nil];
     [super viewDidUnload];
     queue = nil;
     // Release any retained subviews of the main view.
@@ -154,12 +160,20 @@
         CGRect r = CGRectMake(x, y, ABS(x1 - x2), ABS(y1 - y2));
         self.selectionBox.frame = r;
     } else if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"panGesture done %f,%f", p.x, p.y);
+        NSLog(@"panGesture done %f,%f %f,%f", self.selectionBox.frame.origin.x, self.selectionBox.frame.origin.y, self.selectionBox.frame.size.width, self.selectionBox.frame.size.height);
+        NSLog(@"photo size %f,%f", self.imageView.image.size.width, self.imageView.image.size.height);
+        self.titleImage.image = [UIImage imageNamed:@"title-detecting-shape"];
+        self.imageView.userInteractionEnabled = NO;
+        self.pleaseWaitImage.hidden = NO;
+        [self.submitIndicator startAnimating];
         CGRect r = self.selectionBox.frame;
         CGFloat scaleX = self.imageView.image.size.width / self.imageView.bounds.size.width;
         CGFloat scaleY = self.imageView.image.size.height / self.imageView.bounds.size.height;
         CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
-        r = CGRectMake(r.origin.x * scale, r.origin.y * scale, r.size.width * scale, r.size.height * scale);
+        CGFloat offsetX = (self.imageView.bounds.size.width * scale - self.imageView.image.size.width) / 2.;
+        CGFloat offsetY = (self.imageView.bounds.size.height * scale - self.imageView.image.size.height) / 2.;
+        r = CGRectMake(r.origin.x * scale - offsetX, r.origin.y * scale - offsetY, r.size.width * scale, r.size.height * scale);
+        NSLog(@"scaleX %f scaleY %f ofssetX %f offsetY %f", scaleX, scaleY, offsetX, offsetY);
         NSLog(@"asking contour detection on %f,%f %f,%f", r.origin.x, r.origin.y, r.size.width, r.size.height);
         ImageProcessingOperation *op = [[ImageProcessingOperation alloc] initWithImage:self.imageView.image selection:r];
         [op addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
