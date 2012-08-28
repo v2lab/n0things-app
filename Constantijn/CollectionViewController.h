@@ -10,8 +10,12 @@
 
 @interface CollectionViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIView *collectionContainer;
 @property (strong, nonatomic) NSString *latestShape;
+
+@property (strong, nonatomic) IBOutlet UIView *collectionContainer;
+@property (strong, nonatomic) IBOutlet UIScrollView *collectionScrollView;
+@property (strong, nonatomic) IBOutlet UIScrollView *clustersScrollView;
+@property (strong, nonatomic) IBOutlet UIPageControl *clustersPageControl;
 
 - (IBAction)backTapped:(id)sender;
 

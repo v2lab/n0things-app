@@ -11,6 +11,7 @@
 
 @interface ClusterView : UIView {
     Cluster *cluster;
+    UIScrollView *scrollView;
 }
 
 @property (nonatomic, strong) Cluster *cluster;

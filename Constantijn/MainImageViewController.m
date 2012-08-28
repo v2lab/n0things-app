@@ -16,15 +16,18 @@
 @interface MainImageViewController ()
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation;
+- (void)imageCaptured;
 
 @end
 
 @implementation MainImageViewController
+@synthesize capturePreview;
 @synthesize titleImage;
 @synthesize pleaseWaitImage;
 @synthesize cameraButton;
 @synthesize submitButton;
 @synthesize submitIndicator, selectionBox, imageView;
+@synthesize captureManager;
 
 - (void)shapeSubmitSuccesObjectId:(Shape *)shape {
     NSLog(@"shapeSubmitSuccesObjectId %@", shape);
@@ -88,9 +91,18 @@
     }
 }
 
+- (void)imageCaptured {
+    self.imageView.image = self.captureManager.stillImage;
+    self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
+    self.cameraButton.hidden = YES;
+    self.imageView.userInteractionEnabled = YES;
+    [self.captureManager.captureSession stopRunning];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCaptured) name:kImageCapturedSuccessfully object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
     self.selectionBox.layer.borderWidth = 3.;
     self.selectionBox.layer.borderColor = [UIColor colorWithWhite:1. alpha:.5].CGColor;
@@ -99,6 +111,18 @@
     self.selectionBox.layer.shadowOpacity = 0.5;
     queue = [[NSOperationQueue alloc] init];
     queue.maxConcurrentOperationCount = 1;
+	self.captureManager = [[CaptureSessionManager alloc] init];
+    
+	[[self captureManager] addVideoInput];
+    
+	[[self captureManager] addVideoPreviewLayer];
+	CGRect layerRect = self.capturePreview.layer.bounds;
+	[[[self captureManager] previewLayer] setBounds:layerRect];
+	[[[self captureManager] previewLayer] setPosition:CGPointMake(CGRectGetMidX(layerRect),
+                                                                  CGRectGetMidY(layerRect))];
+	[self.capturePreview.layer addSublayer:[[self captureManager] previewLayer]];
+    [[self captureManager] addStillImageOutput];
+	[[captureManager captureSession] startRunning];
 }
 - (void)viewWillAppear:(BOOL)animated {
     //[self showCamera:nil];
@@ -133,6 +157,7 @@
     [self setSubmitButton:nil];
     [self setTitleImage:nil];
     [self setPleaseWaitImage:nil];
+    [self setCapturePreview:nil];
     [super viewDidUnload];
     queue = nil;
     // Release any retained subviews of the main view.
@@ -151,6 +176,9 @@
 }
 
 - (IBAction)showCamera:(id)sender {
+    [self.captureManager captureStillImage];
+    return;
+    
     UIImagePickerController *cameraController = [[UIImagePickerController alloc] init];
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;

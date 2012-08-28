@@ -85,6 +85,10 @@
 		3DCF6AAF15EB9738006FBFB4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCF6AA515EB9738006FBFB4 /* Icon.png */; };
 		3DCF6AB015EB9738006FBFB4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DCF6AA615EB9738006FBFB4 /* Icon@2x.png */; };
 		3DCF6AB115EB9738006FBFB4 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 3DCF6AA715EB9738006FBFB4 /* iTunesArtwork@2x */; };
+		3DDC406715ED3F3D00AAFEFA /* CaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDC406615ED3F3D00AAFEFA /* CaptureSessionManager.m */; };
+		3DDC406A15ED408500AAFEFA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDC406915ED408500AAFEFA /* AVFoundation.framework */; };
+		3DDC406C15ED409000AAFEFA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDC406B15ED409000AAFEFA /* CoreMedia.framework */; };
+		3DDC406E15ED486C00AAFEFA /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDC406D15ED486B00AAFEFA /* ImageIO.framework */; };
 		3DF1687815D30D27003236BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687715D30D27003236BA /* UIKit.framework */; };
 		3DF1687A15D30D27003236BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687915D30D27003236BA /* Foundation.framework */; };
 		3DF1687C15D30D27003236BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF1687B15D30D27003236BA /* CoreGraphics.framework */; };
@@ -96,7 +100,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 2.xcdatamodel"; sourceTree = "<group>"; };
+		3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "N0things 2.xcdatamodel"; sourceTree = "<group>"; };
 		3D04C4D215EBD97600EA78DF /* Shape+CD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Shape+CD.h"; sourceTree = "<group>"; };
 		3D04C4D315EBD97700EA78DF /* Shape+CD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Shape+CD.m"; sourceTree = "<group>"; };
 		3D04C4DD15EBDCF900EA78DF /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
@@ -190,6 +194,11 @@
 		3DCF6AA515EB9738006FBFB4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		3DCF6AA615EB9738006FBFB4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		3DCF6AA715EB9738006FBFB4 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
+		3DDC406515ED3F3D00AAFEFA /* CaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureSessionManager.h; sourceTree = "<group>"; };
+		3DDC406615ED3F3D00AAFEFA /* CaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureSessionManager.m; sourceTree = "<group>"; };
+		3DDC406915ED408500AAFEFA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3DDC406B15ED409000AAFEFA /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		3DDC406D15ED486B00AAFEFA /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3DF1687315D30D27003236BA /* Constantijn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Constantijn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DF1687715D30D27003236BA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3DF1687915D30D27003236BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -210,6 +219,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DDC406E15ED486C00AAFEFA /* ImageIO.framework in Frameworks */,
+				3DDC406C15ED409000AAFEFA /* CoreMedia.framework in Frameworks */,
+				3DDC406A15ED408500AAFEFA /* AVFoundation.framework in Frameworks */,
 				3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */,
 				3DF1687815D30D27003236BA /* UIKit.framework in Frameworks */,
 				3DF1687A15D30D27003236BA /* Foundation.framework in Frameworks */,
@@ -355,6 +367,9 @@
 		3DF1686815D30D27003236BA = {
 			isa = PBXGroup;
 			children = (
+				3DDC406D15ED486B00AAFEFA /* ImageIO.framework */,
+				3DDC406B15ED409000AAFEFA /* CoreMedia.framework */,
+				3DDC406915ED408500AAFEFA /* AVFoundation.framework */,
 				3DF1687D15D30D27003236BA /* Constantijn */,
 				3DF1687615D30D27003236BA /* Frameworks */,
 				3DF1687415D30D27003236BA /* Products */,
@@ -393,6 +408,8 @@
 				3D98A07015D94B5C0067BDE9 /* StartViewController.m */,
 				3DF1688C15D30D27003236BA /* MainImageViewController.h */,
 				3DF1688D15D30D27003236BA /* MainImageViewController.m */,
+				3DDC406515ED3F3D00AAFEFA /* CaptureSessionManager.h */,
+				3DDC406615ED3F3D00AAFEFA /* CaptureSessionManager.m */,
 				3DCD0BBF15E66F1200C6E817 /* ShapeRecordView.h */,
 				3DCD0BC015E66F1200C6E817 /* ShapeRecordView.m */,
 				3D3163CE15E576C100E76754 /* CollectionViewController.h */,
@@ -571,6 +588,7 @@
 				3D04C4D415EBD97700EA78DF /* Shape+CD.m in Sources */,
 				3D04C4DF15EBDCF900EA78DF /* Shape.m in Sources */,
 				3D04C4E215EBDE7600EA78DF /* ISO8601DateFormatter.m in Sources */,
+				3DDC406715ED3F3D00AAFEFA /* CaptureSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

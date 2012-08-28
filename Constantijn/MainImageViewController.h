@@ -10,6 +10,7 @@
 #import "ImageProcessing.h"
 #import "CollectionManager.h"
 #import "ShapeRecordView.h"
+#import "CaptureSessionManager.h"
 
 @interface MainImageViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, CollectionManagerDelegate> {
     CGPoint selectionOrigin;
@@ -20,6 +21,7 @@
     ShapeRecordView *currentShapeRecordView;
 }
 
+@property (strong, nonatomic) IBOutlet UIView *capturePreview;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIView *selectionBox;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *submitIndicator;
@@ -28,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
 @property (strong, nonatomic) IBOutlet UIImageView *pleaseWaitImage;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
+
+@property (strong) CaptureSessionManager *captureManager;
 
 - (IBAction)showCamera:(id)sender;
 - (IBAction)submitImage:(id)sender;

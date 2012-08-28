@@ -9,13 +9,18 @@
 #import "CollectionViewController.h"
 #import "CollectionManager.h"
 #import "ClusterView.h"
+#import "ShapeView.h"
 
 @interface CollectionViewController ()
 
 @end
 
 @implementation CollectionViewController
-@synthesize collectionContainer, latestShape;
+@synthesize collectionScrollView;
+@synthesize clustersScrollView;
+@synthesize clustersPageControl;
+@synthesize latestShape;
+@synthesize collectionContainer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,13 +41,26 @@
 */
 - (void)viewWillAppear:(BOOL)animated {
     NSArray *clusters = [CollectionManager sharedInstance].clusters;
-    CGRect f = CGRectMake(10, 10, 60, 400);
+    //CGRect f = CGRectMake(10, 10, 60, 400);
+    CGFloat xOffset = 0;
+    /*
     for (Cluster *cluster in clusters) {
         ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
         clusterView.backgroundColor = [UIColor blueColor];
         clusterView.frame = f;
         [self.collectionContainer addSubview:clusterView];
         f.origin = CGPointMake(f.origin.x + 80, f.origin.y);
+    }
+     */
+    Cluster *cluster = [clusters lastObject];
+    self.clustersScrollView.contentSize = CGSizeMake(800,100);
+    for (int i = 0; i < 6; ++i) {
+        ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
+        //[clusterView sizeToFit];
+        clusterView.frame = CGRectMake(xOffset, 0., 80., self.collectionContainer.bounds.size.height);
+        [self.collectionContainer addSubview:clusterView];
+        ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
+        xOffset += 80;
     }
 }
 
@@ -54,6 +72,9 @@
 
 - (void)viewDidUnload
 {
+    [self setClustersPageControl:nil];
+    [self setClustersScrollView:nil];
+    [self setCollectionScrollView:nil];
     [self setCollectionContainer:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -65,7 +86,8 @@
 }
 
 - (IBAction)backTapped:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
