@@ -10,6 +10,7 @@
 #import "CollectionManager.h"
 #import "ClusterView.h"
 #import "ShapeView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface CollectionViewController ()
 
@@ -21,6 +22,23 @@
 @synthesize clustersPageControl;
 @synthesize latestShape;
 @synthesize collectionContainer;
+
+
+#pragma mark Scrolling and Paging of clusters
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat page = ceil(scrollView.contentOffset.x / scrollView.bounds.size.width);
+    clustersPageControl.currentPage = page;
+}
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self scrollViewDidEndDecelerating:scrollView];
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint scrollOffset = self.clustersScrollView.contentOffset;
+    collectionContainer.frame = CGRectMake(-scrollOffset.x, collectionContainer.frame.origin.y, scrollOffset.x + 320, collectionContainer.frame.size.height);
+}
+- (void)changePage:(id)sender {
+    [self.clustersScrollView setContentOffset:CGPointMake(self.clustersPageControl.currentPage * self.clustersScrollView.bounds.size.width, 0) animated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,15 +71,23 @@
     }
      */
     Cluster *cluster = [clusters lastObject];
-    self.clustersScrollView.contentSize = CGSizeMake(800,100);
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 11; ++i) {
         ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
         //[clusterView sizeToFit];
         clusterView.frame = CGRectMake(xOffset, 0., 80., self.collectionContainer.bounds.size.height);
         [self.collectionContainer addSubview:clusterView];
-        ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
+        UIView *clusterRepresentativeView = [[UIView alloc] initWithFrame:CGRectMake(xOffset, 0., 80., 80.)];
+        if (cluster.representative) {
+            ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
+            [clusterRepresentativeView addSubview:sv];
+        }
+        //clusterRepresentativeView.layer.borderWidth = 2.;
+        clusterRepresentativeView.backgroundColor = [UIColor colorWithHue:i / 8. saturation:1. brightness:1. alpha:.4];
+        [self.clustersScrollView addSubview:clusterRepresentativeView];
         xOffset += 80;
     }
+    self.clustersPageControl.numberOfPages = ceil(11. / 4.);
+    self.clustersScrollView.contentSize = CGSizeMake(self.clustersPageControl.numberOfPages * 4 * 80, 80);
 }
 
 - (void)viewDidLoad

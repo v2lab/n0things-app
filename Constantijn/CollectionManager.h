@@ -33,7 +33,7 @@
     NSString *uuid;
     AmazonSimpleDBClient *simpleDBClient;
     NSOperationQueue *queue;
-    ISO8601DateFormatter *dateFormatter;
+    NSDateFormatter *dateFormatter;
 }
 
 @property (atomic, readonly) NSArray *clusters;

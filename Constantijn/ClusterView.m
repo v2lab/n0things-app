@@ -57,8 +57,9 @@
      */
     int cnt = random() % 10;
     self.backgroundColor = [UIColor colorWithRed:cnt/15. green:0. blue:0. alpha:1.];
-    scrollView.contentSize = CGSizeMake(60., cnt * 50.);
-    CGFloat yOffset = (cnt - 1) * 50.;
+    CGFloat height = MAX(cnt * 50., scrollView.bounds.size.height - 20.);
+    scrollView.contentSize = CGSizeMake(60., height);
+    CGFloat yOffset = height - 50;
     for (int i = 0; i < cnt; ++i) {
         UILabel *v = [[UILabel alloc] initWithFrame:CGRectMake(0, yOffset, 60, 50)];
         v.text = [NSString stringWithFormat:@"%d", i];
@@ -73,7 +74,7 @@
         [self addSubview:shapeView];
     }
      */
-    [self setNeedsLayout];
+    //[self setNeedsLayout];
     [self setNeedsDisplay];
 }
 
@@ -83,6 +84,7 @@
 }
 
 - (void)layoutSubviews {
+    self.cluster = cluster;
 }
 
 /*

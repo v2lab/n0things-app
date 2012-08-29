@@ -226,10 +226,9 @@ static NSDictionary *shapeMapping;
 - (id)init {
     self = [super init];
     if (self) {
-        dateFormatter = [[ISO8601DateFormatter alloc] init];
-        NSLog(@"date: %@", [dateFormatter stringFromDate:[NSDate date]]);
-        dateFormatter.includeTime = YES;
-        NSLog(@"date: %@", [dateFormatter stringFromDate:[NSDate date]]);
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmssZZZ"];
+        
         NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
         uuid = [defs stringForKey:@"uuid"];
         if (!uuid.length) {

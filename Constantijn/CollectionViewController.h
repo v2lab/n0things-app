@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CollectionViewController : UIViewController
+@interface CollectionViewController : UIViewController <UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSString *latestShape;
 
@@ -18,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UIPageControl *clustersPageControl;
 
 - (IBAction)backTapped:(id)sender;
+- (IBAction)changePage:(id)sender;
 
 @end
