@@ -70,6 +70,7 @@
         if (cluster.representative) {
             ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
             [clusterRepresentativeView addSubview:sv];
+            sv.frame = CGRectInset(clusterRepresentativeView.bounds, 20, 20);
         } else {
             NSLog(@"no representative found for cluster %@", cluster.id);
         }
