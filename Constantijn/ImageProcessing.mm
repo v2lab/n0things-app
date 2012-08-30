@@ -12,6 +12,7 @@
 #include <opencv2/opencv.hpp>
 
 #include <algorithm>
+#include <math.h>
 
 @interface ImageProcessing ()
 
@@ -69,13 +70,16 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
         std::vector<int> from_to;
         // = { 0,2, 1,1, 2,0, 3,3 };
         if (afirst) {
+            NSLog(@"Converting from ARGB\n");
             from_to << 0<<3 << 1<<0 << 2<<1 << 3<<2;
         } else {
+            NSLog(@"Converting from RGBA\n");
             from_to << 0<<0 << 1<<1 << 2<<2 << 3<<3;
         }
         mixChannels( &cv_image, 1, outs, 2, from_to.data(), 4 );
         cv_image = rgb;
-    }
+    } else 
+        NSLog(@"Using image as RGB\n");
     
     /* convert selection rectangle to opencv */
     cv::Rect grab( CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) );
@@ -163,8 +167,8 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
     for (int i = 0; i < contour.size(); ++i) {
         [vertices addObject:
          [NSArray arrayWithObjects:
-          [NSNumber numberWithDouble:contour[i].x / scale + roi.x],
-          [NSNumber numberWithDouble:contour[i].y / scale + roi.y], 
+          [NSNumber numberWithInt: contour[i].x / scale + roi.x],
+          [NSNumber numberWithInt: contour[i].y / scale + roi.y], 
           nil]];
     }
     result.vertices = [NSArray arrayWithArray:vertices];
@@ -188,13 +192,25 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 }
 
 + (NSArray *)mapShapeRecord:(ShapeRecord *)shape withWeights:(NSArray *)weights {
-    //double weight1 = [[weights objectAtIndex:0] doubleValue];
-    
     NSMutableArray *result = [NSMutableArray array];
-    /* do your thing */
+    /* do your thing */    
+    std::vector<double> W(12);
+    for(int i=0; i<12; i++) 
+        W[i] = [[weights objectAtIndex: i] doubleValue];
+    
+    for(int i=0; i<7; i++) {
+        double v = [[shape.huMoments objectAtIndex: i] doubleValue];
+        [result addObject:[NSNumber numberWithDouble: W[i] * v]];
+    }
+    for(int i=0; i<3; i++) {
+        double v = [[shape.color objectAtIndex: i] doubleValue];
+        [result addObject:[NSNumber numberWithDouble: W[i+7] * v]];        
+    }
+    [result addObject:[NSNumber numberWithDouble: W[10] * log((double)[shape.vertices count] - 2.0)]];
+    [result addObject:[NSNumber numberWithDouble: W[11] * log((double) shape.defectsCount + 1.0)]];
+    
     
     /* add the objects to the mutable array*/
-    [result addObject:[NSNumber numberWithDouble:2.]];
     return [NSArray arrayWithArray:result];
 }
 
