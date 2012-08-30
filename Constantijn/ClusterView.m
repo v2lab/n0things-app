@@ -45,16 +45,17 @@
     for (UIView *sub in scrollView.subviews) {
         [sub removeFromSuperview];
     }
-    /*
-    scrollView.contentSize = CGSizeMake(60., cluster.shapes.count * 50);
-    CGFloat yOffset = (cluster.shapes.count - .5) * 50.;
+    int cnt = cluster.shapes.count;
+    CGFloat height = MAX(cnt * 50., scrollView.bounds.size.height - 20.);
+    scrollView.contentSize = CGSizeMake(60., height);
+    CGFloat yOffset = height - 50;
     for (Shape *shape in cluster.shapes) {
         ShapeView *shapeView = [[ShapeView alloc] initWithShape:shape];
         shapeView.center = CGPointMake(40, yOffset);
         yOffset -= 50;
         [scrollView addSubview:shapeView];
     }
-     */
+     /*
     int cnt = random() % 10;
     self.backgroundColor = [UIColor colorWithRed:cnt/15. green:0. blue:0. alpha:1.];
     CGFloat height = MAX(cnt * 50., scrollView.bounds.size.height - 20.);
@@ -67,6 +68,7 @@
         [scrollView addSubview:v];
         yOffset -= 50;
     }
+      */
     /*
     if (cluster.representative) {
         ShapeView *shapeView = [[ShapeView alloc] initWithShape:cluster.representative];

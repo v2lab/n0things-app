@@ -7,10 +7,14 @@
 //
 
 #import "Shape.h"
+#import "ShapeRecord.h"
 
 @interface Shape (CD)
 
 @property (nonatomic, retain) UIColor * color;
 @property (nonatomic, retain) NSArray * contour;
+@property (nonatomic, retain) ShapeRecord * shapeRecord;
+
+- (void)addShapeRecord;
 
 @end

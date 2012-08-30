@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIColor.h>
 //#import <UIKit/UIBezierPath.h>
-#import "Shape.h"
+#import "Shape+CD.h"
 #import "Cluster.h"
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "ShapeRecord.h"

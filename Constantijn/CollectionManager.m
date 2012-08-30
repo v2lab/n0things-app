@@ -7,7 +7,7 @@
 //
 
 #import "CollectionManager.h"
-#include <xlocale.h>                                    // for strptime_l
+//#include <xlocale.h>                                    // for strptime_l
 #import "Constants.h"
 #import "ImageProcessing.h"
 
@@ -28,7 +28,7 @@
 
 @implementation CollectionManager
 
-static NSDictionary *shapeMapping;
+//static NSDictionary *shapeMapping;
 
 @synthesize clusters, shapes, currentGenerationTimestamp, currentGenerationWeights, managedObjectContext;
 
@@ -91,7 +91,7 @@ static NSDictionary *shapeMapping;
                     if ([attr.name isEqualToString:@"Timestamp"]) {
                         timestamp = attr.value;
                     }
-                    if ([attr.name isEqualToString:@"Weights"]) {
+                    if ([attr.name isEqualToString:@"Mapping"]) {
                         NSError *err;
                         weights = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&err];
                     }
@@ -126,7 +126,14 @@ static NSDictionary *shapeMapping;
                         for (SimpleDBAttribute *attr in clusterItem.attributes) {
                             if ([attr.name isEqualToString:@"Representative"]) {
                                 cluster.representative = [representativeShapes objectForKey:attr.value];
-                            } 
+                            } else if ([attr.name isEqualToString:@"Centroid"]) {
+                                NSArray *centroid = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                                if ([centroid isKindOfClass:[NSArray class]]) {
+                                    cluster.centroid = centroid;
+                                }
+                            } else if ([attr.name isEqualToString:@"Generation"]) {
+                                cluster.generation = attr.value;
+                            }
                         }
                         [newClusters addObject:cluster];
                     }
@@ -134,6 +141,7 @@ static NSDictionary *shapeMapping;
 
                     //re-classify
                     for (Shape *shape in self.shapes) {
+                        [shape addShapeRecord];
                         [self classifyShape:shape inClusters:clusters withWeights:weights];
                     }
                     
@@ -185,10 +193,32 @@ static NSDictionary *shapeMapping;
 #pragma mark ToDo check whether shape already exists
     Shape *shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
     shape.id = item.name;
-    [self mapSimpleDBItem:item toObject:shape withMapping:shapeMapping];
+    //[self mapSimpleDBItem:item toObject:shape withMapping:shapeMapping];
     for (SimpleDBAttribute *attr in item.attributes) {
-        if ([attr.name isEqualToString:@"VertexCount"]) {
+        if ([attr.name isEqualToString:@"CollectionId"]) {
+            shape.collectionId = attr.value;
+        } else if ([attr.name isEqualToString:@"Timestamp"]) {
+                #pragma mark ToDo parse date (or just skip it)
+        } else if ([attr.name isEqualToString:@"Contour"]) {
+            NSArray *arr = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            if ([arr isKindOfClass:[NSArray class]]) {
+                shape.contour = arr;
+            }
+        } else if ([attr.name isEqualToString:@"VertexCount"]) {
             shape.vertexCount = [attr.value intValue];
+        } else if ([attr.name isEqualToString:@"Color"]) {
+            NSArray *arr = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            if ([arr isKindOfClass:[NSArray class]] && arr.count == 3) {
+                shape.color = [UIColor colorWithRed:[(NSNumber *)[arr objectAtIndex:0] floatValue] / 255.
+                                              green:[(NSNumber *)[arr objectAtIndex:1] floatValue]
+                                               blue:[(NSNumber *)[arr objectAtIndex:2] floatValue]
+                                              alpha:1.];
+            }
+        } else if ([attr.name isEqualToString:@"HuMoments"]) {
+            NSArray *arr = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            if ([arr isKindOfClass:[NSArray class]]) {
+                shape.huMoments = arr;
+            }
         } else if ([attr.name isEqualToString:@"DefectsCount"]) {
             shape.defectsCount = [attr.value intValue];
         }
@@ -239,7 +269,7 @@ static NSDictionary *shapeMapping;
         }
         self.currentGenerationTimestamp = [defs stringForKey:@"currentGenerationTimestamp"];
         self.currentGenerationWeights = [defs arrayForKey:@"currentGenerationWeights"];
-        shapeMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"contour", @"Contour", nil];
+        //shapeMapping = [NSDictionary dictionaryWithObjectsAndKeys:@"contour", @"Contour", nil];
         simpleDBClient = [[AmazonSimpleDBClient alloc] initWithAccessKey:AWS_KEY withSecretKey:AWS_SECRET];
         queue = [[NSOperationQueue alloc] init];
     }

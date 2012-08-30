@@ -61,15 +61,26 @@
     NSArray *clusters = [CollectionManager sharedInstance].clusters;
     //CGRect f = CGRectMake(10, 10, 60, 400);
     CGFloat xOffset = 0;
-    /*
     for (Cluster *cluster in clusters) {
         ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
-        clusterView.backgroundColor = [UIColor blueColor];
-        clusterView.frame = f;
+        //clusterView.backgroundColor = [UIColor blueColor];
+        clusterView.frame = CGRectMake(xOffset, 0., 80., self.collectionContainer.bounds.size.height);
         [self.collectionContainer addSubview:clusterView];
-        f.origin = CGPointMake(f.origin.x + 80, f.origin.y);
+        UIView *clusterRepresentativeView = [[UIView alloc] initWithFrame:CGRectMake(xOffset, 0., 80., 80.)];
+        if (cluster.representative) {
+            ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
+            [clusterRepresentativeView addSubview:sv];
+        } else {
+            NSLog(@"no representative found for cluster %@", cluster.id);
+        }
+        //clusterRepresentativeView.layer.borderWidth = 2.;
+        //clusterRepresentativeView.backgroundColor = [UIColor colorWithHue:i / 8. saturation:1. brightness:1. alpha:.4];
+        [self.clustersScrollView addSubview:clusterRepresentativeView];
+        xOffset += 80;
     }
-     */
+    self.clustersPageControl.numberOfPages = ceil(clusters.count / 4.);
+    self.clustersScrollView.contentSize = CGSizeMake(self.clustersPageControl.numberOfPages * 4 * 80, 80);
+    /*
     Cluster *cluster = [clusters lastObject];
     for (int i = 0; i < 11; ++i) {
         ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
@@ -88,6 +99,7 @@
     }
     self.clustersPageControl.numberOfPages = ceil(11. / 4.);
     self.clustersScrollView.contentSize = CGSizeMake(self.clustersPageControl.numberOfPages * 4 * 80, 80);
+     */
 }
 
 - (void)viewDidLoad
