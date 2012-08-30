@@ -191,8 +191,18 @@
 
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item {
 #pragma mark ToDo check whether shape already exists
-    Shape *shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
-    shape.id = item.name;
+    NSFetchRequest *req = [[NSFetchRequest alloc] init];
+    req.entity = [NSEntityDescription entityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+    req.predicate = [NSPredicate predicateWithFormat:@"id = %@", item.name];
+    req.fetchLimit = 1;
+    NSArray *fetch = [self.managedObjectContext executeFetchRequest:req error:nil];
+    Shape *shape;
+    if (fetch.count) {
+        shape = [fetch lastObject];
+    } else {
+        shape = [NSEntityDescription insertNewObjectForEntityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
+        shape.id = item.name;
+    }
     //[self mapSimpleDBItem:item toObject:shape withMapping:shapeMapping];
     for (SimpleDBAttribute *attr in item.attributes) {
         if ([attr.name isEqualToString:@"CollectionId"]) {
