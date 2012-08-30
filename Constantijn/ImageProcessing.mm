@@ -12,6 +12,7 @@
 #include <opencv2/opencv.hpp>
 
 #include <algorithm>
+#include <math.h>
 
 @interface ImageProcessing ()
 
@@ -191,13 +192,25 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 }
 
 + (NSArray *)mapShapeRecord:(ShapeRecord *)shape withWeights:(NSArray *)weights {
-    //double weight1 = [[weights objectAtIndex:0] doubleValue];
-    
     NSMutableArray *result = [NSMutableArray array];
-    /* do your thing */
+    /* do your thing */    
+    std::vector<double> W(12);
+    for(int i=0; i<12; i++) 
+        W[i] = [[weights objectAtIndex: i] doubleValue];
+    
+    for(int i=0; i<7; i++) {
+        double v = [[shape.huMoments objectAtIndex: i] doubleValue];
+        [result addObject:[NSNumber numberWithDouble: W[i] * v]];
+    }
+    for(int i=0; i<3; i++) {
+        double v = [[shape.color objectAtIndex: i] doubleValue];
+        [result addObject:[NSNumber numberWithDouble: W[i+7] * v]];        
+    }
+    [result addObject:[NSNumber numberWithDouble: W[10] * log((double)[shape.vertices count] - 2.0)]];
+    [result addObject:[NSNumber numberWithDouble: W[11] * log((double) shape.defectsCount + 1.0)]];
+    
     
     /* add the objects to the mutable array*/
-    [result addObject:[NSNumber numberWithDouble:2.]];
     return [NSArray arrayWithArray:result];
 }
 
