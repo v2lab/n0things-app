@@ -69,13 +69,16 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
         std::vector<int> from_to;
         // = { 0,2, 1,1, 2,0, 3,3 };
         if (afirst) {
+            NSLog(@"Converting from ARGB\n");
             from_to << 0<<3 << 1<<0 << 2<<1 << 3<<2;
         } else {
+            NSLog(@"Converting from RGBA\n");
             from_to << 0<<0 << 1<<1 << 2<<2 << 3<<3;
         }
         mixChannels( &cv_image, 1, outs, 2, from_to.data(), 4 );
         cv_image = rgb;
-    }
+    } else 
+        NSLog(@"Using image as RGB\n");
     
     /* convert selection rectangle to opencv */
     cv::Rect grab( CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) );
