@@ -19,6 +19,10 @@
     UIAlertView *submitWaiting;
     ShapeRecord *currentShapeRecord;
     ShapeRecordView *currentShapeRecordView;
+    AVAudioPlayer *audioSelectOk;
+    AVAudioPlayer *audioSelectError;
+    AVAudioPlayer *audioPhotoClick;
+    AVAudioPlayer *audioSendShape;
 }
 
 @property (strong, nonatomic) IBOutlet UIView *capturePreview;

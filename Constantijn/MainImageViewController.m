@@ -17,6 +17,7 @@
 
 - (void)contourDetectionDone:(ImageProcessingOperation *)operation;
 - (void)imageCaptured;
+- (AVAudioPlayer *)loadAudioPlayer:(NSString *)filename;
 
 @end
 
@@ -31,6 +32,7 @@
 
 - (void)shapeSubmitSuccesObjectId:(Shape *)shape {
     NSLog(@"shapeSubmitSuccesObjectId %@", shape);
+    [audioSendShape play];
     [submitIndicator stopAnimating];
     //[submitWaiting dismissWithClickedButtonIndex:0 animated:YES];
     [self performSegueWithIdentifier:@"presentCollectionWithNewShape" sender:shape];
@@ -53,7 +55,8 @@
     currentShapeRecord = operation.shapeRecord;
     [currentShapeRecordView removeFromSuperview];
     if (currentShapeRecord) {
-        NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
+        [audioSelectOk play];
+        //NSLog(@"finishedProcessingImage %@, %@", [currentShapeRecord.vertices description], currentShapeRecord.color);
         self.titleImage.image = [UIImage imageNamed:@"title-submit-shape"];
         self.submitButton.hidden = NO;
         self.pleaseWaitImage.hidden = YES;
@@ -78,11 +81,12 @@
         CGRect f1 = currentShapeRecordView.frame;
         f1.origin = CGPointZero;
         currentShapeRecordView.frame = f1;
-        currentShapeRecordView.transform = CGAffineTransformConcat(currentShapeRecordView.transform, CGAffineTransformMakeTranslation(offsetX, offsetY));
+        currentShapeRecordView.transform = CGAffineTransformConcat(currentShapeRecordView.transform, CGAffineTransformMakeTranslation(offsetX / scale, offsetY / scale));
         
         [self.view addSubview:currentShapeRecordView];
     } else {
         NSLog(@"no contour found"); //ToDO something
+        [audioSelectError play];
         self.selectionBox.layer.borderColor = [[UIColor redColor] colorWithAlphaComponent:.5].CGColor;
         self.imageView.userInteractionEnabled = YES;
         [self.submitIndicator stopAnimating];
@@ -99,9 +103,28 @@
     [self.captureManager.captureSession stopRunning];
 }
 
+- (AVAudioPlayer *)loadAudioPlayer:(NSString *)filename {
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:filename ofType: @"wav"];
+    if (!soundFilePath) {
+        return nil;
+    }
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    if (fileURL) {
+        AVAudioPlayer *result = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+        [result prepareToPlay];
+        return result;
+    }
+    return nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    audioPhotoClick = [self loadAudioPlayer:@"foto klik"];
+    audioSendShape = [self loadAudioPlayer:@"send shape"];
+    audioSelectOk = [self loadAudioPlayer:@"select shape success"];
+    audioSelectError = [self loadAudioPlayer:@"select shape error"];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCaptured) name:kImageCapturedSuccessfully object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
     self.selectionBox.layer.borderWidth = 3.;
@@ -248,7 +271,17 @@
 }
 
 - (IBAction)backTapped:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.cameraButton.hidden) {
+        self.imageView.image = nil;
+        self.titleImage.image = [UIImage imageNamed:@"title-take-picture"];
+        self.cameraButton.hidden = NO;
+        self.submitButton.hidden = YES;
+        self.pleaseWaitImage.hidden = YES;
+        self.imageView.userInteractionEnabled = NO;
+        [self.captureManager.captureSession startRunning];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

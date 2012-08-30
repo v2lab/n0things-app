@@ -50,7 +50,7 @@ static NSDictionary *shapeMapping;
     s.huMoments = shapeRecord.huMoments;
     s.defectsCount = shapeRecord.defectsCount;
     s.collectionId = uuid;
-    s.submittedDate = [[NSDate date] timeIntervalSince1970];
+    s.submittedDate = [[NSDate date] timeIntervalSinceReferenceDate];
     [shapes addObject:s];
 
     [self classifyShape:s inClusters:self.clusters withWeights:self.currentGenerationWeights];
@@ -122,6 +122,7 @@ static NSDictionary *shapeMapping;
                     for (SimpleDBItem *clusterItem in clusterResponse.items) {
                         Cluster *cluster = [NSEntityDescription insertNewObjectForEntityForName:@"Cluster" inManagedObjectContext:self.managedObjectContext];
                         cluster.id = clusterItem.name;
+                        //ToDo all info
                         for (SimpleDBAttribute *attr in clusterItem.attributes) {
                             if ([attr.name isEqualToString:@"Representative"]) {
                                 cluster.representative = [representativeShapes objectForKey:attr.value];

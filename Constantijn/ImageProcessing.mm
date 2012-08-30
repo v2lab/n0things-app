@@ -30,7 +30,7 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 
 + (ShapeRecord *)detectContourForImage:(UIImage *)img selection:(CGRect)rect {
     /* parameters (could be made configuarable) */
-    double grabMaxArea = 10000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
+    double grabMaxArea = 20000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
     double roiMargin = 5.0; // after scaling image patch is selection rect plus this margin (for bg detection)
     int denoise = 2; // small subcontours filter - before grab cut
     int simplicity = 3; // contour simplification - after grab cut
