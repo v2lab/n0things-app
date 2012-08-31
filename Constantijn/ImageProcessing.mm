@@ -1,4 +1,4 @@
- //
+//
 //  ImageProcessing.m
 //  Constantijn
 //
@@ -30,90 +30,58 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 @implementation ImageProcessing
 
 + (ShapeRecord *)detectContourForImage:(UIImage *)img selection:(CGRect)rect {
-    /* parameters (could be made configuarable) */
-    double grabMaxArea = 20000.0; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
-    double roiMargin = 5.0; // after scaling image patch is selection rect plus this margin (for bg detection)
-    int denoise = 2; // small subcontours filter - before grab cut
-    int simplicity = 3; // contour simplification - after grab cut
-    
-    /* wrap UIImage for opencv */
-    CGImageRef imageRef = img.CGImage;
-    
-    const int srcWidth        = CGImageGetWidth(imageRef);
-    const int srcHeight       = CGImageGetHeight(imageRef);
-    const int stride          = CGImageGetBytesPerRow(imageRef);
-    const int bitPerPixel     = CGImageGetBitsPerPixel(imageRef);
-    const int bitPerComponent = CGImageGetBitsPerComponent(imageRef);
-    const int numComponents   = bitPerPixel / bitPerComponent;
-    
-    CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
-    CFDataRef rawData = CGDataProviderCopyData(dataProvider);
-    
-    const UInt8 * dataPtr = CFDataGetBytePtr(rawData);
+    // parameters (could be made configuarable)
+    int grabMaxArea = 20000; // will scale image patch to be under this area, the smaller - the faster (but less accurate)
+    int roiMargin = 10; // after scaling image patch is selection rect plus this margin (for bg detection)
+    int denoise = 1; // small subcontours filter - before grab cut
+    int simplicity = 2; // contour simplification - after grab cut
 
-    assert(bitPerComponent == 8);
-    assert(numComponents == 3 || numComponents == 4);
-    cv::Mat cv_image(srcHeight, srcWidth, CV_8UC(numComponents), (void*)dataPtr, stride);
-    
-    if (numComponents == 4) {
-        // where is alpha?
-        CGImageAlphaInfo ainfo = CGImageGetAlphaInfo( imageRef );
-        bool afirst = ((ainfo == kCGImageAlphaPremultipliedFirst)
-                       || (ainfo == kCGImageAlphaFirst)
-                       || (ainfo == kCGImageAlphaNoneSkipFirst));
-        
-        // split the alpha off
-        cv::Mat rgb( cv_image.rows, cv_image.cols, CV_8UC3 );
-        cv::Mat alpha( cv_image.rows, cv_image.cols, CV_8UC1 );        
-        cv::Mat outs[] = { rgb, alpha };
-
-        std::vector<int> from_to;
-        // = { 0,2, 1,1, 2,0, 3,3 };
-        if (afirst) {
-            NSLog(@"Converting from ARGB\n");
-            from_to << 0<<3 << 1<<0 << 2<<1 << 3<<2;
-        } else {
-            NSLog(@"Converting from RGBA\n");
-            from_to << 0<<0 << 1<<1 << 2<<2 << 3<<3;
-        }
-        mixChannels( &cv_image, 1, outs, 2, from_to.data(), 4 );
-        cv_image = rgb;
-    } else 
-        NSLog(@"Using image as RGB\n");
-    
-    /* convert selection rectangle to opencv */
-    cv::Rect grab( CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) );
-    
-    // how large should the grab rect become?
-    // 40x40=1600, to get 1000: scale is sqrt(1600/1000) =
-    double area = grab.width*grab.height;
+    // We want to crop a portion around rect
+    int area = rect.size.width * rect.size.height;
     double scale = 1.0;
-    if (area > grabMaxArea) {
-        scale = std::sqrt(grabMaxArea / area);
+    if (grabMaxArea < area) {
+        scale = std::sqrt((double)grabMaxArea / (double)area);
     }
-    
-    // find roi so that it will have roiMargin around grab after scaling
-    int margin = std::min(2, (int)(roiMargin / scale));
-    cv::Rect roi(grab);
-    roi -= cv::Point(margin, margin);
-    roi += cv::Size(margin*2, margin*2);
-    roi &= cv::Rect( cv::Point(0,0), cv_image.size() );
-    
-    // now scale region of interest if necessary
-    cv::Mat selection( cv_image, roi );
-    cv::Mat scaled = selection;
-    if (area > grabMaxArea) {
-        cv::resize( selection, scaled, cv::Size(), scale, scale );
-    }
-    
-    // adjust the grab rectangle
-    cv::Rect grabInScaled(grab);
-    grabInScaled -= roi.tl();
-    grabInScaled.x *= scale;
-    grabInScaled.y *= scale;
-    grabInScaled.width *= scale;
-    grabInScaled.height *= scale;
-    
+    int margin = std::max(2, (int)((double)roiMargin / scale));
+    CGRect cropRect = CGRectIntersection(CGRectInset(rect, -margin , -margin ),
+                                         CGRectMake(0, 0, img.size.width, img.size.height));
+    NSLog( @"Crop\n  Rect: %.0f,%.0f,%.0f,%.0f\n  Area: %d\n  Scale: %.2f\n  Margin: %d\n  cropRect: %.0f,%.0f,%.0f,%.0f\n",
+          rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,
+          area,
+          scale,
+          margin,
+          cropRect.origin.x, cropRect.origin.y, cropRect.size.width, cropRect.size.height );
+
+    // we rely on OpenCV to allocate / deallocate memory for the cropped image...
+    cv::Mat scaled( cropRect.size.height * scale, cropRect.size.width * scale, CV_8UC4 ); // RGBA
+
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context =
+        CGBitmapContextCreate(scaled.data, scaled.cols, scaled.rows,
+                              8, 4 * scaled.cols, colorSpace,
+                              kCGImageAlphaNoneSkipLast | kCGBitmapByteOrder32Big);
+
+    CGColorSpaceRelease(colorSpace);
+
+    // crop, scale and convert to RGB
+    CGImageRef imageRef = img.CGImage;
+    CGImageRef cropPortion = CGImageCreateWithImageInRect(imageRef, cropRect);
+    CGContextDrawImage(context, CGRectMake(0, 0, scaled.cols, scaled.rows), cropPortion);
+    CGContextRelease(context);
+    CGImageRelease(cropPortion);
+
+    // convert RGBA->RGB
+    cv::cvtColor(scaled, scaled, CV_RGBA2RGB);
+
+    // now we need a cv::Rect corresponding to 'rect' in cropped, scaled image
+    cv::Rect grabInScaled(scale * (rect.origin.x - cropRect.origin.x),
+                          scale * (rect.origin.y - cropRect.origin.y),
+                          scale * rect.size.width,
+                          scale * rect.size.height);
+    NSLog( @"GrabCut input\n  Image size: %d,%d\n  Scaled rect: %d,%d,%d,%d\n",
+          scaled.cols, scaled.rows,
+          grabInScaled.x, grabInScaled.y, grabInScaled.width, grabInScaled.height);
+
     // perform grabcut
     cv::Mat mask, bgd, fgd;
     cv::grabCut( scaled, mask, grabInScaled, bgd, fgd, 1, cv::GC_INIT_WITH_RECT );
@@ -123,12 +91,12 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
                          denoise, cv::BORDER_CONSTANT, cv::Scalar(0) );
     // FIXME average color?
     cv::Scalar color = cv::mean( scaled, mask );
-    
+
     std::vector< std::vector< cv::Point > > contours;
     cv::findContours( mask, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_L1 );
     if (contours.size() < 1)
         return nil; // no contours found
-    
+
     // find the largest contour
     double max_area=0;
     int max_index=-1;
@@ -141,50 +109,48 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
     }
     if (max_index < 0)
         return nil; // no contour contains more than 2 vertices
-    
+
     std::vector<cv::Point> contour = contours[max_index];
-    
+
     if (simplicity && contour.size() > 10)
         cv::approxPolyDP(contour, contour, simplicity, true);
-    
+
     // find defects (just to know the count)
     std::vector< int > hull_idx;
     cv::convexHull( contour, hull_idx, false, true );
     std::vector< cv::Vec4i > defects;
     if ( contour.size() > 3 )
         cv::convexityDefects( contour, hull_idx, defects );
-    
+
     // find hu moments
     cv::Moments mom = cv::moments( contour );
     std::vector<double> hu; // 7 doubles
     cv::HuMoments( mom, hu );
-        
-    CFRelease(rawData);
-    
+
     NSMutableArray *vertices = [NSMutableArray array];
-        
+
     ShapeRecord *result = [[ShapeRecord alloc] init];
     for (int i = 0; i < contour.size(); ++i) {
         [vertices addObject:
          [NSArray arrayWithObjects:
-          [NSNumber numberWithInt: contour[i].x / scale + roi.x],
-          [NSNumber numberWithInt: contour[i].y / scale + roi.y], 
+          [NSNumber numberWithInt:contour[i].x / scale + cropRect.origin.x],
+          [NSNumber numberWithInt:contour[i].y / scale + cropRect.origin.y],
           nil]];
     }
     result.vertices = [NSArray arrayWithArray:vertices];
     result.color = [NSArray arrayWithObjects:
-                    [NSNumber numberWithInt:color[0]], 
-                    [NSNumber numberWithInt:color[1]], 
-                    [NSNumber numberWithInt:color[2]], 
+                    [NSNumber numberWithInt:color[0]],
+                    [NSNumber numberWithInt:color[1]],
+                    [NSNumber numberWithInt:color[2]],
                     nil];
     result.huMoments = [NSArray arrayWithObjects:
-                        [NSNumber numberWithDouble:hu[0]], 
-                        [NSNumber numberWithDouble:hu[1]], 
-                        [NSNumber numberWithDouble:hu[2]], 
-                        [NSNumber numberWithDouble:hu[3]], 
-                        [NSNumber numberWithDouble:hu[4]], 
-                        [NSNumber numberWithDouble:hu[5]], 
-                        [NSNumber numberWithDouble:hu[6]], 
+                        [NSNumber numberWithDouble:hu[0]],
+                        [NSNumber numberWithDouble:hu[1]],
+                        [NSNumber numberWithDouble:hu[2]],
+                        [NSNumber numberWithDouble:hu[3]],
+                        [NSNumber numberWithDouble:hu[4]],
+                        [NSNumber numberWithDouble:hu[5]],
+                        [NSNumber numberWithDouble:hu[6]],
                         nil];
     result.defectsCount = defects.size();
 
@@ -193,23 +159,23 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
 
 + (NSArray *)mapShapeRecord:(ShapeRecord *)shape withWeights:(NSArray *)weights {
     NSMutableArray *result = [NSMutableArray array];
-    /* do your thing */    
+    /* do your thing */
     std::vector<double> W(12);
-    for(int i=0; i<12; i++) 
+    for(int i=0; i<12; i++)
         W[i] = [[weights objectAtIndex: i] doubleValue];
-    
+
     for(int i=0; i<7; i++) {
         double v = [[shape.huMoments objectAtIndex: i] doubleValue];
         [result addObject:[NSNumber numberWithDouble: W[i] * v]];
     }
     for(int i=0; i<3; i++) {
         double v = [[shape.color objectAtIndex: i] doubleValue];
-        [result addObject:[NSNumber numberWithDouble: W[i+7] * v]];        
+        [result addObject:[NSNumber numberWithDouble: W[i+7] * v]];
     }
     [result addObject:[NSNumber numberWithDouble: W[10] * log((double)[shape.vertices count] - 2.0)]];
     [result addObject:[NSNumber numberWithDouble: W[11] * log((double) shape.defectsCount + 1.0)]];
-    
-    
+
+
     /* add the objects to the mutable array*/
     return [NSArray arrayWithArray:result];
 }
