@@ -158,6 +158,17 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     NSLog(@"picker finish %@", [info description]);
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    /* Make sure displayed image is always in default orientation, so it's easy on us
+       FIXME Jan do we have to release img here?
+     */
+    UIImageOrientation ori = img.imageOrientation;
+    if (ori != UIImageOrientationUp) {
+        UIGraphicsBeginImageContext(img.size);
+        [img drawInRect:CGRectMake(0, 0, img.size.width, img.size.height)];
+        img = UIGraphicsGetImageFromCurrentImageContext();
+    }
+    
     self.imageView.image = img;
     [self dismissModalViewControllerAnimated: YES];
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
@@ -241,13 +252,8 @@
         self.selectionBox.frame = r;
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"panGesture done %f,%f %f,%f", self.selectionBox.frame.origin.x, self.selectionBox.frame.origin.y, self.selectionBox.frame.size.width, self.selectionBox.frame.size.height);
-        CGRect scaledImageRect = CGRectMake(0, 0, 480., 480. * self.imageView.image.size.height / self.imageView.image.size.width);
-
-        UIGraphicsBeginImageContext(scaledImageRect.size);
-        [self.imageView.image drawInRect:scaledImageRect blendMode:kCGBlendModePlusDarker alpha:1];
-        UIImage *targetImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-
+        
+        UIImage *targetImage = self.imageView.image;
         NSLog(@"photo size %f,%f", targetImage.size.width, targetImage.size.height);
         self.titleImage.image = [UIImage imageNamed:@"title-detecting-shape"];
         self.imageView.userInteractionEnabled = NO;
