@@ -15,6 +15,7 @@
 }
 
 @property (nonatomic, strong) Shape *shape;
+@property (nonatomic, strong) UIBezierPath *path;
 
 - (id)initWithShape:(Shape *)shape;
 

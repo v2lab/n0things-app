@@ -44,11 +44,11 @@
 		3D3E345115EFA0CC007FB512 /* foto klik.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344C15EFA0CC007FB512 /* foto klik.wav */; };
 		3D3E345215EFA0CC007FB512 /* select shape error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344D15EFA0CC007FB512 /* select shape error.wav */; };
 		3D3E345315EFB041007FB512 /* select shape success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344B15EFA0CC007FB512 /* select shape success.wav */; };
+		3D3E345715EFE164007FB512 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E345615EFE164007FB512 /* Cluster.m */; };
 		3D3E63F615EEC1B500CA982A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E63F515EEC1B500CA982A /* AboutViewController.m */; };
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
 		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
-		3D79D28815E5858700193CE7 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79D28715E5858700193CE7 /* Cluster.m */; };
 		3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79D28B15E594B100193CE7 /* ShapeView.m */; };
 		3D79D29B15E630F200193CE7 /* button-about-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D79D28D15E630F200193CE7 /* button-about-down.png */; };
 		3D79D29C15E630F200193CE7 /* button-about-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D79D28E15E630F200193CE7 /* button-about-down@2x.png */; };
@@ -152,6 +152,9 @@
 		3D3E344B15EFA0CC007FB512 /* select shape success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "select shape success.wav"; sourceTree = "<group>"; };
 		3D3E344C15EFA0CC007FB512 /* foto klik.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "foto klik.wav"; sourceTree = "<group>"; };
 		3D3E344D15EFA0CC007FB512 /* select shape error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "select shape error.wav"; sourceTree = "<group>"; };
+		3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 4.xcdatamodel"; sourceTree = "<group>"; };
+		3D3E345515EFE164007FB512 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
+		3D3E345615EFE164007FB512 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D3E63F415EEC1B500CA982A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		3D3E63F515EEC1B500CA982A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		3D5C010E15E27D9100E4A80B /* ShapeRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeRecord.h; sourceTree = "<group>"; };
@@ -159,8 +162,6 @@
 		3D5C011215E280DA00E4A80B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		3D5C012415E295E800E4A80B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
-		3D79D28615E5858700193CE7 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
-		3D79D28715E5858700193CE7 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D79D28A15E594B100193CE7 /* ShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeView.h; sourceTree = "<group>"; };
 		3D79D28B15E594B100193CE7 /* ShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeView.m; sourceTree = "<group>"; };
 		3D79D28D15E630F200193CE7 /* button-about-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about-down.png"; sourceTree = "<group>"; };
@@ -255,9 +256,9 @@
 				3D04C4DE15EBDCF900EA78DF /* Shape.m */,
 				3D04C4D215EBD97600EA78DF /* Shape+CD.h */,
 				3D04C4D315EBD97700EA78DF /* Shape+CD.m */,
-				3D79D28615E5858700193CE7 /* Cluster.h */,
-				3D79D28715E5858700193CE7 /* Cluster.m */,
 				3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */,
+				3D3E345515EFE164007FB512 /* Cluster.h */,
+				3D3E345615EFE164007FB512 /* Cluster.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -615,7 +616,6 @@
 				3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */,
 				3D3163D015E576C100E76754 /* CollectionViewController.m in Sources */,
 				3D3163D315E5781300E76754 /* ClusterView.m in Sources */,
-				3D79D28815E5858700193CE7 /* Cluster.m in Sources */,
 				3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */,
 				3DCD0BC115E66F1200C6E817 /* ShapeRecordView.m in Sources */,
 				3D04C4CB15EBD8BB00EA78DF /* N0things.xcdatamodeld in Sources */,
@@ -624,6 +624,7 @@
 				3D04C4E215EBDE7600EA78DF /* ISO8601DateFormatter.m in Sources */,
 				3DDC406715ED3F3D00AAFEFA /* CaptureSessionManager.m in Sources */,
 				3D3E63F615EEC1B500CA982A /* AboutViewController.m in Sources */,
+				3D3E345715EFE164007FB512 /* Cluster.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,9 +762,10 @@
 			children = (
 				3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */,
 				3DBFB1F215EE5FEE00867BF6 /* N0things 3.xcdatamodel */,
+				3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */,
 				3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */,
 			);
-			currentVersion = 3DBFB1F215EE5FEE00867BF6 /* N0things 3.xcdatamodel */;
+			currentVersion = 3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */;
 			path = N0things.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

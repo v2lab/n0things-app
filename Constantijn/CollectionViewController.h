@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Shape.h"
 
 @interface CollectionViewController : UIViewController <UIScrollViewDelegate>
 
-@property (strong, nonatomic) NSString *latestShape;
+@property (strong, nonatomic) Shape *latestShape;
 
 @property (strong, nonatomic) IBOutlet UIView *collectionContainer;
 @property (strong, nonatomic) IBOutlet UIScrollView *collectionScrollView;

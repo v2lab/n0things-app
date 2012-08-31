@@ -7,6 +7,7 @@
 //
 
 #import "ShapeView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ShapeView ()
 
@@ -16,7 +17,7 @@
 
 @implementation ShapeView
 
-@synthesize shape;
+@synthesize shape, path;
 
 - (CGPoint)pointForArray:(NSArray *)arr {
     int x = [(NSNumber *)[arr objectAtIndex:0] floatValue];
@@ -51,14 +52,13 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect pathBounds = path.bounds;
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(-pathBounds.origin.x, -pathBounds.origin.y);
-    [path applyTransform:translate];
-    CGFloat scaleX = self.bounds.size.height / pathBounds.size.height;
-    CGFloat scaleY = self.bounds.size.width / pathBounds.size.width;
+    CGFloat scaleX = self.bounds.size.height / path.bounds.size.height;
+    CGFloat scaleY = self.bounds.size.width / path.bounds.size.width;
     CGFloat scaleFactor = MIN(scaleX, scaleY);
     CGAffineTransform scale = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
     [path applyTransform:scale];
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
+    [path applyTransform:translate];
     
     [shape.color setFill];
     [[UIColor blackColor] setStroke];

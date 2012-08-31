@@ -53,6 +53,7 @@
     s.submittedDate = [[NSDate date] timeIntervalSinceReferenceDate];
     [shapes addObject:s];
 
+    s.shapeRecord = shapeRecord;
     [self classifyShape:s inClusters:self.clusters withWeights:self.currentGenerationWeights];
     NSError *err;
     [self.managedObjectContext save:&err];

@@ -9,10 +9,11 @@
 #import "ClusterView.h"
 #import "Shape.h"
 #import "ShapeView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation ClusterView
 
-@synthesize cluster;
+@synthesize cluster, latestShape;
 
 - (id)init {
     self = [super init];
@@ -33,7 +34,7 @@
         scrollView = [[UIScrollView alloc] init];
         scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         scrollView.frame = CGRectMake(0, 0, 80, self.bounds.size.height);
-        scrollView.contentInset = UIEdgeInsetsMake(10., 10., 10., 10.);
+        scrollView.contentInset = UIEdgeInsetsMake(10., 10., 0., 10.);
         scrollView.showsHorizontalScrollIndicator = YES;
         [self addSubview:scrollView];
         self.cluster = _cluster;
@@ -46,13 +47,32 @@
         [sub removeFromSuperview];
     }
     int cnt = cluster.shapes.count;
-    CGFloat height = MAX(cnt * 50., scrollView.bounds.size.height - 20.);
+    CGFloat height = MAX((cnt - 1) * 50., scrollView.bounds.size.height - 33);
     scrollView.contentSize = CGSizeMake(60., height);
-    CGFloat yOffset = height - 50;
+    CGFloat yOffset = height;// - 50;
     for (Shape *shape in cluster.shapes) {
         ShapeView *shapeView = [[ShapeView alloc] initWithShape:shape];
-        shapeView.center = CGPointMake(40, yOffset);
+        shapeView.center = CGPointMake(30, yOffset);
         yOffset -= 50;
+        if (shape == latestShape) {
+            //shapeView.backgroundColor = [UIColor redColor];
+            UIImageView *plus1View = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback-+1"]];
+            plus1View.frame = CGRectMake(0, yOffset - 30, 60, 60);
+            plus1View.contentMode = UIViewContentModeCenter;
+            [scrollView addSubview:plus1View];
+            /*
+            [UIView animateWithDuration:1. delay:0. options:UIViewAnimationOptionAutoreverse animations:^{
+                shapeView.path
+            } completion:^(BOOL finished) {
+                
+            }];
+             */
+            shapeView.layer.shadowColor = [UIColor yellowColor].CGColor;
+            shapeView.layer.shadowRadius = 8.;
+            shapeView.layer.shadowOpacity = .8;
+            shapeView.layer.shadowOffset = CGSizeMake(0., 0.);
+            yOffset -= 50;
+        }
         [scrollView addSubview:shapeView];
     }
      /*

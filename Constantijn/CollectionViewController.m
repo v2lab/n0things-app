@@ -58,13 +58,21 @@
 }
 */
 - (void)viewWillAppear:(BOOL)animated {
+    Cluster *latestCluster = nil;
+    if (latestShape) {
+        latestCluster = latestShape.cluster;
+    }
     NSArray *clusters = [CollectionManager sharedInstance].clusters;
     //CGRect f = CGRectMake(10, 10, 60, 400);
     CGFloat xOffset = 0;
+    self.clustersPageControl.numberOfPages = ceil(clusters.count / 4.);
+    self.clustersScrollView.contentSize = CGSizeMake(self.clustersPageControl.numberOfPages * 4 * 80, 80);
     for (Cluster *cluster in clusters) {
         ClusterView *clusterView = [[ClusterView alloc] initWithCluster:cluster];
+        clusterView.latestShape = self.latestShape;
         //clusterView.backgroundColor = [UIColor blueColor];
         clusterView.frame = CGRectMake(xOffset, 0., 80., self.collectionContainer.bounds.size.height);
+        //clusterView.layer.borderWidth = 1.;
         [self.collectionContainer addSubview:clusterView];
         UIView *clusterRepresentativeView = [[UIView alloc] initWithFrame:CGRectMake(xOffset, 0., 80., 80.)];
         if (cluster.representative) {
@@ -77,10 +85,13 @@
         //clusterRepresentativeView.layer.borderWidth = 2.;
         //clusterRepresentativeView.backgroundColor = [UIColor colorWithHue:i / 8. saturation:1. brightness:1. alpha:.4];
         [self.clustersScrollView addSubview:clusterRepresentativeView];
+        if (cluster == latestShape.cluster) {
+            self.clustersScrollView.contentOffset = CGPointMake(floor(xOffset / 320) * 320, 0);
+            [self scrollViewDidScroll:self.clustersScrollView];
+            self.clustersPageControl.currentPage = floor(xOffset / 320);
+        }
         xOffset += 80;
     }
-    self.clustersPageControl.numberOfPages = ceil(clusters.count / 4.);
-    self.clustersScrollView.contentSize = CGSizeMake(self.clustersPageControl.numberOfPages * 4 * 80, 80);
     /*
     Cluster *cluster = [clusters lastObject];
     for (int i = 0; i < 11; ++i) {

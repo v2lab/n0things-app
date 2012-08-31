@@ -15,6 +15,7 @@
 }
 
 @property (nonatomic, strong) Cluster *cluster;
+@property (nonatomic, strong) Shape *latestShape;
 
 - (id)initWithCluster:(Cluster *)cluster;
 
