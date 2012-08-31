@@ -158,6 +158,17 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     NSLog(@"picker finish %@", [info description]);
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    /* Make sure displayed image is always in default orientation, so it's easy on us
+       FIXME Jan do we have to release img here?
+     */
+    UIImageOrientation ori = img.imageOrientation;
+    if (ori != UIImageOrientationUp) {
+        UIGraphicsBeginImageContext(img.size);
+        [img drawInRect:CGRectMake(0, 0, img.size.width, img.size.height)];
+        img = UIGraphicsGetImageFromCurrentImageContext();
+    }
+    
     self.imageView.image = img;
     [self dismissModalViewControllerAnimated: YES];
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
