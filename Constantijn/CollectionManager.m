@@ -32,6 +32,14 @@
 
 @synthesize clusters, shapes, currentGenerationTimestamp, currentGenerationWeights, managedObjectContext;
 
+- (void)dumpClusterCounts {
+    NSString *result = @"";
+    for (Cluster *cluster in self.clusters) {
+        result = [result stringByAppendingFormat:@"%d,", cluster.shapes.count];
+    }
+    NSLog(@"ClusterCounts: %@", result);
+}
+
 - (void)submitShapeRecord:(ShapeRecord *)shapeRecord delegate:(id<CollectionManagerDelegate>)delegate {
 #pragma mark ToDo put this in an NSOperation
     NSLog(@"submitShapeRecord for uuid %@", uuid);
@@ -54,9 +62,11 @@
     [shapes addObject:s];
 
     s.shapeRecord = shapeRecord;
+    [self dumpClusterCounts];
     [self classifyShape:s inClusters:self.clusters withWeights:self.currentGenerationWeights];
     NSError *err;
     [self.managedObjectContext save:&err];
+    [self dumpClusterCounts];
 
     NSMutableArray *attributes = [NSMutableArray array];
     [attributes addObject:[[SimpleDBReplaceableAttribute alloc] initWithName:@"CollectionId" andValue:uuid andReplace:YES]];
@@ -80,7 +90,7 @@
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
         @try {
-            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
+            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp > '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
             SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
             SimpleDBSelectResponse *resp = [simpleDBClient select:req];
             NSLog(@"req: %@ \nresponse: %@", req, resp);
@@ -177,6 +187,7 @@
         }
     }
     shape.cluster = closestCluster;
+    //[closestCluster addShapesObject:shape];
     return shape.cluster;
 }
 

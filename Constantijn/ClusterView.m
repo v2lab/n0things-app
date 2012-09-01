@@ -59,6 +59,7 @@
             UIImageView *plus1View = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback-+1"]];
             plus1View.frame = CGRectMake(0, yOffset - 30, 60, 60);
             plus1View.contentMode = UIViewContentModeCenter;
+            plus1View.alpha = 0.;
             [scrollView addSubview:plus1View];
             /*
             [UIView animateWithDuration:1. delay:0. options:UIViewAnimationOptionAutoreverse animations:^{
@@ -71,6 +72,17 @@
             shapeView.layer.shadowRadius = 8.;
             shapeView.layer.shadowOpacity = .8;
             shapeView.layer.shadowOffset = CGSizeMake(0., 0.);
+            shapeView.transform = CGAffineTransformMakeScale(.1, .1);
+            shapeView.alpha = 0.;
+            [UIView animateWithDuration:.5 delay:1. options:UIViewAnimationOptionCurveEaseOut animations:^{
+                shapeView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+                shapeView.alpha = 1.;
+            } completion:^(BOOL finished) {
+                plus1View.alpha = 1.;
+                [UIView animateWithDuration:.2 animations:^{
+                    shapeView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                }];
+            }];
             yOffset -= 50;
         }
         [scrollView addSubview:shapeView];

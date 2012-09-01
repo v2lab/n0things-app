@@ -13,7 +13,6 @@
 #import "Cluster.h"
 #import <AWSiOSSDK/SimpleDB/AmazonSimpleDBClient.h>
 #import "ShapeRecord.h"
-#import "ISO8601DateFormatter.h"
 
 @protocol CollectionManagerDelegate <NSObject>
 

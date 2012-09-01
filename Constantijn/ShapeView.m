@@ -33,6 +33,7 @@
         self.bounds = CGRectMake(0, 0, 40, 40);
         [self addObserver:self forKeyPath:@"shape" options:0 context:NULL];
         self.shape = _shape;
+        self.clipsToBounds = NO;
     }
     return self;
 }
@@ -54,7 +55,7 @@
 {
     CGFloat scaleX = self.bounds.size.height / path.bounds.size.height;
     CGFloat scaleY = self.bounds.size.width / path.bounds.size.width;
-    CGFloat scaleFactor = MIN(scaleX, scaleY);
+    CGFloat scaleFactor = MIN(scaleX, scaleY) * 0.95;
     CGAffineTransform scale = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
     [path applyTransform:scale];
     CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);

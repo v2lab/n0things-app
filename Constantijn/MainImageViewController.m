@@ -67,14 +67,18 @@
         //f.origin = CGPointZero;
         //f.size = imageView.image.size;
         
-        CGRect scaledImageRect = CGRectMake(0, 0, 480., 480. * self.imageView.image.size.height / self.imageView.image.size.width);
-
-        CGFloat scaleX = scaledImageRect.size.width / self.imageView.bounds.size.width;
-        CGFloat scaleY = scaledImageRect.size.height / self.imageView.bounds.size.height;
+        //CGRect scaledImageRect = CGRectMake(0, 0, 480., 480. * self.imageView.image.size.height / self.imageView.image.size.width);
+        CGSize scaledImageSize = self.imageView.image.size;
+        
+        CGFloat scaleX = scaledImageSize.width / self.imageView.bounds.size.width;
+        CGFloat scaleY = scaledImageSize.height / self.imageView.bounds.size.height;
         CGFloat scale = MIN(scaleX, scaleY); // because image is set to aspect fill
-        CGFloat offsetX = (self.imageView.bounds.size.width * scale - scaledImageRect.size.width) / 2.;
-        CGFloat offsetY = (self.imageView.bounds.size.height * scale - scaledImageRect.size.height) / 2.;
-        currentShapeRecordView.frame = scaledImageRect;
+        CGFloat offsetX = (self.imageView.bounds.size.width * scale - scaledImageSize.width) / 2.;
+        CGFloat offsetY = (self.imageView.bounds.size.height * scale - scaledImageSize.height) / 2.;
+        CGRect f;
+        f.origin = CGPointZero;
+        f.size = scaledImageSize;
+        currentShapeRecordView.frame = f;
         //currentShapeRecordView.layer.anchorPoint = CGPointZero;
         currentShapeRecordView.userInteractionEnabled = NO;
         currentShapeRecordView.transform = CGAffineTransformMakeScale(1./scale, 1./scale);
@@ -254,6 +258,13 @@
         NSLog(@"panGesture done %f,%f %f,%f", self.selectionBox.frame.origin.x, self.selectionBox.frame.origin.y, self.selectionBox.frame.size.width, self.selectionBox.frame.size.height);
         
         UIImage *targetImage = self.imageView.image;
+        UIImageOrientation ori = targetImage.imageOrientation;
+        if (ori != UIImageOrientationUp) {
+            UIGraphicsBeginImageContext(targetImage.size);
+            [targetImage drawInRect:CGRectMake(0, 0, targetImage.size.width, targetImage.size.height)];
+            targetImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
         NSLog(@"photo size %f,%f", targetImage.size.width, targetImage.size.height);
         self.titleImage.image = [UIImage imageNamed:@"title-detecting-shape"];
         self.imageView.userInteractionEnabled = NO;
@@ -284,6 +295,9 @@
         self.submitButton.hidden = YES;
         self.pleaseWaitImage.hidden = YES;
         self.imageView.userInteractionEnabled = NO;
+        self.selectionBox.hidden = YES;
+        [currentShapeRecordView removeFromSuperview];
+        currentShapeRecordView = nil;
         [self.captureManager.captureSession startRunning];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
