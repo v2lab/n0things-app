@@ -74,7 +74,7 @@
             shapeView.layer.shadowOffset = CGSizeMake(0., 0.);
             shapeView.transform = CGAffineTransformMakeScale(.1, .1);
             shapeView.alpha = 0.;
-            [UIView animateWithDuration:.5 delay:1. options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [UIView animateWithDuration:.5 delay:.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 shapeView.transform = CGAffineTransformMakeScale(1.2, 1.2);
                 shapeView.alpha = 1.;
             } completion:^(BOOL finished) {
