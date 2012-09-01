@@ -49,14 +49,12 @@
     return self;
 }
 
-/*
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"presentCollectionWithNewShape"]) {
-        self.latestShape = sender;
-        NSLog(@"presentCollectionWithNewShape %@", sender);
+- (void)viewDidAppear:(BOOL)animated {
+    for (ClusterView *v in self.collectionContainer.subviews) {
+        [v flashScrollIndicators];
     }
 }
-*/
+
 - (void)viewWillAppear:(BOOL)animated {
     Cluster *latestCluster = nil;
     if (latestShape) {

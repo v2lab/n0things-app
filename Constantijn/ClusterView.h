@@ -12,11 +12,13 @@
 @interface ClusterView : UIView {
     Cluster *cluster;
     UIScrollView *scrollView;
+    UIView *containerView;
 }
 
 @property (nonatomic, strong) Cluster *cluster;
 @property (nonatomic, strong) Shape *latestShape;
 
 - (id)initWithCluster:(Cluster *)cluster;
+- (void)flashScrollIndicators;
 
 @end

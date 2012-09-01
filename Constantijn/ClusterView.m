@@ -15,6 +15,10 @@
 
 @synthesize cluster, latestShape;
 
+- (void)flashScrollIndicators {
+    [scrollView flashScrollIndicators];
+}
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -34,22 +38,25 @@
         scrollView = [[UIScrollView alloc] init];
         scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         scrollView.frame = CGRectMake(0, 0, 80, self.bounds.size.height);
-        scrollView.contentInset = UIEdgeInsetsMake(10., 10., 0., 10.);
+        scrollView.contentInset = UIEdgeInsetsMake(0., 10., 0., 10.);
         scrollView.showsHorizontalScrollIndicator = YES;
         [self addSubview:scrollView];
+        containerView = [[UIView alloc] init];
+        [scrollView addSubview:containerView];
         self.cluster = _cluster;
     }
     return self;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    for (UIView *sub in scrollView.subviews) {
+    for (UIView *sub in [containerView.subviews copy]) {
         [sub removeFromSuperview];
     }
     int cnt = cluster.shapes.count;
-    CGFloat height = MAX((cnt - 1) * 50., scrollView.bounds.size.height - 33);
+    CGFloat height = MAX((cnt) * 50. + 55., scrollView.bounds.size.height);
     scrollView.contentSize = CGSizeMake(60., height);
-    CGFloat yOffset = height;// - 50;
+    containerView.frame = CGRectMake(0, 0, 60, height);
+    CGFloat yOffset = height - 33.;
     for (Shape *shape in cluster.shapes) {
         ShapeView *shapeView = [[ShapeView alloc] initWithShape:shape];
         shapeView.center = CGPointMake(30, yOffset);
@@ -60,7 +67,7 @@
             plus1View.frame = CGRectMake(0, yOffset - 30, 60, 60);
             plus1View.contentMode = UIViewContentModeCenter;
             plus1View.alpha = 0.;
-            [scrollView addSubview:plus1View];
+            [containerView addSubview:plus1View];
             /*
             [UIView animateWithDuration:1. delay:0. options:UIViewAnimationOptionAutoreverse animations:^{
                 shapeView.path
@@ -85,7 +92,7 @@
             }];
             yOffset -= 50;
         }
-        [scrollView addSubview:shapeView];
+        [containerView addSubview:shapeView];
     }
      /*
     int cnt = random() % 10;
