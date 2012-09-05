@@ -32,7 +32,6 @@
 
 - (void)shapeSubmitSuccesObjectId:(Shape *)shape {
     NSLog(@"shapeSubmitSuccesObjectId %@", shape);
-    [audioSendShape play];
     [submitIndicator stopAnimating];
     //[submitWaiting dismissWithClickedButtonIndex:0 animated:YES];
     [self performSegueWithIdentifier:@"presentCollectionWithNewShape" sender:shape];
@@ -104,6 +103,13 @@
     self.titleImage.image = [UIImage imageNamed:@"title-select-shape"];
     self.cameraButton.hidden = YES;
     self.imageView.userInteractionEnabled = YES;
+    [UIView animateWithDuration:.5 delay:.1 options:0 animations:^{
+        self.selectShapePopup.alpha = 1.;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:.5 delay:.5 options:0 animations:^{
+            self.selectShapePopup.alpha = 0.;
+        } completion:NULL];
+    }];
     [self.captureManager.captureSession stopRunning];
 }
 
@@ -127,8 +133,10 @@
     audioPhotoClick = [self loadAudioPlayer:@"foto klik"];
     audioSendShape = [self loadAudioPlayer:@"send shape"];
     audioSelectOk = [self loadAudioPlayer:@"select shape success"];
-    audioSelectError = [self loadAudioPlayer:@"select shape error"];
+    audioSelectError = [self loadAudioPlayer:@"error selection v2"];
 
+    self.selectShapePopup.alpha = 0.;
+    self.selectShapePopup.layer.cornerRadius = 5.;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCaptured) name:kImageCapturedSuccessfully object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
     self.selectionBox.layer.borderWidth = 3.;
@@ -196,6 +204,7 @@
     [self setTitleImage:nil];
     [self setPleaseWaitImage:nil];
     [self setCapturePreview:nil];
+    [self setSelectShapePopup:nil];
     [super viewDidUnload];
     queue = nil;
     // Release any retained subviews of the main view.
@@ -214,6 +223,7 @@
 }
 
 - (IBAction)showCamera:(id)sender {
+    self.cameraButton.enabled = NO;
     [self.captureManager captureStillImage];
     return;
     
@@ -230,6 +240,7 @@
 - (IBAction)submitImage:(id)sender {
     //submitWaiting = [[UIAlertView alloc] initWithTitle:@"Submitting" message:@"Your image is being processed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"<debug>", nil];
     [self.submitIndicator startAnimating];
+    [audioSendShape play];
     self.submitButton.hidden = YES;
     self.imageView.userInteractionEnabled = NO;
     //[submitWaiting show];
@@ -289,6 +300,7 @@
 
 - (IBAction)backTapped:(id)sender {
     if (self.cameraButton.hidden) {
+        self.cameraButton.enabled = YES;
         self.imageView.image = nil;
         self.titleImage.image = [UIImage imageNamed:@"title-take-picture"];
         self.cameraButton.hidden = NO;

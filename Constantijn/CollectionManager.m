@@ -148,8 +148,11 @@
                         }
                         [newClusters addObject:cluster];
                     }
+                    for (NSManagedObject *obj in self.clusters) {
+                        [self.managedObjectContext deleteObject:obj];
+                    }
                     self.clusters = [NSArray arrayWithArray:newClusters];
-
+                    
                     //re-classify
                     for (Shape *shape in self.shapes) {
                         [shape addShapeRecord];
@@ -160,11 +163,12 @@
                     self.currentGenerationWeights = weights;
                     self.currentGenerationTimestamp = timestamp;
                     NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-                    [defs setObject:currentGenerationTimestamp forKey:@"currentGenerationTimestamp"];
-                    [defs setObject:currentGenerationWeights forKey:@"currentGenerationWeights"];
-                    [defs synchronize];
                     NSError *err;
-                    [self.managedObjectContext save:&err];
+                    if ([self.managedObjectContext save:&err]) {
+                        [defs setObject:currentGenerationTimestamp forKey:@"currentGenerationTimestamp"];
+                        [defs setObject:currentGenerationWeights forKey:@"currentGenerationWeights"];
+                        [defs synchronize];
+                    }
                 }
             }
         }
@@ -202,7 +206,6 @@
 }
 
 - (Shape *)createShapeFromSimpleDBItem:(SimpleDBItem *)item {
-#pragma mark ToDo check whether shape already exists
     NSFetchRequest *req = [[NSFetchRequest alloc] init];
     req.entity = [NSEntityDescription entityForName:@"Shape" inManagedObjectContext:self.managedObjectContext];
     req.predicate = [NSPredicate predicateWithFormat:@"id = %@", item.name];

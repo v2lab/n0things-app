@@ -30,7 +30,6 @@
 {
     // Override point for customization after application launch.
     [CollectionManager sharedInstance].managedObjectContext = self.managedObjectContext;
-    [[CollectionManager sharedInstance] loadShapesAndClusters];
     self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     return YES;
 }
@@ -42,6 +41,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [[CollectionManager sharedInstance] loadShapesAndClusters];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -74,7 +74,7 @@
              abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
              */
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+            //abort();
         }
     }
 }
@@ -170,7 +170,8 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
-        abort();
+        //abort();
+        [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
     }
     
     return _persistentStoreCoordinator;

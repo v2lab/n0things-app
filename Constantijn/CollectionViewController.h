@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Shape.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface CollectionViewController : UIViewController <UIScrollViewDelegate>
+@interface CollectionViewController : UIViewController <UIScrollViewDelegate> {
+    AVAudioPlayer *audioSuccess;
+}
 
 @property (strong, nonatomic) Shape *latestShape;
 

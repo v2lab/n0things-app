@@ -14,6 +14,8 @@
 
 @interface CollectionViewController ()
 
+- (AVAudioPlayer *)loadAudioPlayer:(NSString *)filename;
+
 @end
 
 @implementation CollectionViewController
@@ -52,6 +54,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     for (ClusterView *v in self.collectionContainer.subviews) {
         [v flashScrollIndicators];
+    }
+    if (latestShape) {
+        [audioSuccess play];
     }
 }
 
@@ -116,6 +121,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.clustersScrollView.layer.borderWidth = 1.;
+    self.clustersScrollView.layer.borderColor = [UIColor grayColor].CGColor;
+    audioSuccess = [self loadAudioPlayer:@"well done"];
 }
 
 - (void)viewDidUnload
@@ -136,6 +144,20 @@
 - (IBAction)backTapped:(id)sender {
     //[self.navigationController popViewControllerAnimated:YES];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (AVAudioPlayer *)loadAudioPlayer:(NSString *)filename {
+    NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:filename ofType: @"wav"];
+    if (!soundFilePath) {
+        return nil;
+    }
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath: soundFilePath];
+    if (fileURL) {
+        AVAudioPlayer *result = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+        [result prepareToPlay];
+        return result;
+    }
+    return nil;
 }
 
 @end

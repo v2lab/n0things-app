@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Wgq-2b-c6G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2829" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Wgq-2b-c6G">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1914"/>
     </dependencies>
     <scenes>
         <!--Start View Controller - N0THINGS-->
@@ -178,7 +177,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="iKy-57-6hE">
-                                <rect key="frame" x="0.0" y="380" width="320" height="80"/>
+                                <rect key="frame" x="-1" y="380" width="322" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="87m-Tb-ehz" id="mBp-TY-Mrp"/>
@@ -311,6 +310,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="icon-select-shape.png" id="HT2-w0-NZ2">
+                                <rect key="frame" x="120" y="190" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.89540816326530615" green="0.89540816326530615" blue="0.89540816326530615" alpha="0.81000000000000005" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <navigationItem key="navigationItem" title="N0THINGS" id="Fsy-Jw-Pfv">
@@ -321,6 +325,7 @@
                         <outlet property="capturePreview" destination="mSK-7m-vme" id="Zpe-Zq-XDw"/>
                         <outlet property="imageView" destination="Q9I-VH-hpU" id="MZF-kx-Ibp"/>
                         <outlet property="pleaseWaitImage" destination="OsA-2f-B8Q" id="FSw-fS-yKQ"/>
+                        <outlet property="selectShapePopup" destination="HT2-w0-NZ2" id="fFR-4b-en4"/>
                         <outlet property="selectionBox" destination="Zjq-4V-kmB" id="Chn-uC-MG3"/>
                         <outlet property="submitButton" destination="eRS-GQ-JyH" id="kl0-OG-M4C"/>
                         <outlet property="submitIndicator" destination="SgE-Fa-5PV" id="M1W-Mf-L0r"/>
@@ -365,6 +370,7 @@
         <image name="button-collection-up.png" width="182" height="28"/>
         <image name="button-start-down.png" width="182" height="28"/>
         <image name="button-start-up.png" width="182" height="28"/>
+        <image name="icon-select-shape.png" width="41" height="43"/>
         <image name="photo-button-down.png" width="46" height="35"/>
         <image name="photo-button-up.png" width="46" height="35"/>
         <image name="title-about.png" width="85" height="20"/>
@@ -377,46 +383,6 @@
         <image name="upload-button-down.png" width="46" height="36"/>
         <image name="upload-button-up.png" width="46" height="36"/>
     </resources>
-    <classes>
-        <class className="AboutViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AboutViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backTapped:"/>
-                <relationship kind="outlet" name="webview" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="CollectionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CollectionViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backTapped:"/>
-                <relationship kind="action" name="changePage:"/>
-                <relationship kind="outlet" name="clustersPageControl" candidateClass="UIPageControl"/>
-                <relationship kind="outlet" name="clustersScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="collectionContainer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="collectionScrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="MainImageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainImageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backTapped:"/>
-                <relationship kind="action" name="panGesture:" candidateClass="UIGestureRecognizer"/>
-                <relationship kind="action" name="showCamera:"/>
-                <relationship kind="action" name="submitImage:"/>
-                <relationship kind="outlet" name="cameraButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="capturePreview" candidateClass="UIView"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="pleaseWaitImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="selectionBox" candidateClass="UIView"/>
-                <relationship kind="outlet" name="submitButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="submitIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="titleImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="StartViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StartViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

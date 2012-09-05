@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
 @property (strong, nonatomic) IBOutlet UIImageView *pleaseWaitImage;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
+@property (strong, nonatomic) IBOutlet UIImageView *selectShapePopup;
 
 @property (strong) CaptureSessionManager *captureManager;
 

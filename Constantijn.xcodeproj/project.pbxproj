@@ -45,6 +45,10 @@
 		3D3E345315EFB041007FB512 /* select shape success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344B15EFA0CC007FB512 /* select shape success.wav */; };
 		3D3E345A15F16D03007FB512 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E345915F16D03007FB512 /* Cluster.m */; };
 		3D3E63F615EEC1B500CA982A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E63F515EEC1B500CA982A /* AboutViewController.m */; };
+		3D3F566D15F7504900F4AB19 /* error selection v2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F566C15F7504900F4AB19 /* error selection v2.wav */; };
+		3D3F567015F7507C00F4AB19 /* send shape v2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F566F15F7507C00F4AB19 /* send shape v2.wav */; };
+		3D3F567315F7510B00F4AB19 /* icon-select-shape.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F567115F7510B00F4AB19 /* icon-select-shape.png */; };
+		3D3F567415F7510B00F4AB19 /* icon-select-shape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F567215F7510B00F4AB19 /* icon-select-shape@2x.png */; };
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
 		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
@@ -149,11 +153,15 @@
 		3D3E344B15EFA0CC007FB512 /* select shape success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "select shape success.wav"; sourceTree = "<group>"; };
 		3D3E344C15EFA0CC007FB512 /* foto klik.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "foto klik.wav"; sourceTree = "<group>"; };
 		3D3E344D15EFA0CC007FB512 /* select shape error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "select shape error.wav"; sourceTree = "<group>"; };
-		3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 4.xcdatamodel"; sourceTree = "<group>"; };
+		3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "N0things 4.xcdatamodel"; sourceTree = "<group>"; };
 		3D3E345815F16D03007FB512 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
 		3D3E345915F16D03007FB512 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D3E63F415EEC1B500CA982A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		3D3E63F515EEC1B500CA982A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		3D3F566C15F7504900F4AB19 /* error selection v2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "error selection v2.wav"; sourceTree = "<group>"; };
+		3D3F566F15F7507C00F4AB19 /* send shape v2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "send shape v2.wav"; sourceTree = "<group>"; };
+		3D3F567115F7510B00F4AB19 /* icon-select-shape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-select-shape.png"; sourceTree = "<group>"; };
+		3D3F567215F7510B00F4AB19 /* icon-select-shape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-select-shape@2x.png"; sourceTree = "<group>"; };
 		3D5C010E15E27D9100E4A80B /* ShapeRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeRecord.h; sourceTree = "<group>"; };
 		3D5C010F15E27D9100E4A80B /* ShapeRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeRecord.m; sourceTree = "<group>"; };
 		3D5C011215E280DA00E4A80B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
@@ -263,6 +271,8 @@
 		3D31637715E54DCC00E76754 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3D3F567115F7510B00F4AB19 /* icon-select-shape.png */,
+				3D3F567215F7510B00F4AB19 /* icon-select-shape@2x.png */,
 				3D31637815E54E3100E76754 /* foto */,
 				3D31638B15E54E3100E76754 /* startscherm */,
 				3DCF6A7E15EB77A7006FBFB4 /* please wait */,
@@ -331,9 +341,11 @@
 			children = (
 				3D3E344915EFA0CC007FB512 /* well done.wav */,
 				3D3E344A15EFA0CC007FB512 /* send shape.wav */,
+				3D3F566F15F7507C00F4AB19 /* send shape v2.wav */,
 				3D3E344B15EFA0CC007FB512 /* select shape success.wav */,
 				3D3E344C15EFA0CC007FB512 /* foto klik.wav */,
 				3D3E344D15EFA0CC007FB512 /* select shape error.wav */,
+				3D3F566C15F7504900F4AB19 /* error selection v2.wav */,
 			);
 			name = audio;
 			sourceTree = "<group>";
@@ -591,6 +603,10 @@
 				3D3E345115EFA0CC007FB512 /* foto klik.wav in Resources */,
 				3D3E345215EFA0CC007FB512 /* select shape error.wav in Resources */,
 				3D3E345315EFB041007FB512 /* select shape success.wav in Resources */,
+				3D3F566D15F7504900F4AB19 /* error selection v2.wav in Resources */,
+				3D3F567015F7507C00F4AB19 /* send shape v2.wav in Resources */,
+				3D3F567315F7510B00F4AB19 /* icon-select-shape.png in Resources */,
+				3D3F567415F7510B00F4AB19 /* icon-select-shape@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
