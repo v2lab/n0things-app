@@ -90,7 +90,7 @@
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
         @try {
-            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
+            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp > '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
             SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
             SimpleDBSelectResponse *resp = [simpleDBClient select:req];
                 //NSLog(@"req: %@ \nresponse: %@", req, resp);
