@@ -2,7 +2,7 @@
 //  Shape.h
 //  Constantijn
 //
-//  Created by Jan Misker on 27-08-12.
+//  Created by Jan Misker on 02-10-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
@@ -20,8 +20,10 @@
 @property (nonatomic, retain) id huMoments;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) id shapeRecord;
-@property (nonatomic) int16_t vertexCount;
 @property (nonatomic) NSTimeInterval submittedDate;
+@property (nonatomic) int16_t vertexCount;
+@property (nonatomic) double distanceToCentroid;
 @property (nonatomic, retain) Cluster *cluster;
+@property (nonatomic, retain) Cluster *representativeForCluster;
 
 @end

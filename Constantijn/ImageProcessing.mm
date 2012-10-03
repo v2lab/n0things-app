@@ -190,7 +190,7 @@ std::vector<T>& operator<<(std::vector<T>& vector, const T& value)
         double b = [(NSNumber *)[pointB objectAtIndex:i] doubleValue];
         result += (a-b)*(a-b);
     }
-    return result;
+    return sqrt(result);
 }
 
 @end

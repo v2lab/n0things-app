@@ -2,7 +2,7 @@
 //  Shape.m
 //  Constantijn
 //
-//  Created by Jan Misker on 27-08-12.
+//  Created by Jan Misker on 02-10-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
@@ -19,8 +19,10 @@
 @dynamic huMoments;
 @dynamic id;
 @dynamic shapeRecord;
-@dynamic vertexCount;
 @dynamic submittedDate;
+@dynamic vertexCount;
+@dynamic distanceToCentroid;
 @dynamic cluster;
+@dynamic representativeForCluster;
 
 @end

@@ -1,13 +1,14 @@
-//
-//  ShapeView.m
-//  Constantijn
-//
-//  Created by Jan Misker on 23-08-12.
-//  Copyright (c) 2012 V2_. All rights reserved.
-//
+    //
+    //  ShapeView.m
+    //  Constantijn
+    //
+    //  Created by Jan Misker on 23-08-12.
+    //  Copyright (c) 2012 V2_. All rights reserved.
+    //
 
 #import "ShapeView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Cluster.h"
 
 @interface ShapeView ()
 
@@ -17,7 +18,7 @@
 
 @implementation ShapeView
 
-@synthesize shape, path;
+@synthesize shape, path, representsCluster;
 
 - (CGPoint)pointForArray:(NSArray *)arr {
     int x = [(NSNumber *)[arr objectAtIndex:0] floatValue];
@@ -58,13 +59,39 @@
     CGFloat scaleFactor = MIN(scaleX, scaleY) * 0.95;
     CGAffineTransform scale = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
     [path applyTransform:scale];
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
-    [path applyTransform:translate];
-    
-    [shape.color setFill];
-    [[UIColor blackColor] setStroke];
-    [path fill];
-    [path stroke];
+    if (self.representsCluster && (scaleY < scaleX)) {
+        NSLog(@"before rotating %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
+        [path applyTransform:CGAffineTransformMakeRotation(M_PI_2)];
+        NSLog(@" after rotating %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
+        CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
+        [path applyTransform:translate];
+        NSLog(@" after transl. %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
+    } else {
+        CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
+        [path applyTransform:translate];
+    }
+    if (self.representsCluster) {
+        NSNumber *num = [self.shape.representativeForCluster.shapes valueForKeyPath:@"@min.distanceToCentroid"];
+        NSLog(@"minimal distances %@ sigma %f", num, self.shape.representativeForCluster.sigma);
+        double closestDistance = [num doubleValue];
+        double visibleRatio = 1.;
+        if (closestDistance > 0) {
+            visibleRatio = MAX(0, 1 - (closestDistance / (2 * self.shape.representativeForCluster.sigma)));
+        }
+        [[UIColor colorWithWhite:.8 alpha:1.] setFill];
+        [[UIColor blackColor] setStroke];
+            //[path fill];
+        [path stroke];
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextClipToRect(ctx, CGRectMake(0, self.bounds.size.height * (1 - visibleRatio), self.bounds.size.width, self.bounds.size.height));
+        [shape.color setFill];
+        [path fill];
+    } else {
+        [shape.color setFill];
+        [[UIColor blackColor] setStroke];
+        [path fill];
+        [path stroke];
+    }
 }
 
 - (void)dealloc {

@@ -2,7 +2,7 @@
 //  Cluster.m
 //  Constantijn
 //
-//  Created by Jan Misker on 01-09-12.
+//  Created by Jan Misker on 02-10-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 @dynamic centroid;
 @dynamic generation;
 @dynamic id;
+@dynamic sigma;
 @dynamic representative;
 @dynamic shapes;
 

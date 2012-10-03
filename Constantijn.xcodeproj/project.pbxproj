@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3D04C4CB15EBD8BB00EA78DF /* N0things.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */; };
 		3D04C4D415EBD97700EA78DF /* Shape+CD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D04C4D315EBD97700EA78DF /* Shape+CD.m */; };
-		3D04C4DF15EBDCF900EA78DF /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D04C4DE15EBDCF900EA78DF /* Shape.m */; };
 		3D230E2B15E19A430003DC9D /* ImageProcessingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */; };
 		3D230E2D15E19E000003DC9D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D230E2C15E19E000003DC9D /* CoreData.framework */; };
 		3D3163A015E54E3100E76754 /* photo-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D31637915E54E3100E76754 /* photo-button-down.png */; };
@@ -43,7 +42,6 @@
 		3D3E345115EFA0CC007FB512 /* foto klik.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344C15EFA0CC007FB512 /* foto klik.wav */; };
 		3D3E345215EFA0CC007FB512 /* select shape error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344D15EFA0CC007FB512 /* select shape error.wav */; };
 		3D3E345315EFB041007FB512 /* select shape success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E344B15EFA0CC007FB512 /* select shape success.wav */; };
-		3D3E345A15F16D03007FB512 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E345915F16D03007FB512 /* Cluster.m */; };
 		3D3E63F615EEC1B500CA982A /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E63F515EEC1B500CA982A /* AboutViewController.m */; };
 		3D3F566D15F7504900F4AB19 /* error selection v2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F566C15F7504900F4AB19 /* error selection v2.wav */; };
 		3D3F567015F7507C00F4AB19 /* send shape v2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D3F566F15F7507C00F4AB19 /* send shape v2.wav */; };
@@ -52,6 +50,8 @@
 		3D5C011015E27D9100E4A80B /* ShapeRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C010F15E27D9100E4A80B /* ShapeRecord.m */; };
 		3D5C011315E280DA00E4A80B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C011215E280DA00E4A80B /* opencv2.framework */; };
 		3D5C0AE615E244D900F555C9 /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */; };
+		3D615B37161B6F7B00D0BB15 /* Cluster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D615B36161B6F7B00D0BB15 /* Cluster.m */; };
+		3D615B3A161B711B00D0BB15 /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D615B39161B711B00D0BB15 /* Shape.m */; };
 		3D79D28C15E594B100193CE7 /* ShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79D28B15E594B100193CE7 /* ShapeView.m */; };
 		3D79D29B15E630F200193CE7 /* button-about-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D79D28D15E630F200193CE7 /* button-about-down.png */; };
 		3D79D29C15E630F200193CE7 /* button-about-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D79D28E15E630F200193CE7 /* button-about-down@2x.png */; };
@@ -112,8 +112,6 @@
 		3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "N0things 2.xcdatamodel"; sourceTree = "<group>"; };
 		3D04C4D215EBD97600EA78DF /* Shape+CD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Shape+CD.h"; sourceTree = "<group>"; };
 		3D04C4D315EBD97700EA78DF /* Shape+CD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Shape+CD.m"; sourceTree = "<group>"; };
-		3D04C4DD15EBDCF900EA78DF /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
-		3D04C4DE15EBDCF900EA78DF /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
 		3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = N0things.xcdatamodel; sourceTree = "<group>"; };
 		3D230E2915E19A430003DC9D /* ImageProcessingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessingOperation.h; sourceTree = "<group>"; };
 		3D230E2A15E19A430003DC9D /* ImageProcessingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProcessingOperation.m; sourceTree = "<group>"; };
@@ -154,8 +152,6 @@
 		3D3E344C15EFA0CC007FB512 /* foto klik.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "foto klik.wav"; sourceTree = "<group>"; };
 		3D3E344D15EFA0CC007FB512 /* select shape error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "select shape error.wav"; sourceTree = "<group>"; };
 		3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "N0things 4.xcdatamodel"; sourceTree = "<group>"; };
-		3D3E345815F16D03007FB512 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
-		3D3E345915F16D03007FB512 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
 		3D3E63F415EEC1B500CA982A /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		3D3E63F515EEC1B500CA982A /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		3D3F566C15F7504900F4AB19 /* error selection v2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "error selection v2.wav"; sourceTree = "<group>"; };
@@ -167,6 +163,12 @@
 		3D5C011215E280DA00E4A80B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		3D5C012415E295E800E4A80B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		3D5C0AE515E244D900F555C9 /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSiOSSDK.framework; sourceTree = "<group>"; };
+		3D615B31161B6EC300D0BB15 /* N0things 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 5.xcdatamodel"; sourceTree = "<group>"; };
+		3D615B35161B6F7B00D0BB15 /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cluster.h; sourceTree = "<group>"; };
+		3D615B36161B6F7B00D0BB15 /* Cluster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cluster.m; sourceTree = "<group>"; };
+		3D615B38161B711B00D0BB15 /* Shape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		3D615B39161B711B00D0BB15 /* Shape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
+		3D615B3B161B71D500D0BB15 /* N0things 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "N0things 6.xcdatamodel"; sourceTree = "<group>"; };
 		3D79D28A15E594B100193CE7 /* ShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeView.h; sourceTree = "<group>"; };
 		3D79D28B15E594B100193CE7 /* ShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeView.m; sourceTree = "<group>"; };
 		3D79D28D15E630F200193CE7 /* button-about-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about-down.png"; sourceTree = "<group>"; };
@@ -257,10 +259,10 @@
 		3D230E1E15E194000003DC9D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3D3E345815F16D03007FB512 /* Cluster.h */,
-				3D3E345915F16D03007FB512 /* Cluster.m */,
-				3D04C4DD15EBDCF900EA78DF /* Shape.h */,
-				3D04C4DE15EBDCF900EA78DF /* Shape.m */,
+				3D615B38161B711B00D0BB15 /* Shape.h */,
+				3D615B39161B711B00D0BB15 /* Shape.m */,
+				3D615B35161B6F7B00D0BB15 /* Cluster.h */,
+				3D615B36161B6F7B00D0BB15 /* Cluster.m */,
 				3D04C4D215EBD97600EA78DF /* Shape+CD.h */,
 				3D04C4D315EBD97700EA78DF /* Shape+CD.m */,
 				3D230E2015E1943B0003DC9D /* N0things.xcdatamodeld */,
@@ -631,10 +633,10 @@
 				3DCD0BC115E66F1200C6E817 /* ShapeRecordView.m in Sources */,
 				3D04C4CB15EBD8BB00EA78DF /* N0things.xcdatamodeld in Sources */,
 				3D04C4D415EBD97700EA78DF /* Shape+CD.m in Sources */,
-				3D04C4DF15EBDCF900EA78DF /* Shape.m in Sources */,
 				3DDC406715ED3F3D00AAFEFA /* CaptureSessionManager.m in Sources */,
 				3D3E63F615EEC1B500CA982A /* AboutViewController.m in Sources */,
-				3D3E345A15F16D03007FB512 /* Cluster.m in Sources */,
+				3D615B37161B6F7B00D0BB15 /* Cluster.m in Sources */,
+				3D615B3A161B711B00D0BB15 /* Shape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -712,6 +714,7 @@
 		3DF1689215D30D27003236BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/aws-ios-sdk-1.3.3\"",
@@ -729,6 +732,7 @@
 		3DF1689315D30D27003236BA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = armv7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Downloads/aws-ios-sdk-1.3.3\"",
@@ -773,9 +777,11 @@
 				3D04C4C615EBD42500EA78DF /* N0things 2.xcdatamodel */,
 				3DBFB1F215EE5FEE00867BF6 /* N0things 3.xcdatamodel */,
 				3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */,
+				3D615B31161B6EC300D0BB15 /* N0things 5.xcdatamodel */,
+				3D615B3B161B71D500D0BB15 /* N0things 6.xcdatamodel */,
 				3D230E2115E1943B0003DC9D /* N0things.xcdatamodel */,
 			);
-			currentVersion = 3D3E345415EFE11B007FB512 /* N0things 4.xcdatamodel */;
+			currentVersion = 3D615B3B161B71D500D0BB15 /* N0things 6.xcdatamodel */;
 			path = N0things.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

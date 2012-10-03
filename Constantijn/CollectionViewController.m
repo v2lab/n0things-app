@@ -80,6 +80,7 @@
         UIView *clusterRepresentativeView = [[UIView alloc] initWithFrame:CGRectMake(xOffset, 0., 80., 80.)];
         if (cluster.representative) {
             ShapeView *sv = [[ShapeView alloc] initWithShape:cluster.representative];
+            sv.representsCluster = YES;
             [clusterRepresentativeView addSubview:sv];
             sv.frame = CGRectInset(clusterRepresentativeView.bounds, 20, 20);
         } else {

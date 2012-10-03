@@ -10,12 +10,11 @@
 #import "Shape+CD.h"
 
 @interface ShapeView : UIView {
-    Shape *shape;
-    UIBezierPath *path;
 }
 
 @property (nonatomic, strong) Shape *shape;
 @property (nonatomic, strong) UIBezierPath *path;
+@property (nonatomic, assign) BOOL representsCluster;
 
 - (id)initWithShape:(Shape *)shape;
 

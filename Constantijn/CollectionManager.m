@@ -90,10 +90,10 @@
 - (void)checkForNewGeneration {
     NSBlockOperation *op = [NSBlockOperation blockOperationWithBlock:^{
         @try {
-            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp > '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
+            NSString *selectExpr = [NSString stringWithFormat:@"SELECT * FROM `Generation` WHERE Timestamp >= '%@' ORDER BY Timestamp DESC LIMIT 1", self.currentGenerationTimestamp];
             SimpleDBSelectRequest *req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
             SimpleDBSelectResponse *resp = [simpleDBClient select:req];
-            NSLog(@"req: %@ \nresponse: %@", req, resp);
+                //NSLog(@"req: %@ \nresponse: %@", req, resp);
             if (resp.items.count) {
                 SimpleDBItem *newGenerationItem = [resp itemsObjectAtIndex:0];
                 NSString *timestamp = nil;
@@ -108,9 +108,11 @@
                     }
                 }
                 if (timestamp && timestamp.length && weights && [weights isKindOfClass:[NSArray class]] && weights.count == 12) {
+                        //NSLog(@"before select cluster");
                     selectExpr = [NSString stringWithFormat:@"SELECT * FROM Cluster WHERE Generation = '%@'", timestamp];
                     req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:selectExpr];
                     SimpleDBSelectResponse *clusterResponse = [simpleDBClient select:req];
+                        //NSLog(@"after select cluster");
                     //load all the representatives
                     NSMutableArray *representativeIDs = [NSMutableArray arrayWithCapacity:clusterResponse.items.count];
                     for (SimpleDBItem *clusterItem in clusterResponse.items) {
@@ -121,7 +123,9 @@
                     NSMutableDictionary *representativeShapes = [NSMutableDictionary dictionaryWithCapacity:representativeIDs.count];
                     if (representativeIDs.count) {
                         req = [[SimpleDBSelectRequest alloc] initWithSelectExpression:[NSString stringWithFormat:@"SELECT * FROM Shape WHERE itemName() IN (%@)", [representativeIDs componentsJoinedByString:@","]]];
+                            //NSLog(@"before select representatives");
                         SimpleDBSelectResponse *representativeResponse = [simpleDBClient select:req];
+                            //NSLog(@"after select representatives");
                         for (SimpleDBItem *reprItem in representativeResponse.items) {
                             //create Shape
                             Shape *s = [self createShapeFromSimpleDBItem:reprItem];
@@ -144,6 +148,8 @@
                                 }
                             } else if ([attr.name isEqualToString:@"Generation"]) {
                                 cluster.generation = attr.value;
+                            } else if ([attr.name isEqualToString:@"Sigma"]) {
+                                cluster.sigma = [attr.value doubleValue];
                             }
                         }
                         [newClusters addObject:cluster];
@@ -159,7 +165,7 @@
                         [self classifyShape:shape inClusters:clusters withWeights:weights];
                     }
                     
-                    NSLog(@"found this data %@ %@", timestamp, [[weights objectAtIndex:1] class]);
+                        //NSLog(@"found this data %@ %@", timestamp, [[weights objectAtIndex:1] class]);
                     self.currentGenerationWeights = weights;
                     self.currentGenerationTimestamp = timestamp;
                     NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
@@ -175,6 +181,16 @@
         @catch (NSException *exception) {
             NSLog(@"Exception calling Amazon %@", [exception description]);
         }
+        /*
+        for (Cluster *c in self.clusters) {
+            NSLog(@"Cluster %@", c.id);
+            NSLog(@"--representative %@", c.representative.id);
+            [c.representative addShapeRecord];
+            [self classifyShape:c.representative inClusters:self.clusters withWeights:currentGenerationWeights];
+            NSLog(@"--classifiedRepr: %@", c.representative.cluster.id);
+        }
+        NSLog(@"weights: %@", currentGenerationWeights);
+         */
     }];
     [queue addOperation:op];
 }
@@ -190,7 +206,9 @@
             closestDistance = distance;
         }
     }
+        //NSLog(@"--- distance %f", closestDistance);
     shape.cluster = closestCluster;
+    shape.distanceToCentroid = closestDistance;
     //[closestCluster addShapesObject:shape];
     return shape.cluster;
 }
@@ -235,8 +253,8 @@
             NSArray *arr = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
             if ([arr isKindOfClass:[NSArray class]] && arr.count == 3) {
                 shape.color = [UIColor colorWithRed:[(NSNumber *)[arr objectAtIndex:0] floatValue] / 255.
-                                              green:[(NSNumber *)[arr objectAtIndex:1] floatValue]
-                                               blue:[(NSNumber *)[arr objectAtIndex:2] floatValue]
+                                              green:[(NSNumber *)[arr objectAtIndex:1] floatValue] / 255.
+                                               blue:[(NSNumber *)[arr objectAtIndex:2] floatValue] / 255.
                                               alpha:1.];
             }
         } else if ([attr.name isEqualToString:@"HuMoments"]) {

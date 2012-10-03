@@ -2,7 +2,7 @@
 //  Cluster.h
 //  Constantijn
 //
-//  Created by Jan Misker on 01-09-12.
+//  Created by Jan Misker on 02-10-12.
 //  Copyright (c) 2012 V2_. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) id centroid;
 @property (nonatomic, retain) NSString * generation;
 @property (nonatomic, retain) NSString * id;
+@property (nonatomic) double sigma;
 @property (nonatomic, retain) Shape *representative;
 @property (nonatomic, retain) NSOrderedSet *shapes;
 @end

@@ -31,7 +31,7 @@
         }
         [path closePath];
         path.lineWidth = 2.;
-        NSLog(@"shaperecord path bounds %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
+            //NSLog(@"shaperecord path bounds %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
         //[path applyTransform:CGAffineTransformMakeTranslation(-path.bounds.origin.x, -path.bounds.origin.y)];
     }
     return self;
