@@ -30,7 +30,12 @@
 {
     // Override point for customization after application launch.
     [CollectionManager sharedInstance].managedObjectContext = self.managedObjectContext;
-    self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    if ([UIScreen mainScreen].scale == 2.f && screenHeight == 568.0f) {
+        self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background-568h@2x.png"]];
+    } else {
+        self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
+    }
     return YES;
 }
 							

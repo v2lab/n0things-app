@@ -10,9 +10,11 @@
 #import "CollectionManager.h"
 #import "ClusterView.h"
 #import "ShapeView.h"
+#import "ShapeRecord.h"
 #import <QuartzCore/QuartzCore.h>
+#import <MessageUI/MessageUI.h>
 
-@interface CollectionViewController ()
+@interface CollectionViewController () <MFMailComposeViewControllerDelegate>
 
 - (AVAudioPlayer *)loadAudioPlayer:(NSString *)filename;
 
@@ -25,6 +27,55 @@
 @synthesize latestShape;
 @synthesize collectionContainer;
 
+#pragma mark shape doubletap to email 
+
+- (void)shapeDoubleTapped:(NSNotification *)notif {
+    ShapeView *sv = notif.object;
+    if (![MFMailComposeViewController canSendMail]) {
+        return;
+    }
+    NSError *err = nil;
+    [sv.shape addShapeRecord];
+    ShapeRecord *shapeRecord = sv.shape.shapeRecord;
+    
+    NSData *contourData = [NSJSONSerialization dataWithJSONObject:sv.shape.contour options:0 error:&err];
+    if (err) {
+        NSLog(@"error serializing to JSON %@", [err description]);
+        return;
+    }
+    NSData *colorData = [NSJSONSerialization dataWithJSONObject:shapeRecord.color options:0 error:&err];
+    if (err) {
+        NSLog(@"error serializing to JSON %@", [err description]);
+        return;
+    }
+
+    ShapeView *shapeView = [[ShapeView alloc] initWithShape:sv.shape];
+    shapeView.bounds = CGRectMake(0., 0., 200., 200.);
+    UIGraphicsBeginImageContextWithOptions(shapeView.bounds.size, NO, 0.0);
+    [shapeView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSData *png = UIImagePNGRepresentation(img);
+
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    mailer.mailComposeDelegate = self;
+    [mailer setSubject:@"N0things shape"];
+    NSString *txt = [NSString stringWithFormat:@"N0things shape data\n\nID: %@\n\nDate: %@\n\nRGB:%@\n\nShape: %@\n\nhttp://www.constantijnsmit.nl",
+                     sv.shape.id,
+                     [NSDate dateWithTimeIntervalSinceReferenceDate:sv.shape.submittedDate],
+                     [[NSString alloc] initWithData:colorData encoding:NSUTF8StringEncoding],
+                     [[NSString alloc] initWithData:contourData encoding:NSUTF8StringEncoding]];
+    [mailer setMessageBody:txt isHTML:NO];
+    [mailer setToRecipients:[NSArray arrayWithObject:@"n0things@constantijnsmit.nl"]];
+        //NSData *svgData = [@"<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\"><path d=\"M150 0 L75 200 L225 200 Z\" /></svg>" dataUsingEncoding:NSUTF8StringEncoding];
+    [mailer addAttachmentData:png mimeType:@"image/png" fileName:[NSString stringWithFormat:@"n0things_%@.png", sv.shape.id]];
+    [self presentViewController:mailer animated:YES completion:^{
+    }];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 #pragma mark Scrolling and Paging of clusters
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -61,6 +112,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shapeDoubleTapped:) name:@"ShapeDoubleTapped" object:nil];
     Cluster *latestCluster = nil;
     if (latestShape) {
         latestCluster = latestShape.cluster;

@@ -107,6 +107,7 @@
                         weights = [NSJSONSerialization JSONObjectWithData:[attr.value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&err];
                     }
                 }
+                NSLog(@"weights: %@", weights);
                 if (timestamp && timestamp.length && weights && [weights isKindOfClass:[NSArray class]] && weights.count == 12) {
                         //NSLog(@"before select cluster");
                     selectExpr = [NSString stringWithFormat:@"SELECT * FROM Cluster WHERE Generation = '%@'", timestamp];
@@ -152,6 +153,11 @@
                                 cluster.sigma = [attr.value doubleValue];
                             }
                         }
+                        Shape *repr = cluster.representative;
+                        [repr addShapeRecord];
+                        NSArray *shape12D = [ImageProcessing mapShapeRecord:repr.shapeRecord withWeights:weights];
+                        NSLog(@"centroid %@, shape12D %@", cluster.centroid, shape12D);
+                        NSLog(@"distance from repr %@ to cluster centroid = %f sigma = %f", repr.id, [ImageProcessing distanceBetweenPointA:shape12D andPointB:cluster.centroid], cluster.sigma);
                         [newClusters addObject:cluster];
                     }
                     for (NSManagedObject *obj in self.clusters) {
@@ -164,6 +170,8 @@
                         [shape addShapeRecord];
                         [self classifyShape:shape inClusters:clusters withWeights:weights];
                     }
+                    
+
                     
                         //NSLog(@"found this data %@ %@", timestamp, [[weights objectAtIndex:1] class]);
                     self.currentGenerationWeights = weights;

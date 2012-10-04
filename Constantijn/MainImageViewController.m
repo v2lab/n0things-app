@@ -162,6 +162,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     //[self showCamera:nil];
     selectionOrigin = CGPointZero;
+    
+    return;
+    UIImagePickerController *cameraController = [[UIImagePickerController alloc] init];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    cameraController.allowsEditing = NO;
+        //cameraController.navigationItem.title = @"Nothings";
+    cameraController.delegate = self;
+    [self presentModalViewController:cameraController animated:YES];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Shape.h"
+#import "Shape+CD.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface CollectionViewController : UIViewController <UIScrollViewDelegate> {

@@ -26,6 +26,12 @@
     return CGPointMake(x, y);
 }
 
+- (void)doubleTapped {
+    if (!self.representsCluster) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShapeDoubleTapped" object:self];
+    }
+}
+
 - (id)initWithShape:(Shape *)_shape
 {
     self = [super init];
@@ -35,6 +41,9 @@
         [self addObserver:self forKeyPath:@"shape" options:0 context:NULL];
         self.shape = _shape;
         self.clipsToBounds = NO;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped)];
+        tap.numberOfTapsRequired = 2;
+        [self addGestureRecognizer:tap];
     }
     return self;
 }
@@ -60,32 +69,36 @@
     CGAffineTransform scale = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
     [path applyTransform:scale];
     if (self.representsCluster && (scaleY < scaleX)) {
-        NSLog(@"before rotating %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
         [path applyTransform:CGAffineTransformMakeRotation(M_PI_2)];
-        NSLog(@" after rotating %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
         CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
         [path applyTransform:translate];
-        NSLog(@" after transl. %f,%f %f,%f", path.bounds.origin.x, path.bounds.origin.y, path.bounds.size.width, path.bounds.size.height);
     } else {
         CGAffineTransform translate = CGAffineTransformMakeTranslation(-path.bounds.origin.x + (self.bounds.size.width - path.bounds.size.width)/2., -path.bounds.origin.y + (self.bounds.size.height - path.bounds.size.height)/2.);
         [path applyTransform:translate];
     }
     if (self.representsCluster) {
         NSNumber *num = [self.shape.representativeForCluster.shapes valueForKeyPath:@"@min.distanceToCentroid"];
-        NSLog(@"minimal distances %@ sigma %f", num, self.shape.representativeForCluster.sigma);
+            //NSLog(@"minimal distances %@ sigma %f", num, self.shape.representativeForCluster.sigma);
         double closestDistance = [num doubleValue];
-        double visibleRatio = 1.;
+        double visibleRatio = 0.;
         if (closestDistance > 0) {
-            visibleRatio = MAX(0, 1 - (closestDistance / (2 * self.shape.representativeForCluster.sigma)));
+            double sigma = self.shape.representativeForCluster.sigma;
+            visibleRatio = MAX(0, MIN(1, 1 - ((closestDistance - 0.1 * sigma) / (2 * sigma))));
         }
+            //NSLog(@"  => ratio %f", visibleRatio);
         [[UIColor colorWithWhite:.8 alpha:1.] setFill];
-        [[UIColor blackColor] setStroke];
+        [[UIColor colorWithWhite:0. alpha:.2] setStroke];
             //[path fill];
+        CGFloat dashPatern[2] = {2.0, 2.0};
+        [path setLineDash:dashPatern count:2 phase:0.0];
         [path stroke];
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGContextClipToRect(ctx, CGRectMake(0, self.bounds.size.height * (1 - visibleRatio), self.bounds.size.width, self.bounds.size.height));
         [shape.color setFill];
+        [[UIColor blackColor] setStroke];
+        [path setLineDash:NULL count:0 phase:0];
         [path fill];
+        [path stroke];
     } else {
         [shape.color setFill];
         [[UIColor blackColor] setStroke];
