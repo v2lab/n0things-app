@@ -163,7 +163,7 @@
     //[self showCamera:nil];
     selectionOrigin = CGPointZero;
     
-    return;
+    //return;
     UIImagePickerController *cameraController = [[UIImagePickerController alloc] init];
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         cameraController.sourceType = UIImagePickerControllerSourceTypeCamera;
